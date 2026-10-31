@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="guimbi-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a044e"/>
+      <stop offset="50%" stop-color="#831843"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#guimbi-bg)"/>
+
+  <!-- Architecture banco de Bobo-Dioulasso en arrière-plan (Mosquée de Dioulassoba & remparts) -->
+  <g fill="#78350f" opacity="0.65" transform="translate(420, 160)">
+    <!-- Minaret banco avec pointes de bois saillantes (torons) -->
+    <path d="M 60 180 L 90 20 L 130 20 L 160 180 Z"/>
+    <circle cx="110" cy="18" r="9" fill="#9a3412"/>
+    <!-- Torons horizontaux en bois -->
+    <line x1="80" y1="50" x2="140" y2="50" stroke="#451a03" stroke-width="4"/>
+    <line x1="75" y1="80" x2="145" y2="80" stroke="#451a03" stroke-width="4"/>
+    <line x1="70" y1="110" x2="150" y2="110" stroke="#451a03" stroke-width="4"/>
+    <line x1="65" y1="140" x2="155" y2="140" stroke="#451a03" stroke-width="4"/>
+    <!-- Mur d'enceinte de Sya -->
+    <rect x="0" y="140" width="340" height="80" fill="#9a3412"/>
+    <path d="M 180 140 Q 210 90 240 140 Z" fill="#78350f"/>
+  </g>
+
+  <!-- Reine Guimbi Ouattara au premier plan avec port altier et étoffe royale -->
+  <g transform="translate(140, 70)">
+    <!-- Aura de respect et lumière dorée -->
+    <circle cx="160" cy="170" r="130" fill="#fef08a" opacity="0.15"/>
+
+    <!-- Robe royale en Faso Dan Fani brodée d'or et d'indigo -->
+    <path d="M 110 320 L 140 170 L 180 170 L 210 320 Z" fill="#1e1b4b"/>
+    <path d="M 125 320 L 145 170 L 175 170 L 195 320 Z" fill="#fbbf24"/>
+    <!-- Grand manteau d'apparat en pourpre mandingue -->
+    <path d="M 90 175 Q 160 160 230 175 L 250 330 L 70 330 Z" fill="#831843" opacity="0.85"/>
+
+    <!-- Colliers de perles royales et cauris sacrés -->
+    <path d="M 140 165 Q 160 190 180 165" stroke="#fbbf24" stroke-width="5" fill="none"/>
+    <circle cx="160" cy="180" r="6" fill="#f59e0b"/>
+
+    <!-- Tête et coiffe royale ornée de peignes en or -->
+    <ellipse cx="160" cy="120" rx="22" ry="26" fill="#78350f"/>
+    <!-- Coiffe tressée avec voile fin -->
+    <path d="M 140 115 Q 160 80 180 115 Q 195 90 160 75 Q 125 90 140 115 Z" fill="#1c1917"/>
+    <circle cx="160" cy="85" r="5" fill="#f59e0b"/>
+
+    <!-- Visage digne, regard perçant de stratège -->
+    <circle cx="152" cy="118" r="2.5" fill="#0f172a"/>
+    <circle cx="168" cy="118" r="2.5" fill="#0f172a"/>
+    <circle cx="153" cy="117" r="0.8" fill="#ffffff"/>
+    <circle cx="169" cy="117" r="0.8" fill="#ffffff"/>
+    <path d="M 155 133 Q 160 137 165 133" stroke="#451a03" stroke-width="2" fill="none"/> <!-- Bouche sereine -->
+
+    <!-- Bras portant le sceptre de commandement de Sya -->
+    <path d="M 195 190 L 235 220 L 230 260" stroke="#78350f" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <line x1="230" y1="180" x2="230" y2="330" stroke="#f59e0b" stroke-width="5"/>
+    <circle cx="230" cy="180" r="9" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
+  </g>
+
+  <!-- Titre incrusté -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">GUIMBI OUATTARA</text>
+    <text x="210" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#fef08a">L'Héroïne Diplomate & Souveraine Protectrice de Sya</text>
+  </g>
+</svg>

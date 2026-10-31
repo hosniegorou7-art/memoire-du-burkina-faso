@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="sabou-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="60%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
+    </linearGradient>
+    <linearGradient id="sabou-water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ciel ensoleillé et végétation de savane arborée -->
+  <rect width="800" height="480" fill="url(#sabou-sky)"/>
+
+  <!-- Berge de la mare sacrée de Sabou -->
+  <path d="M 0 240 Q 250 210 500 240 T 800 220 L 800 480 L 0 480 Z" fill="#78350f"/>
+  <!-- Mare d'eau douce aux nénuphars -->
+  <path d="M 0 310 Q 350 270 800 320 L 800 480 L 0 480 Z" fill="url(#sabou-water)"/>
+
+  <!-- Nénuphars flottants avec fleurs blanches -->
+  <circle cx="160" cy="380" r="22" fill="#15803d" opacity="0.8"/>
+  <circle cx="160" cy="378" r="7" fill="#ffffff"/>
+  <circle cx="680" cy="410" r="28" fill="#15803d" opacity="0.8"/>
+  <circle cx="680" cy="408" r="8" fill="#fef08a"/>
+
+  <!-- Crocodile Sacré de Sabou (paisible, reposant au bord de l'eau) -->
+  <g transform="translate(220, 260)">
+    <!-- Queue crénelée puissante se prolongeant dans la mare -->
+    <path d="M 50 85 Q 10 90 -40 120 Q -80 140 -120 160 Q -70 145 -30 110 L 40 80 Z" fill="#166534" stroke="#14532d" stroke-width="2"/>
+    <!-- Écailles en crêtes sur la queue -->
+    <polygon points="-80,135 -70,120 -60,132" fill="#14532d"/>
+    <polygon points="-50,120 -40,105 -30,118" fill="#14532d"/>
+    <polygon points="-20,105 -10,92 0,102" fill="#14532d"/>
+
+    <!-- Corps massif et carapace d'écailles -->
+    <ellipse cx="140" cy="75" rx="100" ry="32" fill="#15803d" stroke="#166534" stroke-width="2"/>
+    <!-- Motifs d'écailles du dos -->
+    <g fill="#14532d" opacity="0.7">
+      <rect x="80" y="55" width="16" height="12" rx="3"/>
+      <rect x="105" y="55" width="16" height="12" rx="3"/>
+      <rect x="130" y="55" width="16" height="12" rx="3"/>
+      <rect x="155" y="55" width="16" height="12" rx="3"/>
+      <rect x="180" y="55" width="16" height="12" rx="3"/>
+      <rect x="90" y="72" width="16" height="12" rx="3"/>
+      <rect x="115" y="72" width="16" height="12" rx="3"/>
+      <rect x="140" y="72" width="16" height="12" rx="3"/>
+      <rect x="165" y="72" width="16" height="12" rx="3"/>
+    </g>
+
+    <!-- Tête allongée avec museau camus bienveillant -->
+    <path d="M 230 65 Q 290 60 340 70 Q 320 85 240 90 Z" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+    <!-- Mâchoire inférieure -->
+    <path d="M 240 85 L 330 75 Q 310 95 240 92 Z" fill="#4ade80"/>
+    <!-- Yeux dorés et pupille verticale sereine -->
+    <ellipse cx="270" cy="58" rx="7" ry="6" fill="#facc15" stroke="#14532d"/>
+    <ellipse cx="270" cy="58" rx="1.5" ry="4" fill="#0f172a"/>
+    <!-- Naseaux -->
+    <circle cx="330" cy="67" r="2.5" fill="#14532d"/>
+
+    <!-- Pattes massives posées sur l'herbe -->
+    <path d="M 90 95 Q 80 120 110 125 L 125 105 Z" fill="#15803d"/>
+    <path d="M 200 95 Q 210 120 235 120 L 225 100 Z" fill="#15803d"/>
+  </g>
+
+  <!-- Le Chasseur reconnaissant Badaye tendant la main vers l'animal sans crainte -->
+  <g transform="translate(620, 160)">
+    <!-- Corps du chasseur traditionnel vêtu de cotonnade ocre -->
+    <path d="M 40 180 L 60 90 L 80 90 L 95 180 Z" fill="#b45309"/>
+    <!-- Carquois et flèches au dos -->
+    <line x1="85" y1="80" x2="105" y2="40" stroke="#78350f" stroke-width="4"/>
+    <polygon points="102,36 109,38 107,46" fill="#f59e0b"/>
+
+    <!-- Bras tendu vers le crocodile en geste de respect et bénédiction -->
+    <path d="M 60 100 L 20 115 L -20 125" stroke="#78350f" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="-25" cy="126" r="4" fill="#78350f"/>
+
+    <!-- Tête et regard bienveillant -->
+    <circle cx="70" cy="65" r="14" fill="#78350f"/>
+    <circle cx="65" cy="63" r="2" fill="#0f172a"/>
+    <!-- Bonnet traditionnel de chasseur Dozo -->
+    <path d="M 54 60 Q 70 40 86 60 Z" fill="#92400e"/>
+  </g>
+
+  <!-- Titre incrusté -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">SABOU</text>
+    <text x="95" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#fef08a">Les Crocodiles Sacrés & le Serment de Fraternité Éternelle</text>
+  </g>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="sahel-dune-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="45%" stop-color="#431407"/>
+      <stop offset="80%" stop-color="#9a3412"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="sand-dune" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="60%" stop-color="#b45309"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ciel du Sahel d'Oursi et constellation d'étoiles -->
+  <rect width="800" height="480" fill="url(#sahel-dune-sky)"/>
+
+  <!-- Étoiles de la nuit sahélienne -->
+  <g fill="#ffffff" opacity="0.8">
+    <circle cx="150" cy="60" r="1.5"/><circle cx="280" cy="40" r="2"/><circle cx="420" cy="70" r="1.5"/>
+    <circle cx="560" cy="30" r="2.5"/><circle cx="690" cy="55" r="1.5"/><circle cx="740" cy="95" r="2"/>
+    <circle cx="340" cy="110" r="1.5"/><circle cx="610" cy="110" r="1.5"/>
+  </g>
+
+  <!-- Dunes ondoyantes de sable doré du Sahel (Oursi) -->
+  <path d="M 0 280 Q 240 220 480 290 T 800 240 L 800 480 L 0 480 Z" fill="#9a3412" opacity="0.7"/>
+  <path d="M 0 320 Q 300 260 550 340 T 800 300 L 800 480 L 0 480 Z" fill="url(#sand-dune)"/>
+
+  <!-- Zébu Peul aux longues cornes en lyre et bosse caractéristique -->
+  <g transform="translate(480, 200)">
+    <!-- Corps musclé du Zébu blanc d'Amadou -->
+    <ellipse cx="140" cy="110" rx="90" ry="42" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+    <!-- Bosse adipeuse dorsale typique du Zébu sahélien -->
+    <path d="M 90 75 Q 110 38 135 70 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Tête et mufle doux -->
+    <ellipse cx="60" cy="85" rx="22" ry="18" fill="#f1f5f9"/>
+    <ellipse cx="50" cy="92" rx="10" ry="7" fill="#334155"/>
+    <circle cx="68" cy="80" r="3" fill="#0f172a"/>
+
+    <!-- Magnifiques et majestueuses cornes en lyre du Sahel -->
+    <path d="M 62 70 Q 40 10 10 -10 Q 30 15 56 65" fill="#fef08a" stroke="#d97706" stroke-width="2"/>
+    <path d="M 72 70 Q 95 10 120 -10 Q 105 15 78 65" fill="#fef08a" stroke="#d97706" stroke-width="2"/>
+
+    <!-- Pattes élancées pour la marche dans le sable -->
+    <line x1="85" y1="145" x2="80" y2="210" stroke="#f1f5f9" stroke-width="8"/>
+    <line x1="110" y1="145" x2="115" y2="210" stroke="#f1f5f9" stroke-width="8"/>
+    <line x1="175" y1="145" x2="170" y2="210" stroke="#f1f5f9" stroke-width="8"/>
+    <line x1="205" y1="145" x2="210" y2="210" stroke="#f1f5f9" stroke-width="8"/>
+  </g>
+
+  <!-- Le Berger Peul Amadou jouant de la flûte sous les étoiles -->
+  <g transform="translate(180, 150)">
+    <!-- Bâton de berger posé sur les épaules selon la posture peule ancestrale -->
+    <line x1="10" y1="110" x2="140" y2="110" stroke="#d97706" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Tunique bleu indigo brodée et ample -->
+    <path d="M 45 230 L 60 115 L 90 115 L 105 230 Z" fill="#1e3a8a"/>
+
+    <!-- Bras repliés tenant la flûte pastorale -->
+    <line x1="60" y1="115" x2="75" y2="92" stroke="#78350f" stroke-width="6"/>
+    <!-- Flûte en roseau -->
+    <line x1="65" y1="88" x2="95" y2="80" stroke="#f59e0b" stroke-width="3"/>
+
+    <!-- Visage fin et méditatif du berger -->
+    <ellipse cx="75" cy="72" rx="12" ry="16" fill="#78350f"/>
+    <circle cx="73" cy="70" r="2" fill="#0f172a"/>
+
+    <!-- Chapeau conique peul traditionnel en fibres tressées et lanières de cuir rouge -->
+    <polygon points="35,62 75,18 115,62" fill="#fef08a" stroke="#b45309" stroke-width="2"/>
+    <polygon points="50,62 75,32 100,62" fill="#dc2626" opacity="0.8"/>
+    <circle cx="75" cy="18" r="4" fill="#78350f"/>
+  </g>
+
+  <!-- Titre incrusté -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">PULAAKU & SAHEL</text>
+    <text x="210" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#fef08a">Le Berger Peul et le Triomphe Sacré de la Parole Donnée</text>
+  </g>
+</svg>

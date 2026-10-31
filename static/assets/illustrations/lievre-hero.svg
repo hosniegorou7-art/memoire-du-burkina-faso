@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="lievre-night" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="60%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Nuit claire sous le grand baobab -->
+  <rect width="800" height="480" fill="url(#lievre-night)"/>
+
+  <!-- Grande lune pleine éclairant la scène comique -->
+  <circle cx="200" cy="120" r="60" fill="#fef08a" opacity="0.9"/>
+  <circle cx="215" cy="110" r="50" fill="#1e1b4b" opacity="0.2"/>
+
+  <!-- Arbre à palabres baobab en silhouette -->
+  <path d="M 80 400 Q 110 240 80 180 Q 50 140 10 130 Q 70 120 110 150 Q 150 120 220 140 Q 180 180 150 250 Q 170 340 190 400 Z" fill="#291206"/>
+
+  <!-- Le puits creusé par les animaux de la savane -->
+  <g transform="translate(380, 260)">
+    <!-- Margelle du puits en pierres maçonnées -->
+    <ellipse cx="60" cy="80" rx="60" ry="22" fill="#78350f" stroke="#451a03" stroke-width="3"/>
+    <ellipse cx="60" cy="74" rx="48" ry="16" fill="#0284c7"/>
+    <!-- Reflet d'eau claire -->
+    <ellipse cx="60" cy="74" rx="35" ry="10" fill="#38bdf8" opacity="0.6"/>
+  </g>
+
+  <!-- La statue de glu sculptée par le lièvre (le faux veilleur) -->
+  <g transform="translate(460, 210)">
+    <!-- Corps noir et collant de glu de karité -->
+    <path d="M 30 140 L 40 70 Q 50 40 60 40 Q 70 40 80 70 L 90 140 Z" fill="#09090b" stroke="#18181b" stroke-width="2"/>
+    <!-- Calebasse d'eau sur la tête du mannequin -->
+    <ellipse cx="60" cy="35" rx="18" ry="10" fill="#d97706" stroke="#78350f"/>
+  </g>
+
+  <!-- L'Hyène (Wamdé) piégée par la glu, les deux pattes collées, l'air déconfit -->
+  <g transform="translate(520, 200)">
+    <!-- Corps massif voûté de l'hyène rayée -->
+    <path d="M 70 110 Q 110 80 160 100 Q 180 120 170 160 L 140 165 L 120 150 L 90 155 Z" fill="#78350f" stroke="#451a03" stroke-width="2"/>
+    <!-- Rayures sombres sur le flanc -->
+    <line x1="120" y1="100" x2="115" y2="135" stroke="#291206" stroke-width="4"/>
+    <line x1="135" y1="105" x2="130" y2="140" stroke="#291206" stroke-width="4"/>
+    <line x1="150" y1="110" x2="145" y2="145" stroke="#291206" stroke-width="4"/>
+
+    <!-- Tête et oreilles rondes d'hyène -->
+    <circle cx="65" cy="95" r="22" fill="#78350f"/>
+    <circle cx="50" cy="78" r="9" fill="#451a03"/>
+    <circle cx="75" cy="78" r="9" fill="#451a03"/>
+    <!-- Museau noir renfrogné et mâchoire bloquée contre le mannequin -->
+    <ellipse cx="50" cy="102" rx="14" ry="10" fill="#1c1917"/>
+    <!-- Yeux ahuris et paniqués par le piège -->
+    <circle cx="58" cy="90" r="4.5" fill="#ffffff"/>
+    <circle cx="57" cy="90" r="2.5" fill="#0f172a"/>
+
+    <!-- Pattes avant désespérément collées au corps de glu ! -->
+    <path d="M 50 110 L 0 105" stroke="#451a03" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Le Lièvre Soaamba hilare, caché derrière une touffe d'herbe -->
+  <g transform="translate(260, 250)">
+    <!-- Corps agile du lièvre assis -->
+    <ellipse cx="40" cy="85" rx="24" ry="18" fill="#d97706"/>
+    <!-- Longues oreilles dressées avec malice -->
+    <ellipse cx="32" cy="35" rx="6" ry="22" fill="#f59e0b" stroke="#b45309"/>
+    <ellipse cx="32" cy="35" rx="3" ry="14" fill="#fecdd3"/>
+    <ellipse cx="48" cy="38" rx="6" ry="22" fill="#f59e0b" stroke="#b45309" transform="rotate(15 48 38)"/>
+    <ellipse cx="48" cy="38" rx="3" ry="14" fill="#fecdd3" transform="rotate(15 48 38)"/>
+
+    <!-- Tête malicieuse et sourire en coin -->
+    <circle cx="40" cy="65" r="16" fill="#f59e0b"/>
+    <circle cx="45" cy="62" r="3.5" fill="#0f172a"/>
+    <circle cx="46" cy="61" r="1" fill="#ffffff"/>
+    <!-- Moustaches vibrantes -->
+    <line x1="48" y1="67" x2="65" y2="65" stroke="#1c1917" stroke-width="1.5"/>
+    <line x1="48" y1="69" x2="65" y2="72" stroke="#1c1917" stroke-width="1.5"/>
+    <!-- Patte sous le menton en signe de ruse accomplie -->
+    <ellipse cx="30" cy="74" rx="6" ry="4" fill="#d97706"/>
+  </g>
+
+  <!-- Titre incrusté -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">SOAAMBA & WAMDÉ</text>
+    <text x="215" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#fef08a">Le Lièvre Rusé et la Leçon du Puits Communautaire</text>
+  </g>
+</svg>

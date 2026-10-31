@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="gorge-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="water-dafra" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0369a1"/>
+      <stop offset="40%" stop-color="#075985"/>
+      <stop offset="80%" stop-color="#0c4a6e"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <radialGradient id="water-glow" cx="45%" cy="65%" r="60%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#082f49" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fond céleste de la gorge rocheuse -->
+  <rect width="800" height="480" fill="url(#gorge-sky)" />
+
+  <!-- Falaises abruptes de Bobo-Dioulasso (Gorge de Dafra) -->
+  <!-- Falaise gauche -->
+  <path d="M 0 0 L 260 0 L 220 180 L 270 260 L 210 340 L 260 480 L 0 480 Z" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+  <path d="M 0 40 L 190 0 L 160 160 L 200 240 L 150 360 L 190 480 L 0 480 Z" fill="#291206" opacity="0.6"/>
+
+  <!-- Falaise droite -->
+  <path d="M 800 0 L 580 0 L 620 160 L 560 250 L 610 350 L 570 480 L 800 480 Z" fill="#451a03" stroke="#78350f" stroke-width="2"/>
+  <path d="M 800 60 L 640 0 L 670 170 L 620 270 L 660 380 L 630 480 L 800 480 Z" fill="#291206" opacity="0.6"/>
+
+  <!-- Cascade et filet d'eau sacrée descendant dans le canyon -->
+  <path d="M 400 0 Q 390 120 410 210 Q 420 280 400 320" stroke="#bae6fd" stroke-width="6" fill="none" opacity="0.75" />
+  <path d="M 408 30 Q 395 140 415 220" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.9" />
+
+  <!-- Vasque et plan d'eau mystique où résident les silures -->
+  <path d="M 210 320 Q 400 290 610 320 L 570 480 L 260 480 Z" fill="url(#water-dafra)" />
+  <rect x="210" y="320" width="400" height="160" fill="url(#water-glow)"/>
+
+  <!-- Ondulations aquatiques en cercles concentriques -->
+  <ellipse cx="410" cy="390" rx="140" ry="32" stroke="#7dd3fc" stroke-width="1.5" fill="none" opacity="0.5" />
+  <ellipse cx="410" cy="390" rx="90" ry="20" stroke="#e0f2fe" stroke-width="1" fill="none" opacity="0.7" />
+
+  <!-- Silure Sacré géant de Dafra n°1 (émergeant majestueusement) -->
+  <g transform="translate(320, 310)">
+    <!-- Corps sombre du silure (Clarias / poisson-chat africain) -->
+    <path d="M 40 90 Q 70 40 140 45 Q 210 50 250 85 Q 220 110 150 115 Q 80 120 40 90 Z" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+    <!-- Nageoire dorsale longue -->
+    <path d="M 120 45 Q 180 30 220 60 L 210 52 Z" fill="#1e293b" stroke="#334155"/>
+    <!-- Tête large et plate caractéristique -->
+    <path d="M 40 90 Q 20 85 10 95 Q 20 108 50 112 Z" fill="#020617"/>
+    <!-- Oeil vif mystique teinté de turquoise -->
+    <circle cx="35" cy="88" r="3.5" fill="#38bdf8"/>
+    <circle cx="36" cy="87" r="1.2" fill="#ffffff"/>
+    <!-- Longs barbillons sacrés sensibles -->
+    <path d="M 20 90 Q -20 70 -50 85" stroke="#94a3b8" stroke-width="2" fill="none"/>
+    <path d="M 22 93 Q -15 85 -45 105" stroke="#cbd5e1" stroke-width="1.8" fill="none"/>
+    <path d="M 24 105 Q -10 115 -35 125" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+    <!-- Nageoires pectorales -->
+    <path d="M 70 110 Q 50 140 75 145 Q 95 135 85 110" fill="#1e293b"/>
+    <!-- Reflets argentés sur le cuir sombre -->
+    <path d="M 90 70 Q 140 60 180 75" stroke="#38bdf8" stroke-width="2" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- Deuxième silure en arrière-plan sous l'eau -->
+  <g transform="translate(230, 360) scale(0.65)" opacity="0.6">
+    <path d="M 40 90 Q 70 40 140 45 Q 210 50 250 85 Q 220 110 150 115 Q 80 120 40 90 Z" fill="#020617"/>
+    <path d="M 20 90 Q -20 70 -50 85" stroke="#64748b" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Calebasses et canaris d'offrandes sacrées (Dolo et mil) sur les berges rocheuses -->
+  <g transform="translate(190, 370)">
+    <!-- Canari en terre cuite rouge de Bobo -->
+    <ellipse cx="25" cy="40" rx="18" ry="14" fill="#9a3412" stroke="#451a03" stroke-width="2"/>
+    <ellipse cx="25" cy="30" rx="10" ry="4" fill="#78350f"/>
+    <!-- Calebasse posée -->
+    <circle cx="55" cy="42" r="12" fill="#d97706" stroke="#78350f"/>
+  </g>
+
+  <!-- Titre et légende incrustée -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">DAFRA</text>
+    <text x="105" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#7dd3fc">Les Silures Sacrés & le Pacte Inviolable des Eaux</text>
+  </g>
+</svg>

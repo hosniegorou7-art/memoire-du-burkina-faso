@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faso Oralia — Carte Interactive & Contes du Burkina Faso</title>
+  <meta name="description" content="Plateforme multimédia immersive de préservation, numérisation et transmission des contes, légendes et récits historiques du Burkina Faso en langues nationales (Mooré, Dioula, Fulfulde).">
+  <!-- Tailwind CSS CDN pour utilitaires responsifs rapides -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Styles personnalisés -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+</head>
+<body class="bg-stone-950 text-stone-100 min-h-screen flex flex-col bg-danfani-pattern">
+
+  <!-- ==================== BARRE DE NAVIGATION PRINCIPALE ==================== -->
+  <header class="sticky top-0 z-40 bg-stone-950/90 backdrop-blur-md border-b border-amber-900/30 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo et Titre -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-500 flex items-center justify-center text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          👑
+        </div>
+        <div>
+          <span class="text-base sm:text-lg font-black tracking-wide text-amber-100 group-hover:text-amber-400 transition-colors font-heading">
+            FASO ORALIA
+          </span>
+          <span class="block text-[10px] text-amber-500 font-semibold tracking-wider uppercase">
+            Contes & Légendes du Burkina Faso
+          </span>
+        </div>
+      </a>
+
+      <!-- Liens de navigation bureau -->
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-stone-300">
+        <a href="#section-map" class="hover:text-amber-400 transition-colors">Carte Interactive</a>
+        <a href="#section-library" class="hover:text-amber-400 transition-colors">Bibliothèque Orale</a>
+        <a href="#" id="nav-interactive" class="hover:text-amber-400 transition-colors flex items-center gap-1">
+          <span>🌳</span> <span>Arbre à Palabres</span>
+        </a>
+        <a href="#" id="nav-quiz" class="hover:text-amber-400 transition-colors flex items-center gap-1">
+          <span>🎓</span> <span>Quiz Culturel</span>
+        </a>
+        <a href="/report" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">
+          <span>📄</span> <span>Rapport de Projet</span>
+        </a>
+      </nav>
+
+      <!-- Bouton Ambiance Kora dans la nav -->
+      <div class="flex items-center gap-2">
+        <button id="btn-nav-soundscape" class="px-3 py-1.5 rounded-xl border border-amber-500/30 bg-stone-900 hover:bg-amber-950/40 text-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
+          <span>🎵</span> <span class="hidden sm:inline">Ambiance Kora : Off</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== SECTION HÉROS IMMERSIVE ==================== -->
+  <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-amber-950/20 via-stone-950 to-stone-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+
+      <!-- Badge officiel Gobelab & Délai -->
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold shadow-inner">
+        <span>🇧🇫</span>
+        <span>Plateforme Web Multimédia & Transmission du Patrimoine Oral</span>
+      </div>
+
+      <!-- Grand Titre Héro -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-amber-50 tracking-tight leading-tight max-w-4xl mx-auto font-heading">
+        Voyagez au Cœur des <span class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 bg-clip-text text-transparent">Contes et Légendes</span> du Burkina Faso
+      </h1>
+
+      <p class="text-sm sm:text-base md:text-lg text-stone-300 max-w-2xl mx-auto leading-relaxed">
+        Parcourez les 13 régions du pays des hommes intègres à travers une carte interactive 2D et 3D.
+        Écoutez les récits sacrés, fables et épopées en langues nationales (Mooré, Dioula, Fulfulde)
+        portés par des illustrations animées et une ambiance sonore authentique.
+      </p>
+
+      <!-- Proverbe du jour rotatif -->
+      <div class="max-w-xl mx-auto p-4 rounded-2xl bg-stone-900/80 border border-amber-900/40 shadow-xl backdrop-blur-sm" id="proverb-display">
+        <div class="text-xs text-amber-400 italic">Chargement de la sagesse du jour...</div>
+      </div>
+
+      <!-- Boutons d'Action Rapide -->
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+        <button id="btn-hero-explore" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-stone-950 font-extrabold text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+          <span>🗺️</span> <span>Explorer la Carte</span>
+        </button>
+        <button id="btn-hero-interactive" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-amber-200 border border-amber-500/40 font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+          <span>🌳</span> <span>Mode Arbre à Palabres</span>
+        </button>
+        <button id="btn-hero-quiz" class="px-5 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white border border-stone-700 font-bold text-sm shadow-md transition-all flex items-center gap-2">
+          <span>🎓</span> <span>Tester mes Connaissances</span>
+        </button>
+      </div>
+
+      <!-- Compteurs statistiques du patrimoine -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8">
+        <div class="p-3.5 rounded-xl bg-stone-900/50 border border-amber-900/20">
+          <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">13</div>
+          <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider">Régions Couvertes</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-stone-900/50 border border-amber-900/20">
+          <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">4+</div>
+          <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider">Langues Nationales</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-stone-900/50 border border-amber-900/20">
+          <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">8+</div>
+          <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider">Épopées & Récits</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-stone-900/50 border border-amber-900/20">
+          <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">100%</div>
+          <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider">Audio & Synthèse Web</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== SECTION CARTE INTERACTIVE 2D / 3D ==================== -->
+  <section id="section-map" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+      <div>
+        <div class="text-xs font-bold text-amber-500 uppercase tracking-wider">Cartographie Culturelle</div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
+          Parcourez le Faso en 2D & 3D
+        </h2>
+        <p class="text-xs sm:text-sm text-stone-400 mt-1">
+          Survolez les régions et cliquez sur les balises légendaires pour ouvrir les récits millénaires.
+        </p>
+      </div>
+
+      <!-- Bascule 2D / 3D -->
+      <div class="flex items-center bg-stone-900 rounded-2xl p-1 border border-amber-900/40 text-xs self-start md:self-auto shadow-md">
+        <button id="btn-view-2d" class="px-4 py-2 rounded-xl font-bold transition-all bg-amber-500 text-stone-950 flex items-center gap-1.5 shadow-sm">
+          <span>🗺️</span> <span>Carte 2D Vectorielle</span>
+        </button>
+        <button id="btn-view-3d" class="px-4 py-2 rounded-xl font-bold transition-all text-stone-300 hover:text-white flex items-center gap-1.5">
+          <span>🌍</span> <span>Perspective 3D Isométrique</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Conteneur d'affichage dynamique de la Carte (2D ou 3D) -->
+    <div id="map-viewport-container" class="w-full min-h-[440px] md:min-h-[580px]">
+      <!-- Rendu dynamique par map2d.js ou map3d.js -->
+    </div>
+  </section>
+
+  <!-- ==================== SECTION BIBLIOTHÈQUE DES CONTES ==================== -->
+  <section id="section-library" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <div>
+        <div class="text-xs font-bold text-amber-500 uppercase tracking-wider">Patrimoine Numérisé</div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
+          Bibliothèque Multimédia des Récits
+        </h2>
+        <p class="text-xs sm:text-sm text-stone-400 mt-1">
+          Récits bilingues synchronisés, audio de griots et morales traditionnelles.
+        </p>
+      </div>
+
+      <!-- Recherche et Sélecteur de Langue -->
+      <div class="flex flex-wrap items-center gap-3">
+        <!-- Champ de recherche instantanée -->
+        <div class="relative">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Rechercher un conte, région, héros..."
+            class="bg-stone-900 border border-stone-800 focus:border-amber-500 rounded-xl px-3.5 py-2 pl-9 text-xs text-stone-100 placeholder-stone-500 focus:outline-none w-56 sm:w-64 transition-all"
+          >
+          <span class="absolute left-3 top-2.5 text-stone-500 text-xs">🔍</span>
+        </div>
+
+        <!-- Filtre de langue -->
+        <select id="lang-filter-select" class="bg-stone-900 border border-stone-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-stone-200 focus:outline-none transition-all">
+          <option value="all">Toutes les Langues</option>
+          <option value="Mooré">Mooré</option>
+          <option value="Dioula">Dioula</option>
+          <option value="Fulfulde">Fulfulde</option>
+          <option value="Dagara">Dagara</option>
+          <option value="Kassena">Kassena</option>
+          <option value="Français">Français</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filtres par catégorie -->
+    <div class="flex flex-wrap items-center gap-2 mb-8 text-xs">
+      <button class="cat-filter-btn active px-3 py-1.5 rounded-full bg-amber-500 text-stone-950 font-bold transition-all shadow-sm" data-category="all">
+        Tous les Récits
+      </button>
+      <button class="cat-filter-btn px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-amber-500/40 hover:text-white transition-all" data-category="Fondatrice">
+        👑 Légendes Fondatrices
+      </button>
+      <button class="cat-filter-btn px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-amber-500/40 hover:text-white transition-all" data-category="Nature">
+        🐟 Mythes & Totems
+      </button>
+      <button class="cat-filter-btn px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-amber-500/40 hover:text-white transition-all" data-category="Historique">
+        🏛️ Histoire & Patrimoine
+      </button>
+      <button class="cat-filter-btn px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-amber-500/40 hover:text-white transition-all" data-category="Initiatique">
+        🐇 Contes d'Animaux & Morale
+      </button>
+    </div>
+
+    <!-- Grille des Cartes de Contes -->
+    <div id="stories-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Rendu dynamique via app.js -->
+    </div>
+  </section>
+
+  <!-- ==================== SECTION TRANSMISSION & GLOSSAIRE ==================== -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full border-t border-amber-900/30">
+    <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
+      <div class="text-xs font-bold text-amber-500 uppercase tracking-wider">Trésor Linguistique & Symbolique</div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
+        Les Mots et Symboles qui Forgent le Faso
+      </h2>
+      <p class="text-xs sm:text-sm text-stone-400">
+        Comprendre les concepts fondateurs de la culture burkinabè pour en apprécier toute la profondeur.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">👑</span>
+          <h4 class="font-bold text-amber-300 text-sm">Naam & Naba (Mooré)</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Le pouvoir légitime traditionnel conféré par les ancêtres. Le Naba incarne l'ordre moral, la justice coutumière et la concorde sociale.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">⭐</span>
+          <h4 class="font-bold text-amber-300 text-sm">Pulaaku (Fulfulde)</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Le code d'honneur sacré du peuple Peul. Il repose sur la retenue (Semteende), la patience (Munyal) et le courage invincible face à l'adversité.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">🧵</span>
+          <h4 class="font-bold text-amber-300 text-sm">Faso Dan Fani</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Le pagne tissé de la patrie en pur coton local. Emblème d'autosuffisance, de dignité nationale et d'élégance vestimentaire ouest-africaine.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">🏺</span>
+          <h4 class="font-bold text-amber-300 text-sm">Dolo de Mil</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Bière artisanale traditionnelle à base de sorgho rouge fermenté. Élément central des libations, des réconciliations et des fêtes coutumières.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">🌾</span>
+          <h4 class="font-bold text-amber-300 text-sm">Technique du Zaï</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Savoir-faire agronomique ancestral réhabilité au Yatenga pour reverdir les terres désertiques et retenir l'eau de pluie dans des poquets de compost.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/20 hover:border-amber-500/40 transition-all">
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="text-lg">🎵</span>
+          <h4 class="font-bold text-amber-300 text-sm">Kora & Balafon</h4>
+        </div>
+        <p class="text-xs text-stone-300 leading-relaxed">
+          Instruments mélodiques des griots conteurs. Leurs notes pentatoniques accompagnent les veillées pour fixer les leçons de l'histoire dans les cœurs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BANNIÈRE RAPPORT GOBELAB ==================== -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <div class="p-8 rounded-3xl bg-gradient-to-r from-amber-950/60 via-stone-900 to-amber-950/60 border border-amber-500/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
+          <span>📋</span> <span>Livrable de Projet Officiel</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-extrabold text-amber-100 font-heading">
+          Rapport de Conception & Documentation Technique
+        </h3>
+        <p class="text-xs sm:text-sm text-stone-300 max-w-2xl leading-relaxed">
+          Consultez le dossier complet du projet : concept patrimonial, architecture technique, guide pédagogique et perspectives pour Gobelab (destiné à Odilon.simpore@gobelab.org).
+        </p>
+      </div>
+
+      <a href="/report" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-stone-950 font-black text-sm shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all shrink-0 flex items-center gap-2">
+        <span>📄</span> <span>Consulter le Rapport</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== PIED DE PAGE ==================== -->
+  <footer class="bg-stone-950 border-t border-amber-900/30 py-10 text-xs text-stone-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div>
+        <div class="font-bold text-amber-200">Faso Oralia • Contes & Légendes du Burkina Faso</div>
+        <div class="text-[11px] text-stone-500 mt-0.5">Projet de valorisation et numérisation du patrimoine immatériel oral burkinabè.</div>
+      </div>
+      <div class="flex items-center gap-4 text-amber-400 font-medium">
+        <span>Mooré : Bark wusgo</span> •
+        <span>Dioula : I ni ce</span> •
+        <span>Fulfulde : On jaraama</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== CONTENEURS DES MODALES DYNAMIQUES ==================== -->
+  <!-- Modale du Lecteur Multimédia (Story Reader) -->
+  <div id="reader-modal-container" class="hidden"></div>
+
+  <!-- Modale du Mode Interactif "Arbre à Palabres" -->
+  <div id="interactive-modal-container" class="hidden"></div>
+
+  <!-- Modale du Quiz Éducatif -->
+  <div id="quiz-modal-container" class="hidden"></div>
+
+  <!-- Scripts applicatifs -->
+  <script src="/static/js/data.js"></script>
+  <script src="/static/js/audio.js"></script>
+  <script src="/static/js/map2d.js"></script>
+  <script src="/static/js/map3d.js"></script>
+  <script src="/static/js/reader.js"></script>
+  <script src="/static/js/interactive.js"></script>
+  <script src="/static/js/quiz.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

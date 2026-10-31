@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" class="rounded-2xl shadow-2xl">
+  <defs>
+    <linearGradient id="tiebele-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="60%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="480" fill="url(#tiebele-sky)"/>
+
+  <!-- Collines de Nahouri à l'horizon -->
+  <path d="M 0 260 Q 200 200 420 250 T 800 220 L 800 480 L 0 480 Z" fill="#78350f"/>
+
+  <!-- Sol en terre battue ocre de la cour royale de Tiébélé -->
+  <rect x="0" y="320" width="800" height="160" fill="#9a3412"/>
+
+  <!-- Habitations en terre crue (Banco) aux fresques géométriques Kasséna -->
+  <!-- Case circulaire gauche -->
+  <g transform="translate(100, 180)">
+    <!-- Mur arrondi en banco ocre -->
+    <path d="M 20 180 L 30 70 Q 130 50 230 70 L 240 180 Z" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+    <!-- Petite porte basse traditionnelle (défensive) -->
+    <path d="M 110 180 L 110 135 Q 130 120 150 135 L 150 180 Z" fill="#1c1917"/>
+
+    <!-- Fresques murales géométriques traditionnelles peintes par les femmes -->
+    <!-- Frise de losanges sacrés (fertilité) -->
+    <polygon points="50,95 70,80 90,95 70,110" fill="#ffffff" stroke="#1c1917" stroke-width="2"/>
+    <polygon points="90,95 110,80 130,95 110,110" fill="#1c1917" stroke="#ffffff" stroke-width="2"/>
+    <polygon points="130,95 150,80 170,95 150,110" fill="#ffffff" stroke="#1c1917" stroke-width="2"/>
+    <polygon points="170,95 190,80 210,95 190,110" fill="#1c1917" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Lignes brisées chevrons (écailles du serpent protecteur) -->
+    <polyline points="40,130 65,115 90,130 115,115 140,130 165,115 190,130 215,115" stroke="#ffffff" stroke-width="4" fill="none"/>
+    <polyline points="40,138 65,123 90,138 115,123 140,138 165,123 190,138 215,123" stroke="#1c1917" stroke-width="4" fill="none"/>
+
+    <!-- Toit terrasse accessible avec pots de canaris -->
+    <ellipse cx="130" cy="70" rx="100" ry="12" fill="#78350f"/>
+    <circle cx="90" cy="58" r="8" fill="#dc2626"/>
+    <circle cx="170" cy="58" r="9" fill="#dc2626"/>
+  </g>
+
+  <!-- Grande case en huit (Soukholo des aînés) droite -->
+  <g transform="translate(420, 160)">
+    <path d="M 20 200 L 30 60 Q 150 35 270 60 L 280 200 Z" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+    <path d="M 130 200 L 130 145 Q 150 130 170 145 L 170 200 Z" fill="#1c1917"/>
+
+    <!-- Grands triangles noirs et blancs alternés -->
+    <polygon points="40,100 65,65 90,100" fill="#ffffff" stroke="#1c1917" stroke-width="2"/>
+    <polygon points="90,100 115,65 140,100" fill="#1c1917" stroke="#ffffff" stroke-width="2"/>
+    <polygon points="140,100 165,65 190,100" fill="#ffffff" stroke="#1c1917" stroke-width="2"/>
+    <polygon points="190,100 215,65 240,100" fill="#1c1917" stroke="#ffffff" stroke-width="2"/>
+    <polygon points="240,100 265,65 270,100" fill="#ffffff" stroke="#1c1917" stroke-width="2"/>
+
+    <!-- Symboles peints du tambour et de la calebasse -->
+    <circle cx="85" cy="140" r="14" fill="#ffffff" stroke="#1c1917" stroke-width="3"/>
+    <circle cx="85" cy="140" r="6" fill="#1c1917"/>
+    <circle cx="215" cy="140" r="14" fill="#1c1917" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="215" cy="140" r="6" fill="#ffffff"/>
+  </g>
+
+  <!-- Femme artiste Kasséna peignant avec un galet de fleuve -->
+  <g transform="translate(350, 270)">
+    <!-- Jupe pagne en Faso Dan Fani rouge et noir -->
+    <path d="M 30 120 L 40 70 L 60 70 L 70 120 Z" fill="#dc2626"/>
+    <!-- Buste penché vers le mur en plein geste artistique -->
+    <ellipse cx="50" cy="50" rx="12" ry="15" fill="#78350f"/>
+    <!-- Bras levé tenant le galet de polissage -->
+    <line x1="55" y1="45" x2="85" y2="35" stroke="#78350f" stroke-width="5"/>
+    <circle cx="88" cy="34" r="5" fill="#e2e8f0"/> <!-- Galet blanc de kaolin -->
+    <!-- Récipient de vernis de néré à côté -->
+    <ellipse cx="20" cy="115" rx="10" ry="7" fill="#451a03"/>
+  </g>
+
+  <!-- Titre incrusté -->
+  <g transform="translate(40, 445)">
+    <text x="0" y="0" font-family="sans-serif" font-weight="900" font-size="22" fill="#ffffff" letter-spacing="1">TIÉBÉLÉ</text>
+    <text x="135" y="0" font-family="sans-serif" font-weight="500" font-size="13" fill="#fef08a">Les Murs Peints Kasséna & le Génie Artistique des Femmes</text>
+  </g>
+</svg>
