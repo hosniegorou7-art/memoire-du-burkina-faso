@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/static/css/design-system.css">
   <link rel="stylesheet" href="/static/css/campfire.css">
   <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23f59e0b%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14%22/></svg>">
 </head>
 <body class="bg-danfani text-stone-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-stone-950">
 
@@ -23,14 +23,14 @@
       
       <!-- Logo et Identité -->
       <a href="#home" class="flex items-center gap-3 group">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-600 via-yellow-500 to-amber-600 flex items-center justify-center text-2xl shadow-xl shadow-amber-500/25 group-hover:scale-105 transition-transform">
-          👑
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-yellow-500 to-amber-600 flex items-center justify-center text-stone-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+          <svg class="w-5 h-5 text-stone-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
         </div>
         <div>
-          <span class="text-lg sm:text-xl font-black tracking-wider text-amber-50 group-hover:text-amber-400 transition-colors font-heading block leading-none">
+          <span class="text-base sm:text-lg font-black tracking-wider text-amber-50 group-hover:text-amber-400 transition-colors font-heading block leading-none">
             MÉMOIRE DU BURKINA
           </span>
-          <span class="text-[10px] text-amber-500 font-bold tracking-widest uppercase mt-1 block">
+          <span class="text-[9px] text-amber-500 font-bold tracking-widest uppercase mt-1 block">
             Patrimoine Oral • 17 Régions
           </span>
         </div>
@@ -42,33 +42,38 @@
         <a href="#map" data-nav-route="map" class="text-stone-300 hover:text-amber-400 transition-colors">Carte Interactive</a>
         <a href="#regions" data-nav-route="regions" class="text-stone-300 hover:text-amber-400 transition-colors">Les 17 Régions</a>
         <a href="#library" data-nav-route="library" class="text-stone-300 hover:text-amber-400 transition-colors">Bibliothèque</a>
-        <a href="#campfire/yennenga" data-nav-route="campfire" class="text-orange-400 hover:text-orange-300 transition-colors flex items-center gap-1 font-bold">
-          <span>🔥</span> <span>Autour du Feu</span>
+        <a href="#campfire/yennenga" data-nav-route="campfire" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5 font-bold">
+          <svg class="w-3.5 h-3.5 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <span>Autour du Feu</span>
         </a>
         <a href="#quiz" data-nav-route="quiz" class="text-stone-300 hover:text-amber-400 transition-colors">Quiz</a>
         <a href="#glossary" data-nav-route="glossary" class="text-stone-300 hover:text-amber-400 transition-colors">Glossaire</a>
-        <a href="#adventure" data-nav-route="adventure" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1">
-          <span>⚔️</span> <span>Aventure</span>
+        <a href="#adventure" data-nav-route="adventure" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Aventure</span>
         </a>
         <a href="#contribute" data-nav-route="contribute" class="text-stone-300 hover:text-amber-400 transition-colors">Contribuer</a>
-        <a href="#admin" data-nav-route="admin" class="text-stone-400 hover:text-amber-300 transition-colors flex items-center gap-1 bg-stone-900 px-2 py-1 rounded-lg border border-stone-800">
-          <span>🛡️</span> <span>Admin</span>
+        <a href="#admin" data-nav-route="admin" class="text-stone-300 hover:text-white transition-colors flex items-center gap-1.5 bg-stone-900 px-2.5 py-1 rounded-lg border border-stone-800">
+          <svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Admin</span>
         </a>
       </nav>
 
       <!-- Commandes de droite (Ambiance Sonore & Menu Mobile) -->
       <div class="flex items-center gap-3">
-        <button id="btn-nav-ambience" class="px-3 py-1.5 rounded-xl border border-amber-500/30 bg-stone-900 hover:bg-amber-950/40 text-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
-          <span>🎵</span> <span class="hidden sm:inline">Ambiance Kora : Off</span>
+        <button id="btn-nav-ambience" class="px-3 py-1.5 rounded-xl border border-stone-800 bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
+          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <span class="hidden sm:inline">Kora Traditionnelle : Off</span>
         </button>
 
         <a href="/report" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all">
-          <span>📄</span> <span>Rapport Gobelab</span>
+          <svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Rapport Gobelab</span>
         </a>
 
         <!-- Bouton Burger Mobile -->
-        <button id="btn-mobile-menu" class="lg:hidden w-10 h-10 rounded-xl bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-200 hover:text-white">
-          ☰
+        <button id="btn-mobile-menu" class="lg:hidden w-10 h-10 rounded-xl bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-200 hover:text-white" aria-label="Menu de navigation">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
 
@@ -80,13 +85,13 @@
       <a href="#map" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Carte des 17 Régions</a>
       <a href="#regions" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Fiches des 17 Régions</a>
       <a href="#library" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Bibliothèque des Récits</a>
-      <a href="#campfire/yennenga" class="block py-2 text-orange-400 font-bold border-b border-stone-900">🔥 Mode Écouter autour du feu</a>
+      <a href="#campfire/yennenga" class="block py-2 text-amber-300 font-bold border-b border-stone-900">Autour du Feu (Veillée Immersive)</a>
       <a href="#quiz" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Quiz Culturel</a>
-      <a href="#glossary" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">📖 Glossaire & Proverbes</a>
-      <a href="#adventure" class="block py-2 text-amber-300 hover:text-white font-bold border-b border-stone-900">⚔️ Aventure de Yennenga</a>
+      <a href="#glossary" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Glossaire &amp; Proverbes</a>
+      <a href="#adventure" class="block py-2 text-amber-300 hover:text-white font-bold border-b border-stone-900">Aventure Interactive de Yennenga</a>
       <a href="#contribute" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Contribuer au Patrimoine</a>
       <a href="#admin" class="block py-2 text-amber-300 hover:text-white border-b border-stone-900">Console d'Administration</a>
-      <a href="/report" class="block py-2 text-stone-400 hover:text-white">📄 Rapport Officiel de Projet</a>
+      <a href="/report" class="block py-2 text-stone-400 hover:text-white">Rapport Officiel de Projet</a>
     </div>
   </header>
 
@@ -94,7 +99,7 @@
   <main id="main-view-host" class="flex-1 min-h-[80vh]">
     <!-- Rendu dynamique par FasoRouter (HomeView, MapView, RegionsView, LibraryView, StoryView, CampfireView, etc.) -->
     <div class="py-24 text-center text-stone-400">
-      <div class="animate-spin text-3xl mb-3">☀️</div>
+      <div class="inline-block animate-spin w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full mb-3"></div>
       <p class="text-xs">Initialisation de la Mémoire du Faso...</p>
     </div>
   </main>
@@ -143,7 +148,8 @@
   <!-- 2. Moteur Audio & Synthétiseur -->
   <script src="/static/js/audio.js"></script>
 
-  <!-- 3. État Global & Routeur SPA -->
+  <!-- 3. Système d'Icônes, État Global & Routeur SPA -->
+  <script src="/static/js/core/icons.js"></script>
   <script src="/static/js/core/store.js"></script>
   <script src="/static/js/core/router.js"></script>
 

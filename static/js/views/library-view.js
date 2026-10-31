@@ -40,7 +40,9 @@ class FasoLibraryView {
             <!-- Recherche plein texte -->
             <div class="relative">
               <input type="text" id="lib-search-input" placeholder="Recherche par titre, mot-clé, héros..." class="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 rounded-xl px-3.5 py-2 pl-9 text-xs text-stone-100 focus:outline-none">
-              <span class="absolute left-3 top-2.5 text-stone-500 text-xs">🔍</span>
+              <span class="absolute left-3 top-2.5 text-stone-500 text-xs">
+                ${window.fasoIcon ? window.fasoIcon('search', 'w-3.5 h-3.5 text-stone-500') : ''}
+              </span>
             </div>
 
             <!-- Filtre Catégorie -->
@@ -116,7 +118,7 @@ class FasoLibraryView {
     if (filtered.length === 0) {
       grid.innerHTML = `
         <div class="col-span-full py-16 text-center text-stone-400 space-y-3">
-          <div class="text-4xl">🌾</div>
+          <div class="w-12 h-12 mx-auto text-stone-600">${window.fasoIcon ? window.fasoIcon('search', 'w-10 h-10') : ''}</div>
           <h4 class="text-base font-bold text-amber-200">Aucun récit ne correspond à vos critères</h4>
           <p class="text-xs">Essayez d'élargir votre recherche ou de sélectionner une autre région.</p>
         </div>
@@ -139,8 +141,9 @@ class FasoLibraryView {
           </div>
 
           <div class="p-4 space-y-1.5">
-            <div class="text-[10px] font-semibold text-amber-400 flex items-center gap-1">
-              <span>📍 ${s.regionName}</span> • <span>${s.ethnic}</span>
+            <div class="text-[10px] font-semibold text-amber-400 flex items-center gap-1.5">
+              ${window.fasoIcon ? window.fasoIcon('pin', 'w-3 h-3 text-amber-400') : ''}
+              <span>${s.regionName}</span> • <span>${s.ethnic}</span>
             </div>
             <h4 class="text-sm font-bold text-stone-100 group-hover:text-amber-200 transition-colors leading-snug line-clamp-1">
               ${s.title}
@@ -152,8 +155,11 @@ class FasoLibraryView {
         </div>
 
         <div class="p-4 pt-2 border-t border-stone-800 flex items-center justify-between text-xs text-stone-400">
-          <span class="font-mono text-[11px]">🗣️ ${s.languages.join(", ")}</span>
-          <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">Lire & Écouter ➔</span>
+          <span class="font-mono text-[11px]">${s.languages.join(", ")}</span>
+          <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+            <span>Lire &amp; Écouter</span>
+            ${window.fasoIcon ? window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400') : ''}
+          </span>
         </div>
       </div>
     `).join("");

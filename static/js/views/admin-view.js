@@ -21,10 +21,11 @@ class FasoAdminView {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in text-stone-100">
         
         <!-- En-tête du Tableau de Bord Administrateur -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-amber-900/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-stone-800">
           <div>
             <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-500">
-              <span>🛡️</span> <span>Espace d'Administration & Sauvegarde</span>
+              ${window.fasoIcon ? window.fasoIcon('shield', 'w-3.5 h-3.5 text-amber-400') : ''}
+              <span>Espace d'Administration &amp; Sauvegarde</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
               Console de Gestion du Patrimoine
@@ -33,17 +34,21 @@ class FasoAdminView {
 
           <!-- Onglets de gestion -->
           <div class="flex flex-wrap items-center gap-1.5 bg-stone-900 p-1 rounded-2xl border border-stone-800 text-xs">
-            <button class="admin-tab-btn active px-3 py-1.5 rounded-xl font-bold bg-amber-500 text-stone-950 transition-all" data-tab="overview">
-              📊 Vue Globale
+            <button class="admin-tab-btn active px-3.5 py-1.5 rounded-xl font-bold bg-amber-500 text-stone-950 transition-all flex items-center gap-1.5" data-tab="overview">
+              ${window.fasoIcon ? window.fasoIcon('sparkles', 'w-3 h-3') : ''}
+              <span>Vue Globale</span>
             </button>
-            <button class="admin-tab-btn px-3 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all" data-tab="stories">
-              📖 Récits (${stories.length})
+            <button class="admin-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all flex items-center gap-1.5" data-tab="stories">
+              ${window.fasoIcon ? window.fasoIcon('book', 'w-3 h-3 text-amber-400') : ''}
+              <span>Récits (${stories.length})</span>
             </button>
-            <button class="admin-tab-btn px-3 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all" data-tab="regions">
-              🗺️ 17 Régions (${regions.length})
+            <button class="admin-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all flex items-center gap-1.5" data-tab="regions">
+              ${window.fasoIcon ? window.fasoIcon('map', 'w-3 h-3 text-amber-400') : ''}
+              <span>17 Régions (${regions.length})</span>
             </button>
-            <button class="admin-tab-btn px-3 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all" data-tab="moderation">
-              📥 Modération (${contributions.length})
+            <button class="admin-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-300 hover:text-white transition-all flex items-center gap-1.5" data-tab="moderation">
+              ${window.fasoIcon ? window.fasoIcon('quill', 'w-3 h-3 text-amber-400') : ''}
+              <span>Modération (${contributions.length})</span>
             </button>
           </div>
         </div>
@@ -64,37 +69,37 @@ class FasoAdminView {
       <div class="space-y-8">
         <!-- 4 Cartes Métriques Clés -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="p-5 rounded-2xl bg-stone-900/80 border border-amber-500/30 shadow-lg">
+          <div class="p-5 rounded-2xl bg-stone-900/80 border border-stone-800 shadow-lg">
             <div class="flex items-center justify-between text-xs text-stone-400 mb-2">
               <span>Récits Documentés</span>
-              <span class="text-amber-400">📚</span>
+              <span class="text-amber-400">${window.fasoIcon ? window.fasoIcon('book', 'w-4 h-4 text-amber-400') : ''}</span>
             </div>
             <div class="text-3xl font-black text-amber-200 font-mono">${stories.length}</div>
             <div class="text-[11px] text-emerald-400 mt-1">100% vérifiés et référencés</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-stone-900/80 border border-amber-500/30 shadow-lg">
+          <div class="p-5 rounded-2xl bg-stone-900/80 border border-stone-800 shadow-lg">
             <div class="flex items-center justify-between text-xs text-stone-400 mb-2">
               <span>Régions Officielles</span>
-              <span class="text-amber-400">🗺️</span>
+              <span class="text-amber-400">${window.fasoIcon ? window.fasoIcon('map', 'w-4 h-4 text-amber-400') : ''}</span>
             </div>
             <div class="text-3xl font-black text-amber-200 font-mono">${regions.length} / 17</div>
             <div class="text-[11px] text-emerald-400 mt-1">Découpage intégral intégré</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-stone-900/80 border border-amber-500/30 shadow-lg">
+          <div class="p-5 rounded-2xl bg-stone-900/80 border border-stone-800 shadow-lg">
             <div class="flex items-center justify-between text-xs text-stone-400 mb-2">
               <span>Langues Nationales</span>
-              <span class="text-amber-400">🗣️</span>
+              <span class="text-amber-400">${window.fasoIcon ? window.fasoIcon('speaker', 'w-4 h-4 text-amber-400') : ''}</span>
             </div>
             <div class="text-3xl font-black text-amber-200 font-mono">${languages.length}</div>
             <div class="text-[11px] text-amber-400 mt-1">Mooré, Dioula, Fulfulde...</div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-stone-900/80 border border-amber-500/30 shadow-lg">
+          <div class="p-5 rounded-2xl bg-stone-900/80 border border-stone-800 shadow-lg">
             <div class="flex items-center justify-between text-xs text-stone-400 mb-2">
               <span>Contributions Citoyennes</span>
-              <span class="text-amber-400">📥</span>
+              <span class="text-amber-400">${window.fasoIcon ? window.fasoIcon('quill', 'w-4 h-4 text-amber-400') : ''}</span>
             </div>
             <div class="text-3xl font-black text-amber-200 font-mono">${contributions.length}</div>
             <div class="text-[11px] text-stone-400 mt-1">En attente de comité éthique</div>
@@ -198,8 +203,8 @@ class FasoAdminView {
               </div>
               <p class="text-xs text-stone-400 line-clamp-2">${r.description}</p>
               <div class="pt-2 border-t border-stone-800/80 flex items-center justify-between text-[11px] text-stone-400">
-                <span>📚 ${r.storiesCount || 1} conte(s)</span>
-                <span class="text-amber-400 font-medium">🗣️ ${r.languages.slice(0, 2).join(", ")}</span>
+                <span>${window.fasoIcon ? window.fasoIcon('book', 'w-3 h-3 text-amber-400 inline mr-1') : ''}${r.storiesCount || 1} conte(s)</span>
+                <span class="text-amber-400 font-medium">${r.languages.slice(0, 2).join(", ")}</span>
               </div>
             </div>
           `).join("")}
@@ -212,7 +217,7 @@ class FasoAdminView {
     if (contributions.length === 0) {
       return `
         <div class="py-16 text-center text-stone-400 space-y-3">
-          <div class="text-4xl">📬</div>
+          <div class="w-12 h-12 mx-auto text-stone-600">${window.fasoIcon ? window.fasoIcon('document', 'w-10 h-10') : ''}</div>
           <div class="text-base font-bold text-amber-200">Aucune contribution citoyenne en attente</div>
           <p class="text-xs max-w-md mx-auto">
             Les propositions soumises via le formulaire public de collecte apparaîtront ici pour examen scientifique et validation du consentement.

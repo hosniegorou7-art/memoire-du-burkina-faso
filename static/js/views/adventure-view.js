@@ -50,7 +50,8 @@ class FasoAdventureView {
 
           <div class="relative max-w-3xl mx-auto text-center space-y-4">
             <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-4 py-1.5 rounded-full text-amber-400 text-xs font-bold tracking-widest uppercase">
-              ⚔️ Récit Interactif & Choix du Destin
+              ${window.fasoIcon('compass', 'w-3.5 h-3.5 text-amber-400')}
+              <span>Récit Interactif &amp; Choix du Destin</span>
             </div>
             <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-50 font-heading leading-tight">
               ${this.storyData.title}
@@ -122,11 +123,13 @@ class FasoAdventureView {
           </p>
 
           ${isEnding ? `
-            <div class="pt-4 flex items-center gap-3 bg-amber-950/30 -mx-2 sm:-mx-4 px-4 sm:px-6 py-4 rounded-xl border-t border-amber-500/20 mt-4">
-              <span class="text-4xl">🏅</span>
+            <div class="pt-4 flex items-center gap-3 bg-amber-950/20 -mx-2 sm:-mx-4 px-4 sm:px-6 py-4 rounded-xl border-t border-amber-500/20 mt-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center shrink-0">
+                ${window.fasoIcon('award', 'w-5 h-5 text-amber-400')}
+              </div>
               <div>
-                <div class="text-xs uppercase tracking-widest text-amber-500/70 font-bold">Titre Honorifique Acquis</div>
-                <div class="text-lg font-black text-amber-200 font-heading">${node.badge || "Héroïne du Faso"}</div>
+                <div class="text-[10px] uppercase tracking-widest text-amber-500/80 font-bold">Titre Honorifique Acquis</div>
+                <div class="text-base sm:text-lg font-black text-amber-200 font-heading">${node.badge || "Héroïne du Faso"}</div>
               </div>
             </div>
           ` : ""}
@@ -151,14 +154,17 @@ class FasoAdventureView {
 
         ${isEnding ? `
           <div class="flex flex-wrap items-center justify-center gap-3 pt-6">
-            <button id="adv-btn-restart" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-black text-sm shadow-lg hover:scale-105 transition-all">
-              🔄 Explorer une Autre Voie
+            <button id="adv-btn-restart" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-black text-sm shadow-lg hover:scale-105 transition-all flex items-center gap-2">
+              ${window.fasoIcon('refresh', 'w-4 h-4 fill-stone-950')}
+              <span>Explorer une Autre Voie</span>
             </button>
-            <a href="#library" class="px-6 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-bold text-sm transition-all">
-              📚 Retour à la Bibliothèque
+            <a href="#library" class="px-6 py-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 font-bold text-sm transition-all flex items-center gap-2">
+              ${window.fasoIcon('book', 'w-4 h-4 text-amber-400')}
+              <span>Retour à la Bibliothèque</span>
             </a>
-            <a href="#campfire/yennenga" class="px-6 py-3 rounded-xl bg-orange-950/40 hover:bg-orange-900/50 text-orange-300 border border-orange-500/30 font-bold text-sm transition-all">
-              🔥 Veillée de Yennenga au Coin du Feu
+            <a href="#campfire/yennenga" class="px-6 py-3 rounded-xl bg-amber-950/50 hover:bg-amber-900/60 text-amber-200 border border-amber-500/30 font-bold text-sm transition-all flex items-center gap-2">
+              ${window.fasoIcon('flame', 'w-4 h-4 text-orange-400')}
+              <span>Veillée de Yennenga au Coin du Feu</span>
             </a>
           </div>
         ` : `

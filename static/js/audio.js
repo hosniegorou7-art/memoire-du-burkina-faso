@@ -32,11 +32,38 @@ class FasoAudioEngine {
 
     // Narration Speech Engine
     this.synth = window.speechSynthesis || null;
+    this.availableVoices = [];
     this.currentUtterance = null;
     this.isSpeaking = false;
+    this.speechQueue = [];
     this.onSectionChange = null;
     this.onTimeUpdate = null;
     this.onNarrationEnd = null;
+
+    if (this.synth) {
+      this.loadVoices();
+      if (typeof this.synth.onvoiceschanged !== "undefined") {
+        this.synth.onvoiceschanged = () => this.loadVoices();
+      }
+    }
+  }
+
+  loadVoices() {
+    if (!this.synth) return;
+    this.availableVoices = this.synth.getVoices() || [];
+  }
+
+  playAudioTest() {
+    this.initAudioContext();
+    if (!this.ctx) return;
+    // Joue un accord carillonnant de Kora + note de Balafon + basse de djembé
+    const t = this.ctx.currentTime;
+    this.playDjembe(true, t);
+    this.playKoraNote(220.0, t + 0.05, 1.5);
+    this.playKoraNote(293.66, t + 0.15, 1.5);
+    this.playBalafonNote(392.0, t + 0.25, 1.0);
+    this.playKoraNote(440.0, t + 0.35, 1.8);
+    this.playKoraNote(587.33, t + 0.45, 2.0);
   }
 
   initAudioContext() {
@@ -280,28 +307,58 @@ class FasoAudioEngine {
     this.schedulerTimer = setTimeout(() => this.scheduleNotes(), lookahead * 1000);
   }
 
-  // --- NARRATION VOCALE MULTILINGUE (Web Speech API) ---
+  // --- NARRATION VOCALE MULTILINGUE ROBUSTE (Web Speech API avec file d'attente) ---
 
   speakStorySection(text, lang = "fr-FR", onBoundary = null, onEnd = null) {
     if (!this.synth) {
-      console.warn("Web Speech API non disponible sur ce navigateur.");
+      console.warn("Web Speech API non disponible sur ce navigateur. Lecture d'ambiance musicale.");
+      this.playAudioTest();
       if (onEnd) onEnd();
       return;
     }
 
     this.stopNarration();
+    this.synth.resume(); // Débloque le mutex éventuel des navigateurs Chromium/Linux
     this.isSpeaking = true;
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Découpage en phrases pour contourner la limite de 15 secondes / 200 caractères de Chrome
+    const sentences = text
+      .split(/(?<=[.!?])\s+/)
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    if (sentences.length === 0) {
+      if (onEnd) onEnd();
+      return;
+    }
+
+    this.speechQueue = [...sentences];
+    this.playNextSentence(lang, onBoundary, onEnd);
+  }
+
+  playNextSentence(lang, onBoundary, onEnd) {
+    if (!this.isSpeaking || this.speechQueue.length === 0) {
+      this.isSpeaking = false;
+      if (onEnd) onEnd();
+      return;
+    }
+
+    const sentence = this.speechQueue.shift();
+    const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.lang = lang;
-    utterance.rate = 0.95; // Rythme posé de conteur griot
+    utterance.rate = 0.95; // Rythme naturel de conteur
     utterance.pitch = 1.0;
 
-    // Sélection d'une voix naturelle si possible
-    const voices = this.synth.getVoices();
-    const frVoice = voices.find(v => v.lang.startsWith("fr") && (v.name.includes("Natural") || v.name.includes("Google") || v.name.includes("Thomas")));
-    if (frVoice) {
-      utterance.voice = frVoice;
+    // Sélection de la meilleure voix disponible
+    if (this.availableVoices.length === 0) {
+      this.loadVoices();
+    }
+
+    const voices = this.availableVoices;
+    const frVoice = voices.find(v => v.lang.startsWith("fr") || v.lang.startsWith("fr_"));
+    const anyVoice = frVoice || voices[0];
+    if (anyVoice) {
+      utterance.voice = anyVoice;
     }
 
     utterance.onboundary = (e) => {
@@ -309,18 +366,33 @@ class FasoAudioEngine {
     };
 
     utterance.onend = () => {
-      this.isSpeaking = false;
-      if (onEnd) onEnd();
+      if (this.speechQueue.length > 0 && this.isSpeaking) {
+        this.playNextSentence(lang, onBoundary, onEnd);
+      } else {
+        this.isSpeaking = false;
+        if (onEnd) onEnd();
+      }
     };
 
     utterance.onerror = (e) => {
-      console.error("Erreur de narration vocale :", e);
-      this.isSpeaking = false;
-      if (onEnd) onEnd();
+      console.warn("Erreur ou interruption de parole :", e);
+      if (this.speechQueue.length > 0 && this.isSpeaking) {
+        this.playNextSentence(lang, onBoundary, onEnd);
+      } else {
+        this.isSpeaking = false;
+        if (onEnd) onEnd();
+      }
     };
 
     this.currentUtterance = utterance;
-    this.synth.speak(utterance);
+    try {
+      this.synth.speak(utterance);
+    } catch (err) {
+      console.warn("Échec speak(), repli musical:", err);
+      this.playAudioTest();
+      this.isSpeaking = false;
+      if (onEnd) onEnd();
+    }
   }
 
   stopNarration() {

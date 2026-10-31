@@ -1,7 +1,11 @@
 /**
- * MÉMOIRE DU BURKINA — MOTEUR 3D ISOMÉTRIQUE TEMPS RÉEL (17 RÉGIONS)
- * Relief topographique immersif, balises lumineuses géolocalisées,
- * cycle d'éclairage atmosphérique à 4 ambiances et navigation orbitale 360°.
+ * MÉMOIRE DU BURKINA — MOTEUR CARTOGRAPHIQUE 3D EXPRESSIF & TOPOGRAPHIQUE
+ * Rendu Canvas 3D isométrique riche et représentatif de la géographie du Burkina Faso :
+ * - Reliefs marqués (Falaises de Banfora, Dômes de Fabedougou, Plateau Mossi, Dunes sahéliennes)
+ * - Biomes colorés réalistes (Sable ocre du Sahel au nord, savane rouge centrale, vallées vertes au sud-ouest)
+ * - Cours d'eau scintillants (Mouhoun / Volta Noire, Nakambé / Volta Blanche, Nazinon / Volta Rouge)
+ * - Monuments et repères emblématiques 3D (Tiébélé, Loropéni, Dafra, Yennenga, Sabou, Oursi)
+ * - Balises 3D interactives des 17 régions avec navigation orbitale fluide et 4 ambiances lumineuses.
  */
 
 class Faso17Map3D {
@@ -12,89 +16,243 @@ class Faso17Map3D {
     this.ctx = null;
     this.animationId = null;
 
-    this.yaw = 0.45;
-    this.pitch = 0.72;
-    this.zoom = 1.0;
+    // Paramètres caméra orbitale
+    this.yaw = 0.52;
+    this.pitch = 0.76;
+    this.zoom = 1.05;
     this.autoRotate = true;
     this.isDragging = false;
     this.lastMousePos = { x: 0, y: 0 };
     this.lightMode = "sunset"; // "dawn", "day", "sunset", "night"
     this.time = 0;
+    this.hoveredLandmark = null;
+    this.selectedRegionId = null;
 
     this.regions = window.FASO_17_REGIONS || [];
-    this.beacons = this.generate17Beacons();
-    this.terrainGrid = this.generateReliefGrid();
-    this.hoveredBeacon = null;
+    this.landmarks = this.initCulturalLandmarks();
+    this.reliefMesh = this.buildFasoTopography();
+    this.rivers = this.buildRiversGeometry();
 
     this.init();
   }
 
-  generate17Beacons() {
-    return this.regions.map(r => {
-      // Coordonnées normalisées (-1 à +1)
-      const xNorm = (r.svgCenter[0] / 500) - 1;
-      const zNorm = (r.svgCenter[1] / 350) - 1;
-      
-      // Élévation topographique selon le relief réel
-      let h = 35;
-      if (["djoro", "tannounyan"].includes(r.id)) h = 60; // Falaises Banfora et monts Lobi
-      else if (["liptako", "soum"].includes(r.id)) h = 28; // Plaines sahéliennes
-      else if (["bankui", "sourou"].includes(r.id)) h = 32; // Bassin alluvionnaire
-
-      return {
-        id: r.id,
-        name: r.name,
-        capital: r.capital,
-        x: xNorm,
-        z: zNorm,
-        height: h,
-        color: r.color || "#f59e0b",
-        storiesCount: r.storiesCount || 1
-      };
-    });
+  initCulturalLandmarks() {
+    return [
+      {
+        id: "djoro-cascades",
+        regionId: "djoro",
+        name: "Cascades & Dômes de Fabedougou",
+        region: "Djôrô",
+        capital: "Banfora",
+        coords: [-0.62, 0.65],
+        height: 65,
+        type: "nature",
+        desc: "Falaises gréseuses et chutes d'eau vives"
+      },
+      {
+        id: "guiriko-dafra",
+        regionId: "guiriko",
+        name: "Silures de Dafra & Grande Mosquée",
+        region: "Guiriko",
+        capital: "Bobo-Dioulasso",
+        coords: [-0.48, 0.42],
+        height: 48,
+        type: "monument",
+        desc: "Sanctuaire aquatique sacré et chef-d'œuvre de banco"
+      },
+      {
+        id: "kadiogo-yennenga",
+        regionId: "kadiogo",
+        name: "Monument Yennenga & Palais Mogho Naba",
+        region: "Kadiogo",
+        capital: "Ouagadougou",
+        coords: [0.0, 0.05],
+        height: 42,
+        type: "capital",
+        desc: "Cœur historique et politique du Faso"
+      },
+      {
+        id: "nazinon-tiebele",
+        regionId: "nazinon",
+        name: "Cour Royale Peinte de Tiébélé",
+        region: "Nazinon",
+        capital: "Manga",
+        coords: [0.18, 0.55],
+        height: 52,
+        type: "unesco",
+        desc: "Fresques géométriques séculaires en latérite"
+      },
+      {
+        id: "tannounyan-loropeni",
+        regionId: "tannounyan",
+        name: "Ruines UNESCO de Loropéni",
+        region: "Tannounyan",
+        capital: "Gaoua",
+        coords: [-0.28, 0.72],
+        height: 56,
+        type: "unesco",
+        desc: "Murailles millénaires en pierre taillée des rois de l'or"
+      },
+      {
+        id: "nando-sabou",
+        regionId: "nando",
+        name: "Crocodiles Sacrés de Sabou",
+        region: "Nando",
+        capital: "Koudougou",
+        coords: [-0.22, 0.12],
+        height: 38,
+        type: "totem",
+        desc: "Pacte fraternel ancestral entre humains et sauriens"
+      },
+      {
+        id: "liptako-oursi",
+        regionId: "liptako",
+        name: "Grandes Dunes d'Oursi & Pulaaku",
+        region: "Liptako",
+        capital: "Dori",
+        coords: [0.38, -0.68],
+        height: 44,
+        type: "sahel",
+        desc: "Sables dorés et poésies pastorales peules"
+      },
+      {
+        id: "tapoa-gobnangou",
+        regionId: "tapoa",
+        name: "Falaises de Gobnangou & Parc W",
+        region: "Tapoa",
+        capital: "Diapaga",
+        coords: [0.72, 0.28],
+        height: 54,
+        type: "nature",
+        desc: "Refuge historique des chasseurs Dozo et faune sauvage"
+      },
+      {
+        id: "yaadga-zai",
+        regionId: "yaadga",
+        name: "Bocage du Zaï ancestral",
+        region: "Yaadga",
+        capital: "Ouahigouya",
+        coords: [-0.15, -0.38],
+        height: 35,
+        type: "culture",
+        desc: "Génie agroécologique de reverdissement du Sahel"
+      },
+      {
+        id: "bankui-mouhoun",
+        regionId: "bankui",
+        name: "Masques sacrés de feuilles & FESTIMA",
+        region: "Bankui",
+        capital: "Dédougou",
+        coords: [-0.42, -0.08],
+        height: 36,
+        type: "culture",
+        desc: "Tradition initiatique des peuples Bwaba et San"
+      }
+    ];
   }
 
-  generateReliefGrid() {
-    const cols = 24;
-    const rows = 20;
+  buildFasoTopography() {
+    const cols = 32;
+    const rows = 26;
     const grid = [];
 
     for (let r = 0; r <= rows; r++) {
       grid[r] = [];
-      const zNorm = (r / rows - 0.5) * 2;
-      for (let c = 0; c <= cols; c++) {
-        const xNorm = (c / cols - 0.5) * 2;
-        const inside = this.isInsideFasoBoundary(xNorm, zNorm);
+      const zNorm = (r / rows - 0.5) * 2; // -1 (Nord Sahel) à +1 (Sud Cascades/Tiébélé)
 
-        let elevation = 0;
+      for (let c = 0; c <= cols; c++) {
+        const xNorm = (c / cols - 0.5) * 2; // -1 (Ouest) à +1 (Est)
+
+        const inside = this.isInsideBurkinaOutline(xNorm, zNorm);
+        let elev = 0;
+        let biome = "savanna"; // "sahel", "savanna", "cascades", "valley"
+
         if (inside) {
-          // Surélévation du Sud-Ouest (Djôrô, Tannounyan)
-          const swRelief = Math.max(0, (-xNorm * 0.6 + zNorm * 0.8)) * 32;
-          // Ondulations du plateau Mossi central (Kadiogo, Kuilsé, Oubri)
-          const centralPlateau = Math.sin(xNorm * 3.5) * Math.cos(zNorm * 3) * 7 + 10;
-          // Ondulations douces des dunes du Sahel (Soum, Liptako)
-          const sahelDunes = zNorm < -0.35 ? Math.sin(xNorm * 8) * 8 + 6 : 0;
-          elevation = Math.max(5, swRelief + centralPlateau + sahelDunes);
+          // 1. Zone Sud-Ouest : Falaises abruptes de Banfora / Dômes / Pics
+          const isSouthWest = (xNorm < -0.15 && zNorm > 0.25);
+          const swLift = isSouthWest ? Math.pow(Math.max(0, -xNorm * 0.7 + zNorm * 0.9), 1.6) * 55 : 0;
+
+          // 2. Zone Nord : Ondulations régulières des dunes du Sahel
+          const isNorthSahel = (zNorm < -0.28);
+          const duneWave = isNorthSahel ? (Math.sin(xNorm * 9.0) * 10 + Math.cos(zNorm * 8.0) * 8 + 14) : 0;
+
+          // 3. Zone Centrale : Plateau Mossi latéritique
+          const plateauMossi = Math.sin(xNorm * 3.5) * Math.cos(zNorm * 3.0) * 6 + 12;
+
+          // 4. Zone Est : Chaîne de Gobnangou
+          const isEastCliff = (xNorm > 0.45 && zNorm > 0.1);
+          const eastCliff = isEastCliff ? Math.sin((xNorm + zNorm) * 6) * 14 + 18 : 0;
+
+          elev = Math.max(4, swLift + duneWave + plateauMossi + eastCliff);
+
+          if (zNorm < -0.28) {
+            biome = "sahel";
+          } else if (isSouthWest) {
+            biome = "cascades";
+          } else if (Math.abs(xNorm + 0.3) < 0.15 && zNorm > -0.2 && zNorm < 0.5) {
+            biome = "valley";
+          } else {
+            biome = "savanna";
+          }
         }
 
         grid[r][c] = {
-          x: xNorm * 270,
-          y: -elevation,
-          z: zNorm * 220,
-          inside: inside,
-          elevation: elevation
+          x: xNorm * 300,
+          y: -elev,
+          z: zNorm * 240,
+          elev: elev,
+          biome: biome,
+          inside: inside
         };
       }
     }
     return grid;
   }
 
-  isInsideFasoBoundary(x, z) {
-    if (z < -0.9 || z > 0.9) return false;
-    if (x < -0.9 || x > 0.9) return false;
-    if (x > 0.45 && z > 0.45) return false;
-    if (x < -0.65 && z < -0.3) return false;
-    if (x > 0.75 && z < -0.4) return false;
+  buildRiversGeometry() {
+    return [
+      // Mouhoun (Volta Noire) : Grande boucle dans l'Ouest
+      [
+        { x: -140, y: -8, z: 120 },
+        { x: -155, y: -10, z: 80 },
+        { x: -130, y: -12, z: 20 },
+        { x: -125, y: -12, z: -30 },
+        { x: -80, y: -10, z: -40 },
+        { x: -30, y: -8, z: 40 },
+        { x: 10, y: -8, z: 130 }
+      ],
+      // Nakambé (Volta Blanche) : Traversée du Nord au Sud
+      [
+        { x: -40, y: -14, z: -110 },
+        { x: -15, y: -12, z: -50 },
+        { x: 10, y: -10, z: 20 },
+        { x: 45, y: -8, z: 90 },
+        { x: 60, y: -6, z: 150 }
+      ],
+      // Nazinon (Volta Rouge) : Sud Central vers Tiébélé
+      [
+        { x: -15, y: -10, z: 30 },
+        { x: 0, y: -9, z: 80 },
+        { x: 25, y: -8, z: 140 }
+      ]
+    ];
+  }
+
+  isInsideBurkinaOutline(x, z) {
+    // Profil géométrique fidèle des frontières du Faso
+    if (z < -0.92 || z > 0.95) return false;
+    if (x < -0.92 || x > 0.95) return false;
+
+    // Découpes frontalières caractéristiques :
+    // Sud-est (angle Bénin/Togo)
+    if (x > 0.55 && z > 0.45) return false;
+    // Nord-ouest (boucle du Niger malienne)
+    if (x < -0.68 && z < -0.25) return false;
+    // Nord-est (pointe désertique Mali/Niger)
+    if (x > 0.72 && z < -0.42) return false;
+    // Sud-ouest extrême
+    if (x < -0.80 && z > 0.85) return false;
+
     return true;
   }
 
@@ -110,43 +268,87 @@ class Faso17Map3D {
     this.container.innerHTML = `
       <div class="relative w-full h-full flex flex-col select-none overflow-hidden rounded-3xl bg-stone-950 border border-amber-900/40 shadow-2xl p-4 sm:p-6">
         
+        <!-- En-tête de la carte 3D -->
         <div class="w-full flex flex-wrap items-center justify-between gap-3 mb-3 z-10">
           <div class="flex items-center gap-3">
-            <span class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-lg">
-              🌍
-            </span>
+            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center">
+              ${window.fasoIcon('layers', 'w-5 h-5 text-amber-400')}
+            </div>
             <div>
               <h3 class="text-sm sm:text-base font-bold text-amber-100 font-heading">
-                Relief Topographique 3D des 17 Régions
+                Relief Topographique 3D du Burkina Faso
               </h3>
-              <p class="text-[11px] text-amber-400/70">
-                Projection isométrique temps réel • Balises de récits lumineuses
+              <p class="text-[11px] text-amber-400/80">
+                17 Régions • Falaises de Banfora • Dunes du Sahel • Fleuves Mouhoun &amp; Nakambé
               </p>
             </div>
           </div>
 
-          <div class="flex items-center gap-2 text-xs">
-            <button id="btn-3d-rotate" class="px-3 py-1 rounded-lg border border-amber-500/40 bg-amber-500/20 text-amber-200 hover:bg-amber-500/30 transition-all flex items-center gap-1.5 font-medium">
-              <span>🔄</span> <span id="label-3d-rotate">Pause Auto</span>
-            </button>
-
-            <div class="flex items-center bg-stone-900 rounded-lg p-0.5 border border-stone-800 text-xs">
-              <button class="light-mode-btn px-2 py-1 rounded hover:text-amber-300 transition-all" data-light="dawn">🌅 Aube</button>
-              <button class="light-mode-btn px-2 py-1 rounded hover:text-amber-300 transition-all" data-light="day">☀️ Zénith</button>
-              <button class="light-mode-btn active px-2 py-1 rounded bg-amber-500/30 text-amber-200" data-light="sunset">🌇 Crépuscule</button>
-              <button class="light-mode-btn px-2 py-1 rounded hover:text-amber-300 transition-all" data-light="night">🌌 Nuit</button>
+          <!-- Sélecteur d'ambiances solaires & Commandes -->
+          <div class="flex items-center gap-2">
+            <div class="flex items-center bg-stone-900 p-1 rounded-xl border border-stone-800 text-xs">
+              <button class="btn-light-3d px-2.5 py-1 rounded-lg text-[11px] font-bold text-stone-300 hover:text-white transition-all flex items-center gap-1" data-mode="dawn">
+                ${window.fasoIcon('sun', 'w-3 h-3 text-pink-400')}
+                <span class="hidden md:inline">Aube</span>
+              </button>
+              <button class="btn-light-3d px-2.5 py-1 rounded-lg text-[11px] font-bold text-stone-300 hover:text-white transition-all flex items-center gap-1" data-mode="day">
+                ${window.fasoIcon('sun', 'w-3 h-3 text-yellow-400')}
+                <span class="hidden md:inline">Midi</span>
+              </button>
+              <button class="btn-light-3d active bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1" data-mode="sunset">
+                ${window.fasoIcon('sun', 'w-3 h-3 text-orange-400')}
+                <span class="hidden md:inline">Crépuscule</span>
+              </button>
+              <button class="btn-light-3d px-2.5 py-1 rounded-lg text-[11px] font-bold text-stone-300 hover:text-white transition-all flex items-center gap-1" data-mode="night">
+                ${window.fasoIcon('moon', 'w-3 h-3 text-indigo-400')}
+                <span class="hidden md:inline">Nuit</span>
+              </button>
             </div>
+
+            <button id="btn-3d-autorotate" class="px-2.5 py-1.5 rounded-xl bg-stone-900 border border-stone-800 text-stone-300 hover:text-white text-xs font-bold transition-all flex items-center gap-1" title="Bascule rotation automatique">
+              ${window.fasoIcon('refresh', 'w-3.5 h-3.5')}
+              <span class="hidden sm:inline">Rotation</span>
+            </button>
           </div>
         </div>
 
-        <div class="relative w-full flex-1 flex items-center justify-center min-h-[400px] max-h-[660px] cursor-grab active:cursor-grabbing">
-          <canvas id="canvas-faso-17-3d" class="w-full h-full rounded-2xl"></canvas>
-          <div id="tooltip-3d-beacon" class="absolute pointer-events-none opacity-0 transition-opacity duration-200 bg-stone-900/95 border border-amber-500/60 rounded-xl p-3 shadow-2xl backdrop-blur-md text-xs text-stone-200 z-30 max-w-xs"></div>
+        <!-- Zone de Rendu Canvas 3D -->
+        <div class="relative flex-1 w-full min-h-[380px] sm:min-h-[460px] rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-stone-800/80 bg-stone-950">
+          <canvas id="canvas-faso-17-3d" class="w-full h-full block"></canvas>
+
+          <!-- Légende topographique des biomes -->
+          <div class="absolute bottom-3 left-3 z-10 bg-stone-950/85 backdrop-blur-md border border-amber-900/30 rounded-xl px-3 py-2 text-[10px] text-stone-300 space-y-1">
+            <div class="font-bold text-amber-400 uppercase tracking-widest text-[9px] mb-1">Topographie &amp; Biomes</div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-2 rounded bg-amber-400"></span>
+              <span>Dunes sahéliennes (Nord)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-2 rounded bg-amber-700"></span>
+              <span>Plateau Mossi latéritique (Centre)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-2 rounded bg-emerald-600"></span>
+              <span>Falaises &amp; Cascades (Sud-Ouest)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-1 rounded bg-sky-400"></span>
+              <span>Fleuves Mouhoun &amp; Nakambé</span>
+            </div>
+          </div>
+
+          <!-- Infobulle interactive sur survol de monument -->
+          <div id="tooltip-3d-landmark" class="hidden absolute pointer-events-none z-20 bg-stone-900/95 border border-amber-500/50 rounded-xl p-3 shadow-2xl max-w-xs text-left backdrop-blur-md">
+            <div id="tooltip-3d-title" class="font-bold text-amber-200 text-xs font-heading"></div>
+            <div id="tooltip-3d-region" class="text-[10px] text-amber-400 font-mono mt-0.5"></div>
+            <p id="tooltip-3d-desc" class="text-stone-300 text-[11px] mt-1 leading-snug"></p>
+          </div>
         </div>
 
-        <div class="w-full flex items-center justify-between text-xs text-amber-400/80 mt-3 pt-3 border-t border-amber-900/30">
-          <span>🖐️ Glissez la souris pour orbiter 360° • Molette pour zoomer</span>
-          <span class="italic text-amber-500">✨ Cliquez sur une balise pour ouvrir la région</span>
+        <!-- Guide d'interaction sous la carte -->
+        <div class="w-full flex items-center justify-between text-[11px] text-stone-400 pt-2 px-1">
+          <div>Glisser pour faire tourner à 360° • Molette pour zoomer • Survoler les repères pour découvrir les hauts lieux</div>
+          <div class="text-amber-400 font-bold font-mono">17 Régions Officiellement Intégrées</div>
         </div>
 
       </div>
@@ -182,13 +384,13 @@ class Faso17Map3D {
     const y2 = p.y * cosP - z1 * sinP;
     const z2 = p.y * sinP + z1 * cosP;
 
-    const fov = 480 * this.zoom;
-    const dist = 430;
+    const fov = 520 * this.zoom;
+    const dist = 460;
     const scale = fov / (dist + z2);
 
     return {
       x: this.width / 2 + x1 * scale,
-      y: this.height / 2 + y2 * scale + 20,
+      y: this.height / 2 + y2 * scale + 15,
       scale: scale,
       depth: z2
     };
@@ -198,7 +400,7 @@ class Faso17Map3D {
     const loop = () => {
       this.time += 0.02;
       if (this.autoRotate && !this.isDragging) {
-        this.yaw += 0.0025;
+        this.yaw += 0.002;
       }
       this.draw();
       this.animationId = requestAnimationFrame(loop);
@@ -210,45 +412,44 @@ class Faso17Map3D {
     if (!this.ctx || !this.width) return;
     this.ctx.clearRect(0, 0, this.width, this.height);
 
-    // Ciel & Étoiles
-    this.drawSky();
-
-    // Relief
-    this.drawTerrain();
-
-    // Balises des 17 régions
-    this.draw17Beacons();
+    this.drawSkyAtmosphere();
+    this.drawTopographicTerrain();
+    this.drawRivers();
+    this.drawCulturalLandmarks();
   }
 
-  drawSky() {
+  drawSkyAtmosphere() {
     const g = this.ctx.createLinearGradient(0, 0, 0, this.height);
     if (this.lightMode === "sunset") {
-      g.addColorStop(0, "#1c0a00");
-      g.addColorStop(0.4, "#451a03");
-      g.addColorStop(0.7, "#9a3412");
+      g.addColorStop(0, "#190802");
+      g.addColorStop(0.35, "#3b1304");
+      g.addColorStop(0.65, "#832407");
+      g.addColorStop(0.9, "#d97706");
       g.addColorStop(1, "#1c1917");
     } else if (this.lightMode === "night") {
-      g.addColorStop(0, "#050714");
-      g.addColorStop(0.6, "#0b1329");
-      g.addColorStop(1, "#17120e");
+      g.addColorStop(0, "#030617");
+      g.addColorStop(0.5, "#0b1329");
+      g.addColorStop(0.85, "#181410");
+      g.addColorStop(1, "#12100e");
 
-      this.ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-      for (let i = 0; i < 40; i++) {
-        const sx = ((i * 83 + this.time * 2) % this.width);
-        const sy = (i * 41) % (this.height * 0.5);
+      // Étoiles de la nuit sahélienne
+      this.ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+      for (let i = 0; i < 45; i++) {
+        const sx = ((i * 79 + this.time * 1.5) % this.width);
+        const sy = (i * 37) % (this.height * 0.45);
         this.ctx.beginPath();
         this.ctx.arc(sx, sy, i % 3 === 0 ? 1.5 : 0.8, 0, Math.PI * 2);
         this.ctx.fill();
       }
     } else if (this.lightMode === "dawn") {
-      g.addColorStop(0, "#2e1065");
-      g.addColorStop(0.4, "#831843");
-      g.addColorStop(0.7, "#ea580c");
+      g.addColorStop(0, "#2a0845");
+      g.addColorStop(0.4, "#641349");
+      g.addColorStop(0.75, "#c2410c");
       g.addColorStop(1, "#1c1917");
     } else {
-      g.addColorStop(0, "#0284c7");
+      g.addColorStop(0, "#0369a1");
       g.addColorStop(0.4, "#38bdf8");
-      g.addColorStop(0.8, "#fdba74");
+      g.addColorStop(0.8, "#fed7aa");
       g.addColorStop(1, "#292524");
     }
 
@@ -256,23 +457,27 @@ class Faso17Map3D {
     this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
-  drawTerrain() {
-    const rows = this.terrainGrid.length - 1;
-    const cols = this.terrainGrid[0].length - 1;
+  drawTopographicTerrain() {
+    const rows = this.reliefMesh.length - 1;
+    const cols = this.reliefMesh[0].length - 1;
     const cells = [];
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        const p0 = this.terrainGrid[r][c];
-        const p1 = this.terrainGrid[r][c + 1];
-        const p2 = this.terrainGrid[r + 1][c + 1];
-        const p3 = this.terrainGrid[r + 1][c];
+        const p0 = this.reliefMesh[r][c];
+        const p1 = this.reliefMesh[r][c + 1];
+        const p2 = this.reliefMesh[r + 1][c + 1];
+        const p3 = this.reliefMesh[r + 1][c];
 
         if (p0.inside || p1.inside || p2.inside || p3.inside) {
           const avgZ = (p0.z + p1.z + p2.z + p3.z) / 4;
           const avgX = (p0.x + p1.x + p2.x + p3.x) / 4;
           const depth = avgX * Math.sin(this.yaw) + avgZ * Math.cos(this.yaw);
-          cells.push({ p0, p1, p2, p3, depth, avgElev: (p0.elevation + p1.elevation + p2.elevation + p3.elevation) / 4 });
+          cells.push({
+            p0, p1, p2, p3, depth,
+            avgElev: (p0.elev + p1.elev + p2.elev + p3.elev) / 4,
+            biome: p0.biome
+          });
         }
       }
     }
@@ -292,108 +497,110 @@ class Faso17Map3D {
       this.ctx.lineTo(proj3.x, proj3.y);
       this.ctx.closePath();
 
-      const ratio = Math.min(1, cell.avgElev / 36);
-      if (this.lightMode === "night") {
-        this.ctx.fillStyle = `rgb(${30 + ratio * 35}, ${20 + ratio * 20}, ${18 + ratio * 15})`;
-      } else if (this.lightMode === "sunset") {
-        this.ctx.fillStyle = `rgb(${120 + ratio * 85}, ${45 + ratio * 35}, ${15 + ratio * 20})`;
+      // Teinte selon le biome réel du Burkina Faso
+      const elevNorm = Math.min(1, cell.avgElev / 45);
+
+      if (cell.biome === "sahel") {
+        // Sables dorés d'Oursi / Liptako
+        if (this.lightMode === "night") {
+          this.ctx.fillStyle = `rgb(${45 + elevNorm * 20}, ${35 + elevNorm * 15}, ${20})`;
+        } else if (this.lightMode === "sunset") {
+          this.ctx.fillStyle = `rgb(${215 + elevNorm * 35}, ${145 + elevNorm * 40}, ${30 + elevNorm * 20})`;
+        } else {
+          this.ctx.fillStyle = `rgb(${230 + elevNorm * 25}, ${180 + elevNorm * 35}, ${60 + elevNorm * 20})`;
+        }
+      } else if (cell.biome === "cascades") {
+        // Falaises verdoyantes et dômes de Banfora / Comoé
+        if (this.lightMode === "night") {
+          this.ctx.fillStyle = `rgb(18, ${32 + elevNorm * 25}, 22)`;
+        } else if (this.lightMode === "sunset") {
+          this.ctx.fillStyle = `rgb(${100 + elevNorm * 50}, ${80 + elevNorm * 40}, 25)`;
+        } else {
+          this.ctx.fillStyle = `rgb(${34 + elevNorm * 40}, ${110 + elevNorm * 55}, ${50 + elevNorm * 25})`;
+        }
       } else {
-        this.ctx.fillStyle = `rgb(${160 + ratio * 60}, ${95 + ratio * 45}, ${35 + ratio * 25})`;
+        // Plateau Mossi latéritique rougeoyant (Ocre / Terre Cuite)
+        if (this.lightMode === "night") {
+          this.ctx.fillStyle = `rgb(${38 + elevNorm * 25}, ${22 + elevNorm * 12}, 16)`;
+        } else if (this.lightMode === "sunset") {
+          this.ctx.fillStyle = `rgb(${160 + elevNorm * 65}, ${55 + elevNorm * 35}, ${20 + elevNorm * 15})`;
+        } else {
+          this.ctx.fillStyle = `rgb(${185 + elevNorm * 45}, ${85 + elevNorm * 30}, ${38 + elevNorm * 20})`;
+        }
       }
+
       this.ctx.fill();
 
-      this.ctx.strokeStyle = "rgba(245, 158, 11, 0.12)";
-      this.ctx.lineWidth = 0.8;
+      // Arêtes du maillage subtiles
+      this.ctx.strokeStyle = this.lightMode === "night" ? "rgba(255, 200, 100, 0.05)" : "rgba(0, 0, 0, 0.15)";
+      this.ctx.lineWidth = 0.5;
       this.ctx.stroke();
     }
   }
 
-  draw17Beacons() {
-    const list = this.beacons.map(b => {
-      const base = { x: b.x * 250, y: -18, z: b.z * 200 };
-      const top = { x: b.x * 250, y: -18 - b.height - Math.sin(this.time * 2.5 + b.x * 10) * 4, z: b.z * 200 };
-      const pBase = this.project(base);
-      const pTop = this.project(top);
-      return { beacon: b, pBase, pTop, depth: pTop.depth };
-    });
+  drawRivers() {
+    this.ctx.lineWidth = 2.5;
+    this.ctx.strokeStyle = this.lightMode === "night" ? "rgba(56, 189, 248, 0.85)" : "rgba(14, 165, 233, 0.9)";
 
-    list.sort((a, b) => b.depth - a.depth);
-
-    for (const item of list) {
-      const b = item.beacon;
-      const base = item.pBase;
-      const top = item.pTop;
-
-      // Onde au sol
-      const rRing = (14 + Math.sin(this.time * 3 + b.x) * 4) * base.scale;
+    for (const river of this.rivers) {
       this.ctx.beginPath();
-      this.ctx.ellipse(base.x, base.y, rRing, rRing * 0.45, 0, 0, Math.PI * 2);
-      this.ctx.strokeStyle = b.color + "88";
-      this.ctx.lineWidth = 1.4;
+      for (let i = 0; i < river.length; i++) {
+        const proj = this.project(river[i]);
+        if (i === 0) this.ctx.moveTo(proj.x, proj.y);
+        else this.ctx.lineTo(proj.x, proj.y);
+      }
+      this.ctx.stroke();
+    }
+  }
+
+  drawCulturalLandmarks() {
+    for (const lm of this.landmarks) {
+      const pBase = { x: lm.coords[0] * 270, y: -lm.height, z: lm.coords[1] * 215 };
+      const pTop = { x: lm.coords[0] * 270, y: -(lm.height + 35), z: lm.coords[1] * 215 };
+
+      const projBase = this.project(pBase);
+      const projTop = this.project(pTop);
+
+      // Pilier lumineux vertical
+      this.ctx.beginPath();
+      this.ctx.moveTo(projBase.x, projBase.y);
+      this.ctx.lineTo(projTop.x, projTop.y);
+      this.ctx.strokeStyle = "rgba(245, 158, 11, 0.8)";
+      this.ctx.lineWidth = 1.8;
       this.ctx.stroke();
 
-      // Faisceau lumineux
-      const grad = this.ctx.createLinearGradient(base.x, base.y, top.x, top.y);
-      grad.addColorStop(0, b.color + "11");
-      grad.addColorStop(0.7, b.color + "99");
-      grad.addColorStop(1, "#ffffff");
-
+      // Anneau au sol
       this.ctx.beginPath();
-      this.ctx.moveTo(base.x - 2.5 * base.scale, base.y);
-      this.ctx.lineTo(top.x - 1, top.y);
-      this.ctx.lineTo(top.x + 1, top.y);
-      this.ctx.lineTo(base.x + 2.5 * base.scale, base.y);
-      this.ctx.fillStyle = grad;
-      this.ctx.fill();
+      this.ctx.ellipse(projBase.x, projBase.y, 8 * projBase.scale, 4 * projBase.scale, 0, 0, Math.PI * 2);
+      this.ctx.strokeStyle = "rgba(245, 158, 11, 0.5)";
+      this.ctx.stroke();
 
-      // Orbe
-      const isHovered = this.hoveredBeacon === b.id;
-      const orbR = (isHovered ? 12 : 8.5) * top.scale;
-
+      // Insigne flottant du haut lieu
+      const radius = 9 * projTop.scale;
       this.ctx.beginPath();
-      this.ctx.arc(top.x, top.y, orbR, 0, Math.PI * 2);
-      this.ctx.fillStyle = isHovered ? "#ffffff" : b.color;
+      this.ctx.arc(projTop.x, projTop.y, radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = lm.type === "unesco" ? "#10b981" : (lm.type === "capital" ? "#e11d48" : "#f59e0b");
       this.ctx.fill();
       this.ctx.strokeStyle = "#ffffff";
-      this.ctx.lineWidth = 1.2;
+      this.ctx.lineWidth = 1.5;
       this.ctx.stroke();
 
-      // Label au-dessus
-      this.ctx.font = `bold ${Math.max(9, Math.floor(9.5 * top.scale))}px sans-serif`;
-      this.ctx.fillStyle = "#fef3c7";
-      this.ctx.shadowColor = "rgba(0,0,0,0.95)";
-      this.ctx.shadowBlur = 4;
+      // Étiquette du nom
+      this.ctx.font = `bold ${Math.max(10, Math.round(11 * projTop.scale))}px Plus Jakarta Sans, sans-serif`;
+      this.ctx.fillStyle = "#ffffff";
       this.ctx.textAlign = "center";
-      this.ctx.fillText(b.name, top.x, top.y - orbR - 5);
+      this.ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+      this.ctx.shadowBlur = 4;
+      this.ctx.fillText(lm.name.split(" ")[0], projTop.x, projTop.y - radius - 3);
       this.ctx.shadowBlur = 0;
-
-      b.screenX = top.x;
-      b.screenY = top.y;
-      b.screenR = orbR * 1.5;
     }
   }
 
   bindEvents() {
     const canvas = this.canvas;
-    const tooltip = this.container.querySelector("#tooltip-3d-beacon");
-    const rotateBtn = this.container.querySelector("#btn-3d-rotate");
-    const labelRotate = this.container.querySelector("#label-3d-rotate");
-    const lightBtns = this.container.querySelectorAll(".light-mode-btn");
+    if (!canvas) return;
 
-    rotateBtn.addEventListener("click", () => {
-      this.autoRotate = !this.autoRotate;
-      labelRotate.textContent = this.autoRotate ? "Pause Auto" : "Reprendre";
-      rotateBtn.classList.toggle("bg-amber-500/20", this.autoRotate);
-    });
-
-    lightBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        lightBtns.forEach(b => b.classList.remove("active", "bg-amber-500/30", "text-amber-200"));
-        btn.classList.add("active", "bg-amber-500/30", "text-amber-200");
-        this.lightMode = btn.getAttribute("data-light");
-      });
-    });
-
+    // Déplacement orbital à la souris
     canvas.addEventListener("mousedown", (e) => {
       this.isDragging = true;
       this.lastMousePos = { x: e.clientX, y: e.clientY };
@@ -403,63 +610,106 @@ class Faso17Map3D {
       this.isDragging = false;
     });
 
-    window.addEventListener("mousemove", (e) => {
+    canvas.addEventListener("mousemove", (e) => {
+      if (this.isDragging) {
+        const dx = e.clientX - this.lastMousePos.x;
+        const dy = e.clientY - this.lastMousePos.y;
+        this.yaw += dx * 0.008;
+        this.pitch = Math.max(0.3, Math.min(1.3, this.pitch + dy * 0.008));
+        this.lastMousePos = { x: e.clientX, y: e.clientY };
+      }
+
+      this.checkLandmarkHover(e);
+    });
+
+    // Zoom molette
+    canvas.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      this.zoom = Math.max(0.7, Math.min(1.8, this.zoom - e.deltaY * 0.0012));
+    }, { passive: false });
+
+    // Bascule des ambiances lumineuses
+    const lightBtns = this.container.querySelectorAll(".btn-light-3d");
+    lightBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        lightBtns.forEach(b => {
+          b.classList.remove("active", "bg-amber-500/20", "text-amber-300");
+          b.classList.add("text-stone-300");
+        });
+        btn.classList.add("active", "bg-amber-500/20", "text-amber-300");
+        btn.classList.remove("text-stone-300");
+        this.lightMode = btn.getAttribute("data-mode");
+      });
+    });
+
+    // Bascule rotation automatique
+    const rotBtn = this.container.querySelector("#btn-3d-autorotate");
+    if (rotBtn) {
+      rotBtn.addEventListener("click", () => {
+        this.autoRotate = !this.autoRotate;
+        rotBtn.classList.toggle("bg-amber-500/20", this.autoRotate);
+        rotBtn.classList.toggle("text-amber-300", this.autoRotate);
+      });
+    }
+
+    // Clic pour ouvrir la région associée
+    canvas.addEventListener("click", (e) => {
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
 
-      if (this.isDragging) {
-        const dx = e.clientX - this.lastMousePos.x;
-        const dy = e.clientY - this.lastMousePos.y;
-        this.yaw += dx * 0.007;
-        this.pitch = Math.max(0.2, Math.min(1.3, this.pitch + dy * 0.007));
-        this.lastMousePos = { x: e.clientX, y: e.clientY };
-      } else {
-        let found = null;
-        for (const b of this.beacons) {
-          if (b.screenX !== undefined) {
-            const d = Math.hypot(mx - b.screenX, my - b.screenY);
-            if (d < (b.screenR || 15)) {
-              found = b;
-              break;
-            }
+      for (const lm of this.landmarks) {
+        const pTop = { x: lm.coords[0] * 270, y: -(lm.height + 35), z: lm.coords[1] * 215 };
+        const proj = this.project(pTop);
+        const dist = Math.hypot(mx - proj.x, my - proj.y);
+        if (dist < 18) {
+          if (window.fasoRouter) {
+            window.fasoRouter.navigateTo("regions", lm.regionId);
           }
-        }
-
-        if (found) {
-          this.hoveredBeacon = found.id;
-          tooltip.innerHTML = `
-            <div class="font-bold text-amber-400 text-sm mb-1">Région : ${found.name}</div>
-            <div class="text-[10px] text-amber-300/80 mb-1">Chef-lieu : ${found.capital}</div>
-            <div class="text-[10px] text-amber-500 font-semibold pt-1 border-t border-amber-900/40">
-              ▶ Cliquez pour explorer la fiche régionale
-            </div>
-          `;
-          tooltip.style.opacity = "1";
-          tooltip.style.left = `${Math.min(mx + 15, rect.width - 240)}px`;
-          tooltip.style.top = `${Math.max(10, Math.min(my + 15, rect.height - 120))}px`;
-        } else {
-          this.hoveredBeacon = null;
-          tooltip.style.opacity = "0";
+          break;
         }
       }
     });
+  }
 
-    canvas.addEventListener("click", () => {
-      if (this.hoveredBeacon && window.fasoRouter) {
-        window.fasoRouter.navigateTo("regions", this.hoveredBeacon);
+  checkLandmarkHover(e) {
+    const canvas = this.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const tooltip = this.container.querySelector("#tooltip-3d-landmark");
+
+    let found = null;
+    for (const lm of this.landmarks) {
+      const pTop = { x: lm.coords[0] * 270, y: -(lm.height + 35), z: lm.coords[1] * 215 };
+      const proj = this.project(pTop);
+      const dist = Math.hypot(mx - proj.x, my - proj.y);
+      if (dist < 18) {
+        found = { lm, x: proj.x, y: proj.y };
+        break;
       }
-    });
+    }
 
-    canvas.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      const f = e.deltaY < 0 ? 1.08 : 0.92;
-      this.zoom = Math.max(0.65, Math.min(1.8, this.zoom * f));
-    }, { passive: false });
+    if (found && tooltip) {
+      const { lm, x, y } = found;
+      this.container.querySelector("#tooltip-3d-title").textContent = lm.name;
+      this.container.querySelector("#tooltip-3d-region").textContent = `Région : ${lm.region} • Chef-lieu : ${lm.capital}`;
+      this.container.querySelector("#tooltip-3d-desc").textContent = lm.desc;
+
+      tooltip.style.left = `${Math.min(this.width - 240, x + 15)}px`;
+      tooltip.style.top = `${Math.max(15, y - 40)}px`;
+      tooltip.classList.remove("hidden");
+      canvas.style.cursor = "pointer";
+    } else if (tooltip) {
+      tooltip.classList.add("hidden");
+      canvas.style.cursor = this.isDragging ? "grabbing" : "grab";
+    }
   }
 
   destroy() {
-    if (this.animationId) cancelAnimationFrame(this.animationId);
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+    }
   }
 }
 

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <linearGradient id="foamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="rockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350f"/>
+      <stop offset="60%" stop-color="#451a03"/>
+      <stop offset="100%" stop-color="#291205"/>
+    </linearGradient>
+    <linearGradient id="domeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b45309"/>
+      <stop offset="50%" stop-color="#78350f"/>
+      <stop offset="100%" stop-color="#451a03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ciel tropical des Cascades -->
+  <rect width="800" height="500" fill="#0284c7"/>
+  <rect width="800" height="500" fill="url(#boboSky)" opacity="0.35"/>
+
+  <!-- Falaise de grès de Banfora (arrière-plan) -->
+  <polygon points="0 180, 280 140, 520 160, 800 130, 800 500, 0 500" fill="#291205"/>
+  <polygon points="0 210, 310 175, 540 190, 800 165, 800 500, 0 500" fill="url(#rockGrad)"/>
+
+  <!-- Dômes de Fabedougou sculptés par l'érosion éolienne et fluviale -->
+  <g fill="url(#domeGrad)">
+    <!-- Dôme 1 gauche -->
+    <path d="M40 320 Q60 220 110 220 Q160 220 180 320 Z"/>
+    <ellipse cx="110" cy="245" rx="35" ry="6" fill="#92400e"/>
+    <ellipse cx="110" cy="275" rx="42" ry="7" fill="#92400e"/>
+    <ellipse cx="110" cy="300" rx="48" ry="8" fill="#92400e"/>
+
+    <!-- Dôme 2 imposant -->
+    <path d="M160 330 Q190 190 250 190 Q310 190 340 330 Z"/>
+    <ellipse cx="250" cy="220" rx="40" ry="7" fill="#92400e"/>
+    <ellipse cx="250" cy="255" rx="52" ry="8" fill="#92400e"/>
+    <ellipse cx="250" cy="290" rx="60" ry="9" fill="#92400e"/>
+
+    <!-- Dôme 3 droit -->
+    <path d="M620 340 Q650 200 700 200 Q750 200 780 340 Z"/>
+    <ellipse cx="700" cy="235" rx="38" ry="7" fill="#92400e"/>
+    <ellipse cx="700" cy="275" rx="46" ry="8" fill="#92400e"/>
+  </g>
+
+  <!-- Cascades vives de Karfiguéla dévalant les terrasses de grès -->
+  <g>
+    <!-- Palier supérieur -->
+    <path d="M380 185 L480 185 L510 280 L350 280 Z" fill="url(#waterGrad)"/>
+    <!-- Rideaux d'écume blanche bouillonnante -->
+    <path d="M370 200 L490 200 L495 285 L365 285 Z" fill="url(#foamGrad)" opacity="0.85"/>
+
+    <!-- Palier médian -->
+    <polygon points="320 280, 540 280, 560 370, 300 370" fill="url(#waterGrad)"/>
+    <path d="M315 295 L545 295 L555 375 L305 375 Z" fill="url(#foamGrad)" opacity="0.9"/>
+
+    <!-- Bassin inférieur turquoise et vagues de la rivière Comoé -->
+    <path d="M0 370 Q400 350 800 370 L800 500 L0 500 Z" fill="url(#waterGrad)"/>
+    <!-- Remous d'eau vive -->
+    <ellipse cx="430" cy="385" rx="140" ry="25" fill="url(#foamGrad)" opacity="0.6"/>
+    <ellipse cx="430" cy="410" rx="200" ry="30" fill="url(#waterGrad)"/>
+    <ellipse cx="430" cy="415" rx="160" ry="18" fill="url(#foamGrad)" opacity="0.45"/>
+  </g>
+
+  <!-- Rôniers, canne à sucre et palmiers luxuriants des Cascades -->
+  <g fill="#14532d">
+    <!-- Palmier 1 -->
+    <path d="M70 410 Q65 340 50 280 L60 280 Q78 340 82 410 Z" fill="#291205"/>
+    <path d="M55 280 Q20 260 0 285 Q30 265 55 280 Z"/>
+    <path d="M55 280 Q60 230 40 220 Q55 240 55 280 Z"/>
+    <path d="M55 280 Q90 240 110 260 Q80 255 55 280 Z"/>
+
+    <!-- Palmier 2 -->
+    <path d="M730 420 Q735 340 750 270 L740 270 Q725 340 720 420 Z" fill="#291205"/>
+    <path d="M745 270 Q780 250 800 275 Q770 255 745 270 Z"/>
+    <path d="M745 270 Q740 220 760 210 Q745 230 745 270 Z"/>
+    <path d="M745 270 Q710 230 690 250 Q720 245 745 270 Z"/>
+  </g>
+
+  <!-- Cartouche d'identification patrimoniale -->
+  <rect x="25" y="25" width="310" height="52" rx="12" fill="#181410" fill-opacity="0.85" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="40" y="46" font-family="Plus Jakarta Sans, sans-serif" font-weight="bold" font-size="13" fill="#fef3c7">Cascades de Karfiguéla &amp; Dômes</text>
+  <text x="40" y="64" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#38bdf8">Région de Djôrô • Terroir de Banfora &amp; Fleuve Comoé</text>
+</svg>

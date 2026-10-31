@@ -23,7 +23,8 @@ class FasoGlossaryView {
           <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #E5A93C 0, #E5A93C 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
           <div class="relative max-w-5xl mx-auto text-center space-y-4">
             <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 px-4 py-1.5 rounded-full text-amber-400 text-xs font-bold tracking-widest uppercase">
-              📚 Patrimoine Linguistique & Sagesse
+              ${window.fasoIcon('book', 'w-3.5 h-3.5 text-amber-400')}
+              <span>Patrimoine Linguistique &amp; Sagesse</span>
             </div>
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-50 font-heading leading-tight">
               Glossaire Culturel<br>
@@ -36,7 +37,9 @@ class FasoGlossaryView {
 
             <!-- Barre de recherche -->
             <div class="max-w-md mx-auto relative mt-6">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-amber-400 text-lg">🔍</span>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-amber-400 text-sm">
+                ${window.fasoIcon('search', 'w-4 h-4 text-amber-400')}
+              </span>
               <input
                 id="glossary-search-input"
                 type="text"
@@ -52,7 +55,9 @@ class FasoGlossaryView {
           <!-- Section Glossaire -->
           <section>
             <div class="flex items-center gap-3 mb-8">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl">📖</div>
+              <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                ${window.fasoIcon('book', 'w-5 h-5 text-amber-400')}
+              </div>
               <div>
                 <h2 class="text-2xl font-black text-amber-100 font-heading">Dictionnaire des Termes Culturels</h2>
                 <p class="text-stone-400 text-xs">Concepts, pratiques et expressions emblématiques du patrimoine immatériel burkinabè</p>
@@ -66,14 +71,16 @@ class FasoGlossaryView {
           <!-- Séparateur décoratif -->
           <div class="flex items-center gap-4">
             <div class="flex-1 h-px bg-gradient-to-r from-transparent via-amber-700/40 to-transparent"></div>
-            <span class="text-amber-500 text-2xl">◆</span>
+            <span class="text-amber-500 text-xl font-serif">◈</span>
             <div class="flex-1 h-px bg-gradient-to-r from-transparent via-amber-700/40 to-transparent"></div>
           </div>
 
           <!-- Section Proverbes -->
           <section>
             <div class="flex items-center gap-3 mb-8">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl">🪔</div>
+              <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                ${window.fasoIcon('quill', 'w-5 h-5 text-amber-400')}
+              </div>
               <div>
                 <h2 class="text-2xl font-black text-amber-100 font-heading">Proverbes &amp; Sagesses Orales</h2>
                 <p class="text-stone-400 text-xs">Paroles des aïeux transmises de génération en génération lors des veillées</p>
@@ -85,15 +92,18 @@ class FasoGlossaryView {
           </section>
 
           <!-- Appel à contribution -->
-          <section class="bg-gradient-to-br from-amber-950/30 to-stone-900 border border-amber-500/20 rounded-3xl p-8 text-center space-y-4">
-            <div class="text-4xl">🌍</div>
+          <section class="bg-gradient-to-br from-amber-950/20 to-stone-900 border border-stone-800 rounded-3xl p-8 text-center space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400">
+              ${window.fasoIcon('globe', 'w-6 h-6 text-amber-400')}
+            </div>
             <h3 class="text-xl font-black text-amber-100 font-heading">Enrichissez ce Glossaire Collectif</h3>
             <p class="text-stone-300 text-sm max-w-lg mx-auto leading-relaxed">
               Vous connaissez un terme traditionnel, un proverbe ou une expression culturelle 
               d'une des 17 régions non répertorié ici ? Contribuez à cette mémoire vivante.
             </p>
-            <a href="#contribute" class="inline-block mt-2 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-black text-sm shadow-lg hover:scale-105 transition-all">
-              ✍️ Proposer un Terme ou un Proverbe
+            <a href="#contribute" class="inline-flex items-center gap-2 mt-2 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-black text-sm shadow-lg hover:scale-105 transition-all">
+              ${window.fasoIcon('quill', 'w-4 h-4 fill-stone-950')}
+              <span>Proposer un Terme ou un Proverbe</span>
             </a>
           </section>
 
@@ -116,31 +126,24 @@ class FasoGlossaryView {
     });
 
     if (filtered.length === 0) {
-      return `<div class="col-span-3 text-center py-10 text-stone-500">
-        <div class="text-4xl mb-3">🔎</div>
+      return `<div class="col-span-3 text-center py-12 text-stone-500">
+        <div class="w-12 h-12 mx-auto mb-3 text-stone-600">${window.fasoIcon('search', 'w-10 h-10')}</div>
         <p class="text-sm">Aucun terme ne correspond à "<strong class="text-amber-400">${query}</strong>".</p>
       </div>`;
     }
 
-    const termIcons = {
-      "Naba": "👑", "Mogho Naba": "🏛️", "Faso Dan Fani": "🧵",
-      "Dolo": "🍺", "Pulaaku": "🌟", "Kora": "🎵",
-      "Balafon": "🪘", "Wack": "🔮", "Soumbala": "🌿", "Zaï": "🌾"
-    };
-
     return filtered.map(item => `
-      <article class="group relative bg-stone-900/60 hover:bg-amber-950/30 border border-stone-800 hover:border-amber-500/50 rounded-2xl p-5 transition-all duration-300 cursor-default">
-        <div class="flex items-start gap-3 mb-3">
-          <span class="text-2xl mt-0.5">${termIcons[item.term] || "📌"}</span>
+      <article class="group relative bg-stone-900/50 hover:bg-stone-900 border border-stone-800 hover:border-amber-500/40 rounded-2xl p-6 transition-all duration-300 cursor-default space-y-3">
+        <div class="flex items-start justify-between">
           <div>
             <h3 class="text-lg font-black text-amber-300 font-heading group-hover:text-amber-200 transition-colors">${item.term}</h3>
-            <div class="text-[10px] uppercase tracking-widest text-amber-600/70 font-bold">Terme du Patrimoine</div>
+            <div class="text-[10px] uppercase tracking-widest text-amber-500/70 font-bold mt-0.5">Terme Traditionnel Burkinabè</div>
+          </div>
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
+            ${window.fasoIcon('book', 'w-4 h-4')}
           </div>
         </div>
-        <p class="text-stone-300 text-sm leading-relaxed">${item.def}</p>
-        <div class="absolute bottom-3 right-3 w-6 h-6 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <span class="text-amber-400 text-xs">→</span>
-        </div>
+        <p class="text-stone-300 text-xs sm:text-sm leading-relaxed">${item.def}</p>
       </article>
     `).join("");
   }
@@ -150,16 +153,19 @@ class FasoGlossaryView {
       return `<p class="text-stone-500">Données des proverbes non disponibles.</p>`;
     }
 
-    const proverbIcons = ["🌍", "🎶", "🌅", "🤝"];
-
     return FASO_PROVERBS.map((item, i) => `
-      <article class="bg-gradient-to-br from-stone-900 to-amber-950/20 border border-amber-500/20 rounded-2xl p-6 space-y-4 hover:border-amber-400/40 transition-all shadow-md">
-        <div class="flex items-center gap-3">
-          <span class="text-3xl">${proverbIcons[i % proverbIcons.length]}</span>
-          <span class="text-xs uppercase tracking-widest text-amber-500/80 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">${item.lang}</span>
+      <article class="bg-stone-900/50 border border-stone-800 hover:border-amber-500/30 rounded-2xl p-6 sm:p-7 space-y-4 transition-all">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-bold">${item.lang}</span>
+          </div>
+          <div class="w-7 h-7 rounded-lg bg-stone-800 flex items-center justify-center text-stone-400">
+            ${window.fasoIcon('quill', 'w-3.5 h-3.5 text-amber-400')}
+          </div>
         </div>
 
-        <blockquote class="border-l-4 border-amber-500 pl-4">
+        <blockquote class="border-l-3 border-amber-500 pl-4 py-1">
           <p class="text-amber-100 font-semibold text-base italic leading-relaxed">"${item.proverb}"</p>
         </blockquote>
 

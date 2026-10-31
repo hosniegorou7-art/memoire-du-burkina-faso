@@ -19,7 +19,8 @@ class FasoContributeView {
         <!-- En-tête -->
         <div class="text-center space-y-3 mb-10">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
-            <span>🤝</span> <span>Collecte & Préservation Participative</span>
+            ${window.fasoIcon ? window.fasoIcon('quill', 'w-3.5 h-3.5 text-amber-400') : ''}
+            <span>Collecte &amp; Préservation Participative</span>
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold text-amber-100 font-heading">
             Transmettez la Mémoire de Vos Aînés
@@ -132,18 +133,21 @@ class FasoContributeView {
             <!-- Bouton de soumission -->
             <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <span class="text-[11px] text-stone-400">
-                ℹ️ Toute contribution est vérifiée par notre comité d'historiens et linguistes avant publication.
+                Toute contribution est vérifiée par notre comité d'historiens et linguistes avant publication.
               </span>
-              <button type="submit" class="btn-primary text-xs w-full sm:w-auto px-6 py-3 shadow-lg">
-                <span>🚀</span> <span>Soumettre la Contribution</span>
+              <button type="submit" class="btn-primary text-xs w-full sm:w-auto px-6 py-3 shadow-lg flex items-center justify-center gap-2">
+                ${window.fasoIcon ? window.fasoIcon('quill', 'w-4 h-4 fill-stone-950') : ''}
+                <span>Soumettre la Contribution</span>
               </button>
             </div>
 
           </form>
 
           <!-- Notification de confirmation -->
-          <div id="contribute-success" class="hidden p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/50 text-emerald-200 text-center space-y-2 animate-fade-in">
-            <div class="text-3xl">✨</div>
+          <div id="contribute-success" class="hidden p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/50 text-emerald-200 text-center space-y-2 animate-fade-in">
+            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2">
+              ${window.fasoIcon ? window.fasoIcon('check', 'w-5 h-5') : '✓'}
+            </div>
             <h4 class="font-bold text-base">Contribution Enregistrée avec Succès !</h4>
             <p class="text-xs text-stone-300 max-w-md mx-auto">
               Bark wusgo ! Votre récit a été transmis à la cellule scientifique pour modération et intégration dans la bibliothèque du patrimoine.

@@ -29,9 +29,9 @@ class Faso17Map2D {
         <!-- Barre supérieure de contrôle cartographique -->
         <div class="w-full flex flex-wrap items-center justify-between gap-3 mb-4 z-10">
           <div class="flex items-center gap-3">
-            <span class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-lg">
-              🗺️
-            </span>
+            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center">
+              ${window.fasoIcon ? window.fasoIcon('map', 'w-4 h-4 text-amber-400') : ''}
+            </div>
             <div>
               <h3 class="text-sm sm:text-base font-bold text-amber-100 font-heading">
                 Carte Souveraine des 17 Régions du Faso
@@ -240,8 +240,9 @@ class Faso17Map2D {
         </div>
 
         <div class="pt-3">
-          <button id="btn-explore-reg" class="w-full btn-primary text-xs justify-center py-2 shadow-md">
-            <span>📖</span> <span>Explorer cette région & récits</span>
+          <button id="btn-explore-reg" class="w-full btn-primary text-xs justify-center py-2 shadow-md flex items-center gap-2">
+            ${window.fasoIcon ? window.fasoIcon('book', 'w-3.5 h-3.5 text-stone-950') : ''}
+            <span>Explorer cette région &amp; récits</span>
           </button>
         </div>
       </div>

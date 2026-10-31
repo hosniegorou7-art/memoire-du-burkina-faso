@@ -116,6 +116,38 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         question_count = quiz_section.count('question:')
         self.assertGreaterEqual(question_count, 14, f"FASO_QUIZ doit contenir au moins 14 questions, trouvé {question_count}")
 
+    def test_audio_tracks_presence(self):
+        """Vérifie la génération et présence effective des 20 fichiers audio MP3 haute fidélité"""
+        audio_dir = BASE_DIR / "static" / "audio"
+        self.assertTrue(audio_dir.exists(), "Le dossier static/audio doit exister")
+        mp3_files = list(audio_dir.glob("*.mp3"))
+        self.assertGreaterEqual(len(mp3_files), 20, f"Au moins 20 fichiers audio MP3 doivent être présents, trouvé {len(mp3_files)}")
+        # Vérification des fichiers clés
+        key_stories = ["yennenga.mp3", "dafra.mp3", "guimbi-ouattara.mp3", "festima-bankui.mp3", "cascades-djoro.mp3"]
+        for k in key_stories:
+            self.assertTrue((audio_dir / k).exists(), f"Fichier audio clé {k} manquant dans static/audio !")
+
+    def test_icons_and_illustrations(self):
+        """Vérifie la présence des icônes vectorielles SVG et des illustrations burkinabè"""
+        icons_file = BASE_DIR / "static" / "js" / "core" / "icons.js"
+        self.assertTrue(icons_file.exists(), "Le système d'icônes icons.js doit exister")
+        
+        illus_dir = BASE_DIR / "static" / "assets" / "illustrations"
+        self.assertTrue(illus_dir.exists(), "Le dossier des illustrations doit exister")
+        required_illus = ["burkina-panoramic.svg", "mosquee-bobo.svg", "cascades-banfora.svg", "cour-tiebele.svg"]
+        for img in required_illus:
+            self.assertTrue((illus_dir / img).exists(), f"Illustration {img} manquante !")
+
+    def test_no_informal_emojis_in_core_navigation(self):
+        """Vérifie que la navigation principale utilise des icônes SVG professionnelles sans emojis informels"""
+        index_file = BASE_DIR / "static" / "index.html"
+        content = index_file.read_text(encoding="utf-8")
+        # Les emojis de navigation autrefois présents ne doivent plus s'y trouver
+        forbidden_emojis = ["🗺️", "📚", "🏛️", "🔥", "✨", "📖", "🧭", "🛡️", "👑"]
+        for em in forbidden_emojis:
+            self.assertNotIn(em, content, f"Emoji informel {em} trouvé dans static/index.html")
+        self.assertIn("icons.js", content)
+
 
 if __name__ == "__main__":
     unittest.main()

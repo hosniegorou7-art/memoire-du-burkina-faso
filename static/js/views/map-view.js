@@ -29,12 +29,14 @@ class FasoMapView {
           </div>
 
           <!-- Bascule 2D Vectorielle / 3D Isométrique -->
-          <div class="flex items-center bg-stone-900 rounded-2xl p-1 border border-amber-900/40 text-xs">
-            <button id="btn-toggle-2d" class="px-4 py-2 rounded-xl font-bold transition-all ${this.currentMode === '2d' ? 'bg-amber-500 text-stone-950 shadow-md' : 'text-stone-300 hover:text-white'} flex items-center gap-1.5">
-              <span>🗺️</span> <span>Carte 2D Vectorielle</span>
+          <div class="flex items-center bg-stone-900 rounded-2xl p-1 border border-stone-800 text-xs">
+            <button id="btn-toggle-2d" class="px-4 py-2 rounded-xl font-bold transition-all ${this.currentMode === '2d' ? 'bg-amber-500 text-stone-950 shadow-md' : 'text-stone-300 hover:text-white'} flex items-center gap-2">
+              ${window.fasoIcon('map', 'w-3.5 h-3.5')}
+              <span>Carte 2D Vectorielle</span>
             </button>
-            <button id="btn-toggle-3d" class="px-4 py-2 rounded-xl font-bold transition-all ${this.currentMode === '3d' ? 'bg-amber-500 text-stone-950 shadow-md' : 'text-stone-300 hover:text-white'} flex items-center gap-1.5">
-              <span>🌍</span> <span>Relief 3D Isométrique</span>
+            <button id="btn-toggle-3d" class="px-4 py-2 rounded-xl font-bold transition-all ${this.currentMode === '3d' ? 'bg-amber-500 text-stone-950 shadow-md' : 'text-stone-300 hover:text-white'} flex items-center gap-2">
+              ${window.fasoIcon('layers', 'w-3.5 h-3.5')}
+              <span>Relief 3D Topographique</span>
             </button>
           </div>
         </div>

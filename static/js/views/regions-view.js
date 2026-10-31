@@ -43,7 +43,9 @@ class FasoRegionsView {
           <!-- Filtre de recherche -->
           <div class="relative w-full sm:w-72">
             <input type="text" id="region-search-input" placeholder="Rechercher une région, chef-lieu..." class="w-full bg-stone-900 border border-stone-800 focus:border-amber-500 rounded-xl px-3.5 py-2 pl-9 text-xs text-stone-100 focus:outline-none">
-            <span class="absolute left-3 top-2.5 text-stone-500 text-xs">🔍</span>
+            <span class="absolute left-3 top-2.5 text-stone-500 text-xs">
+              ${window.fasoIcon ? window.fasoIcon('search', 'w-3.5 h-3.5 text-stone-500') : ''}
+            </span>
           </div>
         </div>
 
@@ -67,7 +69,7 @@ class FasoRegionsView {
               </div>
 
               <div class="pt-2 flex items-center justify-between text-xs text-amber-400 font-bold">
-                <span>📚 ${r.storiesCount || 1} conte(s) documenté(s)</span>
+                <span>${window.fasoIcon ? window.fasoIcon('book', 'w-3 h-3 text-amber-400 inline mr-1') : ''}${r.storiesCount || 1} conte(s)</span>
                 <span class="group-hover:translate-x-1 transition-transform">Explorer ➔</span>
               </div>
             </div>
@@ -126,21 +128,21 @@ class FasoRegionsView {
           <!-- 3 Blocs Détaillés : Peuples, Musique, Paysages -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
             <div class="p-4 rounded-2xl bg-stone-950/70 border border-stone-800 space-y-1">
-              <span class="text-lg">👥</span>
-              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Communautés & Langues</h4>
+              <div class="w-6 h-6 text-amber-400 mb-1">${window.fasoIcon ? window.fasoIcon('user', 'w-4 h-4 text-amber-400') : ''}</div>
+              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Communautés &amp; Langues</h4>
               <p class="text-xs text-stone-300">${reg.demographics.join(", ")}</p>
               <p class="text-[11px] text-amber-400/90 font-mono">Parler : ${reg.languages.join(", ")}</p>
             </div>
 
             <div class="p-4 rounded-2xl bg-stone-950/70 border border-stone-800 space-y-1">
-              <span class="text-lg">🪘</span>
-              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Instruments & Musique</h4>
+              <div class="w-6 h-6 text-amber-400 mb-1">${window.fasoIcon ? window.fasoIcon('audio', 'w-4 h-4 text-amber-400') : ''}</div>
+              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Instruments &amp; Musique</h4>
               <p class="text-xs text-stone-300">${reg.musicalTraditions}</p>
             </div>
 
             <div class="p-4 rounded-2xl bg-stone-950/70 border border-stone-800 space-y-1">
-              <span class="text-lg">🌿</span>
-              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Paysages & Lieux Clés</h4>
+              <div class="w-6 h-6 text-amber-400 mb-1">${window.fasoIcon ? window.fasoIcon('map', 'w-4 h-4 text-amber-400') : ''}</div>
+              <h4 class="font-bold text-amber-300 text-xs uppercase tracking-wider">Paysages &amp; Lieux Clés</h4>
               <p class="text-xs text-stone-300">${reg.landscapes}</p>
               <p class="text-[11px] text-stone-400">Sites : ${reg.historicalSites.join(", ")}</p>
             </div>
@@ -151,7 +153,7 @@ class FasoRegionsView {
         <div class="space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="text-xl sm:text-2xl font-extrabold text-amber-100 font-heading">
-              Récits & Légendes du Terroir de ${reg.name}
+              Récits &amp; Légendes du Terroir de ${reg.name}
             </h3>
             <span class="text-xs text-amber-400 font-bold">${regionStories.length} récit(s) disponible(s)</span>
           </div>
@@ -166,8 +168,11 @@ class FasoRegionsView {
                     <h4 class="text-base font-bold text-stone-100 group-hover:text-amber-200 transition-colors leading-snug line-clamp-1">${s.title}</h4>
                     <p class="text-xs text-stone-400 line-clamp-2 leading-relaxed">${s.synopsis}</p>
                     <div class="pt-2 flex items-center justify-between text-xs text-amber-400 font-bold">
-                      <span>🗣️ ${s.languages.join(", ")}</span>
-                      <span>Écouter ➔</span>
+                      <span>${s.languages.join(", ")}</span>
+                      <span class="flex items-center gap-1">
+                        <span>Écouter</span>
+                        ${window.fasoIcon ? window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400') : ''}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -175,13 +180,13 @@ class FasoRegionsView {
             </div>
           ` : `
             <div class="p-10 rounded-2xl bg-stone-900/50 border border-dashed border-stone-800 text-center space-y-3">
-              <div class="text-3xl">🌾</div>
+              <div class="w-12 h-12 mx-auto text-stone-600">${window.fasoIcon ? window.fasoIcon('quill', 'w-10 h-10') : ''}</div>
               <h4 class="text-base font-bold text-amber-200">Collecte en cours pour cette région</h4>
               <p class="text-xs text-stone-400 max-w-md mx-auto">
                 Les traditions orales de ${reg.name} font l'objet d'une campagne de documentation active. Vous pouvez contribuer en proposant un récit authentique.
               </p>
               <a href="#contribute" class="btn-secondary text-xs inline-block">
-                <span>✍️</span> <span>Proposer un conte pour ${reg.name}</span>
+                <span>Proposer un conte pour ${reg.name}</span>
               </a>
             </div>
           `}

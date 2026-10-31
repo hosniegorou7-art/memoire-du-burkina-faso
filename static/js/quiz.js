@@ -54,10 +54,12 @@ class FasoQuizEngine {
 
           <!-- En-tête -->
           <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 border-b border-amber-900/40">
-            <div class="flex items-center gap-2">
-              <span class="text-2xl">🎓</span>
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center justify-center">
+                ${window.fasoIcon ? window.fasoIcon('award', 'w-4 h-4 text-amber-400') : '◆'}
+              </div>
               <div>
-                <h3 class="text-sm font-bold text-amber-200">Transmission & Sagesse du Faso</h3>
+                <h3 class="text-sm font-bold text-amber-200">Transmission &amp; Sagesse du Faso</h3>
                 <p class="text-[11px] text-amber-400/80">Question ${this.currentIndex + 1} sur ${this.questions.length} • Score : ${this.score}</p>
               </div>
             </div>
@@ -112,7 +114,9 @@ class FasoQuizEngine {
     quizBody.innerHTML = `
       <div class="space-y-5 animate-fade-in">
         <div class="p-4 rounded-2xl ${isCorrect ? 'bg-emerald-950/40 border border-emerald-500/50 text-emerald-200' : 'bg-rose-950/40 border border-rose-500/50 text-rose-200'} flex items-start gap-3">
-          <span class="text-2xl">${isCorrect ? '✨' : '📖'}</span>
+          <div class="w-8 h-8 rounded-lg ${isCorrect ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'} flex items-center justify-center shrink-0">
+            ${isCorrect ? (window.fasoIcon ? window.fasoIcon('check', 'w-4 h-4') : '✓') : (window.fasoIcon ? window.fasoIcon('book', 'w-4 h-4') : 'ℹ')}
+          </div>
           <div>
             <div class="font-bold text-base mb-1">${isCorrect ? 'Excellente réponse !' : 'Bonne tentative !'}</div>
             <p class="text-xs sm:text-sm text-stone-200 leading-relaxed">${q.explanation}</p>
@@ -121,7 +125,7 @@ class FasoQuizEngine {
 
         <div class="text-center pt-3">
           <button id="btn-next-question" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-bold text-sm shadow-lg hover:scale-105 transition-all">
-            ${this.currentIndex + 1 < this.questions.length ? 'Question Suivante ➔' : 'Découvrir mon Rang Culturel 🏆'}
+            ${this.currentIndex + 1 < this.questions.length ? 'Question Suivante ➔' : 'Découvrir mon Rang Culturel'}
           </button>
         </div>
       </div>
@@ -139,16 +143,16 @@ class FasoQuizEngine {
   renderFinalScore() {
     let rankTitle = "Initié des Veillées";
     let rankDesc = "Vous commencez votre voyage au cœur de la sagesse orale burkinabè.";
-    let icon = "🌱";
+    let iconName = "sparkles";
 
     if (this.score >= 7) {
       rankTitle = "Grand Griot & Maître de la Parole";
       rankDesc = "Une connaissance admirable du patrimoine, des langues et des symboles du Faso ! Les ancêtres sont fiers de vous.";
-      icon = "👑";
+      iconName = "crown";
     } else if (this.score >= 4) {
       rankTitle = "Gardien des Coutumes du Faso";
       rankDesc = "Un esprit attentif et éclairé. Les récits des 17 régions résonnent en vous.";
-      icon = "🛡️";
+      iconName = "shield";
     }
 
     const quizBody = this.container.querySelector("#quiz-body");
@@ -156,7 +160,9 @@ class FasoQuizEngine {
 
     quizBody.innerHTML = `
       <div class="text-center space-y-4 py-4 animate-fade-in">
-        <div class="text-5xl">${icon}</div>
+        <div class="w-16 h-16 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center mx-auto">
+          ${window.fasoIcon ? window.fasoIcon(iconName, 'w-8 h-8 text-amber-400') : '◆'}
+        </div>
         <div class="text-xs uppercase tracking-widest text-amber-400 font-bold">Certificat de Transmission</div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-200">${rankTitle}</h2>
         <div class="text-4xl font-black text-white font-mono">${this.score} / ${this.questions.length}</div>
@@ -166,7 +172,7 @@ class FasoQuizEngine {
 
         <div class="pt-4 flex flex-wrap items-center justify-center gap-3">
           <button id="btn-retry-quiz" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-bold text-xs shadow-lg hover:scale-105 transition-all">
-            🔄 Recommencer le Quiz
+            Recommencer le Quiz
           </button>
           <button id="btn-finish-quiz" class="px-5 py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold text-xs border border-stone-700 transition-all">
             Retour à l'Accueil

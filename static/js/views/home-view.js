@@ -1,8 +1,13 @@
 /**
- * MÉMOIRE DU BURKINA — VUE D'ACCUEIL CINÉMATOGRAPHIQUE (8 SECTIONS DU CAHIER DES CHARGES)
- * Section 1: Hero immersif | Section 2: Carte 17 Régions | Section 3: Récits phares |
- * Section 4: Voix du Faso | Section 5: Voyager dans les Régions | Section 6: Autour du feu |
- * Section 7: Sauvegarde | Section 8: Pied de page.
+ * MÉMOIRE DU BURKINA — VUE D'ACCUEIL CINÉMATOGRAPHIQUE & ÉPURÉE
+ * 7 grandes sections du cahier des charges, illustrées et aérées :
+ * - Section 1 : Hero immersif avec grande fresque panoramique du Faso
+ * - Section 2 : Carte interactive des 17 régions
+ * - Section 3 : Récits et épopées phares illustrés
+ * - Section 4 : Voix des terroirs et langues nationales
+ * - Section 5 : Mosaïque des 17 régions et hauts lieux patrimoniaux
+ * - Section 6 : Expérience signature « Écouter autour du feu »
+ * - Section 7 : Sauvegarde collective & contribution UNESCO
  */
 
 class FasoHomeView {
@@ -16,57 +21,85 @@ class FasoHomeView {
     const regions = window.FASO_17_REGIONS || [];
     const languages = window.FASO_LANGUAGES || [];
 
+    // Illustrations emblématiques pour les cartes de régions
+    const regionIllustrations = {
+      guiriko: "mosquee-bobo.svg",
+      djoro: "cascades-banfora.svg",
+      nazinon: "cour-tiebele.svg",
+      tannounyan: "loropeni-hero.svg",
+      nando: "sabou-hero.svg",
+      kadiogo: "yennenga-hero.svg",
+      liptako: "sahel-hero.svg",
+      bankui: "lievre-hero.svg"
+    };
+
     this.container.innerHTML = `
-      <div class="space-y-20 pb-16 animate-fade-in text-stone-100">
+      <div class="space-y-24 pb-20 animate-fade-in text-stone-100">
 
-        <!-- ==================== SECTION 1 : HERO IMMERSIF ==================== -->
-        <section class="relative pt-12 pb-20 md:pt-24 md:pb-32 overflow-hidden bg-gradient-to-b from-amber-950/30 via-stone-950 to-stone-950">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
-            
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider shadow-inner">
-              <span>🇧🇫</span> <span>Patrimoine Oral Vivant des 17 Régions</span>
+        <!-- ==================== SECTION 1 : HERO IMMERSIF PANORAMIQUE ==================== -->
+        <section class="relative pt-6 pb-16 md:pt-10 md:pb-24 overflow-hidden">
+          
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+            <!-- Bannière Panoramique Artistique du Burkina Faso -->
+            <div class="relative w-full h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden border border-amber-900/30 shadow-2xl bg-stone-950 group">
+              <img
+                src="/static/assets/illustrations/burkina-panoramic.svg"
+                alt="Panorama du Burkina Faso — Mosquée de Bobo, Baobab millénaire et Yennenga"
+                class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-1000"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent flex flex-col justify-end p-6 sm:p-10 md:p-12 space-y-4">
+                
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-900/90 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider self-start shadow-md backdrop-blur-md">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span>Patrimoine Oral des 17 Régions</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-amber-50 tracking-tight leading-tight max-w-4xl font-heading drop-shadow-lg">
+                  Chaque région a une histoire.<br>
+                  Chaque voix garde <span class="text-gradient-gold">une mémoire.</span>
+                </h1>
+
+                <p class="text-sm sm:text-base md:text-lg text-stone-200 max-w-2xl leading-relaxed font-sans drop-shadow-md">
+                  Explorez le Burkina Faso à travers ses contes fondateurs, ses légendes héroïques 
+                  et ses sagesses transmises en langues nationales.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                  <a href="#map" class="btn-primary text-xs sm:text-sm px-6 py-3 shadow-xl flex items-center gap-2">
+                    ${window.fasoIcon('map', 'w-4 h-4')}
+                    <span>Explorer la Carte des 17 Régions</span>
+                  </a>
+                  <a href="#library" class="btn-secondary text-xs sm:text-sm px-6 py-3 flex items-center gap-2">
+                    ${window.fasoIcon('book', 'w-4 h-4')}
+                    <span>Bibliothèque des Récits</span>
+                  </a>
+                  <a href="#campfire/yennenga" class="px-5 py-3 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-200 border border-amber-500/40 font-bold text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg backdrop-blur-sm">
+                    ${window.fasoIcon('flame', 'w-4 h-4 text-orange-400')}
+                    <span>Autour du Feu</span>
+                  </a>
+                </div>
+
+              </div>
             </div>
 
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-amber-50 tracking-tight leading-tight max-w-4xl mx-auto font-heading">
-              Chaque région a une histoire. <br>
-              Chaque voix garde <span class="text-gradient-gold">une mémoire.</span>
-            </h1>
-
-            <p class="text-sm sm:text-base md:text-lg text-stone-300 max-w-2xl mx-auto leading-relaxed font-sans">
-              Explorez le Burkina Faso à travers ses contes, ses légendes et ses récits fondateurs.
-              Écoutez la parole des anciens en langues nationales (*Mooré, Dioula, Fulfulde...*)
-              portée par des ambiances musicales authentiques.
-            </p>
-
-            <div class="flex flex-wrap items-center justify-center gap-3.5 pt-4">
-              <a href="#map" class="btn-primary text-sm px-6 py-3.5 shadow-xl shadow-amber-500/20">
-                <span>🗺️</span> <span>Découvrir la Carte des 17 Régions</span>
-              </a>
-              <a href="#library" class="btn-secondary text-sm px-6 py-3.5">
-                <span>📚</span> <span>Explorer la Bibliothèque des Récits</span>
-              </a>
-              <a href="#campfire/yennenga" class="px-5 py-3.5 rounded-xl bg-orange-950/40 hover:bg-orange-900/50 text-orange-200 border border-orange-500/40 font-bold text-sm transition-all flex items-center gap-2">
-                <span>🔥</span> <span>Écouter autour du feu</span>
-              </a>
-            </div>
-
-            <!-- 4 Chiffres Clés du Patrimoine -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-10">
-              <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/30">
+            <!-- 4 Indicateurs Clés Aérés -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
+              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
                 <div class="text-3xl font-black text-amber-300 font-mono">17</div>
-                <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider mt-0.5">Régions Souveraines</div>
+                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Régions Souveraines</div>
               </div>
-              <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/30">
+              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
                 <div class="text-3xl font-black text-amber-300 font-mono">10+</div>
-                <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider mt-0.5">Langues Documentées</div>
+                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Langues Documentées</div>
               </div>
-              <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/30">
-                <div class="text-3xl font-black text-amber-300 font-mono">100%</div>
-                <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider mt-0.5">Voix & Audios Authentiques</div>
+              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
+                <div class="text-3xl font-black text-amber-300 font-mono">20</div>
+                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Pistes Audio &amp; Contes</div>
               </div>
-              <div class="p-4 rounded-2xl bg-stone-900/60 border border-amber-900/30">
+              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
                 <div class="text-3xl font-black text-amber-300 font-mono">UNESCO</div>
-                <div class="text-[11px] text-stone-400 font-semibold uppercase tracking-wider mt-0.5">Éthique & Consentement</div>
+                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Sauvegarde &amp; Éthique</div>
               </div>
             </div>
 
@@ -74,95 +107,100 @@ class FasoHomeView {
         </section>
 
         <!-- ==================== SECTION 2 : EXPLORER PAR LA CARTE ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span class="badge-culture mb-2">Cartographie Immersive</span>
               <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
                 Le Territoire à Travers ses Récits
               </h2>
-              <p class="text-xs sm:text-sm text-stone-400 mt-1">
-                Visualisez les 17 régions actuelles du pays et naviguez vers leurs traditions orales.
+              <p class="text-xs sm:text-sm text-stone-400 mt-1 max-w-xl">
+                Sélectionnez une des 17 régions officielles pour accéder instantanément à ses traditions orales et son patrimoine.
               </p>
             </div>
-            <a href="#map" class="btn-secondary text-xs self-start md:self-auto">
-              <span>Plein Écran Cartographique ➔</span>
+            <a href="#map" class="btn-secondary text-xs self-start md:self-auto flex items-center gap-1.5">
+              <span>Vue Cartographique Complète (2D / 3D)</span>
+              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
             </a>
           </div>
 
-          <!-- Conteneur de l'aperçu 2D des 17 régions -->
-          <div id="home-map-preview-container" class="w-full min-h-[460px]"></div>
+          <div id="home-map-preview-container" class="w-full min-h-[460px] rounded-3xl overflow-hidden border border-stone-800"></div>
         </section>
 
         <!-- ==================== SECTION 3 : RÉCITS À DÉCOUVRIR ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span class="badge-culture mb-2">Sélection Patrimoniale</span>
               <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Contes & Épopées Incontournables
+                Contes &amp; Épopées Emblématiques
               </h2>
               <p class="text-xs sm:text-sm text-stone-400 mt-1">
-                Des héros fondateurs aux fables de sagesse animale.
+                Des figures héroïques fondatrices aux mythes totémiques de la nature.
               </p>
             </div>
             <a href="#library" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
-              <span>Voir les ${stories.length} récits ➔</span>
+              <span>Voir les ${stories.length} récits disponibles</span>
+              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
             </a>
           </div>
 
-          <!-- Grille de Contes -->
+          <!-- Grille des Contes -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             ${stories.slice(0, 4).map(s => `
-              <div class="bg-stone-900 border border-stone-800 hover:border-amber-500/50 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col group cursor-pointer" onclick="window.fasoRouter.navigateTo('story', '${s.id}')">
-                <div class="relative w-full h-44 overflow-hidden bg-stone-950">
+              <article class="bg-stone-900/60 border border-stone-800 hover:border-amber-500/40 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 flex flex-col group cursor-pointer" onclick="window.fasoRouter.navigateTo('story', '${s.id}')">
+                <div class="relative w-full h-48 overflow-hidden bg-stone-950">
                   <img src="/static/assets/illustrations/${s.heroImage}" alt="${s.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                  <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent"></div>
-                  <span class="absolute top-2.5 left-2.5 px-2 py-0.5 text-[10px] font-bold rounded-lg bg-stone-950/80 text-amber-300 border border-amber-500/30">
+                  <div class="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-transparent to-transparent"></div>
+                  <span class="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold rounded-lg bg-stone-950/80 text-amber-300 border border-amber-500/30">
                     ${s.category}
                   </span>
                 </div>
-                <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
                   <div>
-                    <span class="text-[10px] text-amber-400 font-semibold block mb-0.5">${s.regionName}</span>
-                    <h4 class="text-sm font-bold text-stone-100 group-hover:text-amber-200 transition-colors line-clamp-1">${s.title}</h4>
-                    <p class="text-xs text-stone-400 line-clamp-2 mt-1 leading-relaxed">${s.synopsis}</p>
+                    <span class="text-[10px] uppercase tracking-wider text-amber-500 font-semibold block mb-1">${s.regionName}</span>
+                    <h4 class="text-sm font-bold text-stone-100 group-hover:text-amber-200 transition-colors line-clamp-1 font-heading">${s.title}</h4>
+                    <p class="text-xs text-stone-400 line-clamp-2 mt-1.5 leading-relaxed">${s.synopsis}</p>
                   </div>
-                  <div class="pt-2 border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
-                    <span>🗣️ ${s.languages.join(", ")}</span>
-                    <span class="text-amber-400 font-bold">Écouter ➔</span>
+                  <div class="pt-3 border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
+                    <span class="font-mono text-stone-400">${s.languages[0] || 'Français'}</span>
+                    <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                      <span>Écouter</span>
+                      ${window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400')}
+                    </span>
                   </div>
                 </div>
-              </div>
+              </article>
             `).join("")}
           </div>
         </section>
 
         <!-- ==================== SECTION 4 : LES VOIX DU BURKINA ==================== -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-amber-950/40 via-stone-900 to-stone-950 border border-amber-500/30 space-y-6">
-            <div class="max-w-2xl">
-              <span class="badge-culture mb-2">Multilinguisme Réel</span>
+          <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-amber-950/20 via-stone-900/80 to-stone-950 border border-stone-800 space-y-8">
+            <div class="max-w-2xl space-y-2">
+              <span class="badge-culture">Diversité Linguistique</span>
               <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Écoutez la Parole dans les Langues du Pays
+                Écouter la Parole dans les Langues du Terroir
               </h2>
-              <p class="text-xs sm:text-sm text-stone-300 mt-1 leading-relaxed">
-                Le patrimoine oral prend toute sa saveur dans les sonorités, proverbes et intonations de nos terroirs.
+              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                Le patrimoine oral prend tout son relief dans les sonorités et les proverbes des communautés linguistiques burkinabè.
               </p>
             </div>
 
-            <!-- Grille des Langues Nationales -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Grille des Langues -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               ${languages.slice(0, 6).map(l => `
-                <div class="p-4 rounded-2xl bg-stone-950/60 border border-stone-800 hover:border-amber-500/40 transition-all space-y-2">
+                <div class="p-5 rounded-2xl bg-stone-950/60 border border-stone-800/80 hover:border-amber-500/30 transition-all space-y-2.5">
                   <div class="flex items-center justify-between">
-                    <h4 class="text-sm font-bold text-amber-200">${l.nameFr} (${l.nativeName})</h4>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">ISO: ${l.code}</span>
+                    <h4 class="text-sm font-bold text-amber-200 font-heading">${l.nameFr} (${l.nativeName})</h4>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">ISO: ${l.code}</span>
                   </div>
                   <div class="text-xs italic text-amber-100 font-serif">"${l.greeting.native}"</div>
-                  <p class="text-[11px] text-stone-400">${l.greeting.translation}</p>
-                  <div class="pt-2 border-t border-stone-800/80 text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                    <span>✓</span> <span>${l.status.recordedVoicesCount} narrations enregistrées</span>
+                  <p class="text-[11px] text-stone-400 leading-relaxed">${l.greeting.translation}</p>
+                  <div class="pt-2 border-t border-stone-800/80 text-[10px] text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span>Traditions documentées</span>
                   </div>
                 </div>
               `).join("")}
@@ -170,89 +208,100 @@ class FasoHomeView {
           </div>
         </section>
 
-        <!-- ==================== SECTION 5 : VOYAGER DANS LES RÉGIONS ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <!-- ==================== SECTION 5 : VOYAGER DANS LES RÉGIONS AVEC ILLUSTRATIONS ==================== -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <span class="badge-culture mb-2">Mosaïque Territoriale</span>
+              <span class="badge-culture mb-2">Hauts Lieux Patrimoniaux</span>
               <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Voyager dans les 17 Régions
+                Voyager à Travers les 17 Régions
               </h2>
               <p class="text-xs sm:text-sm text-stone-400 mt-1">
-                De Bankui au Sourou, du Liptako au Tannounyan, découvrez l'âme de chaque terroir.
+                Monuments sacrés, paysages emblématiques et cours royales du Burkina Faso.
               </p>
             </div>
-            <a href="#regions" class="btn-secondary text-xs">
-              <span>Voir les 17 Fiches Régionales ➔</span>
+            <a href="#regions" class="btn-secondary text-xs flex items-center gap-1.5">
+              <span>Voir les 17 Fiches Régionales</span>
+              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
             </a>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            ${regions.slice(0, 6).map(r => `
-              <div class="p-5 rounded-2xl bg-stone-900 border border-stone-800 hover:border-amber-500/40 transition-all flex flex-col justify-between group cursor-pointer space-y-3" onclick="window.fasoRouter.navigateTo('regions', '${r.id}')">
-                <div>
-                  <div class="flex items-center justify-between mb-1.5">
-                    <h4 class="text-base font-black text-amber-100 group-hover:text-amber-300 transition-colors font-heading">${r.name}</h4>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-800 text-amber-400">${r.capital}</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${regions.slice(0, 6).map(r => {
+              const illu = regionIllustrations[r.id] || "burkina-panoramic.svg";
+              return `
+                <div class="rounded-2xl bg-stone-900/60 border border-stone-800 hover:border-amber-500/40 transition-all overflow-hidden flex flex-col justify-between group cursor-pointer shadow-md" onclick="window.fasoRouter.navigateTo('regions', '${r.id}')">
+                  <div class="h-36 overflow-hidden bg-stone-950 relative">
+                    <img src="/static/assets/illustrations/${illu}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent"></div>
+                    <span class="absolute top-2.5 right-2.5 text-[10px] font-mono px-2 py-0.5 rounded bg-stone-950/80 text-amber-300 border border-amber-500/30">
+                      ${r.capital}
+                    </span>
                   </div>
-                  <p class="text-xs text-stone-300 line-clamp-2 leading-relaxed">${r.description}</p>
+                  <div class="p-5 space-y-2">
+                    <h4 class="text-base font-black text-amber-100 group-hover:text-amber-300 transition-colors font-heading">${r.name}</h4>
+                    <p class="text-xs text-stone-300 line-clamp-2 leading-relaxed">${r.description}</p>
+                    <div class="pt-3 border-t border-stone-800 text-[11px] flex items-center justify-between text-stone-400">
+                      <span class="truncate">${r.languages.slice(0, 2).join(", ")}</span>
+                      <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform shrink-0 ml-2">Explorer ➔</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="pt-2 border-t border-stone-800 text-[11px] flex items-center justify-between text-stone-400">
-                  <span>🗣️ ${r.languages.slice(0, 2).join(", ")}</span>
-                  <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform">Explorer ➔</span>
-                </div>
-              </div>
-            `).join("")}
+              `;
+            }).join("")}
           </div>
         </section>
 
-        <!-- ==================== SECTION 6 : L'EXPÉRIENCE DU CONTEUR (AUTOUR DU FEU) ==================== -->
+        <!-- ==================== SECTION 6 : EXPÉRIENCE SIGNATURE AUTOUR DU FEU ==================== -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="p-8 sm:p-12 rounded-3xl bg-radial from-stone-900 via-amber-950/30 to-stone-950 border border-amber-500/40 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div class="p-8 sm:p-12 md:p-14 rounded-3xl bg-gradient-to-br from-amber-950/30 via-stone-900 to-stone-950 border border-amber-500/30 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl">
             <div class="space-y-4 max-w-xl">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/30">
-                <span>🔥</span> <span>Expérience Signature</span>
-              </span>
+              <div class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
+                ${window.fasoIcon('flame', 'w-3.5 h-3.5 text-orange-400')}
+                <span>Veillée Traditionnelle</span>
+              </div>
               <h2 class="text-2xl sm:text-4xl font-extrabold text-amber-50 font-heading leading-tight">
                 Mode « Écouter autour du feu »
               </h2>
               <p class="text-xs sm:text-sm text-stone-300 leading-relaxed font-sans">
-                Retrouvez l'intimité sacrée des veillées villageoises sous les étoiles.
-                Lumière de braises dansantes, nappe sonore de kora et crépitement du bois,
-                pour laisser la voix du conteur vous transporter.
+                Retrouvez l'intimité des veillées sous le grand baobab. 
+                Lueur des braises montantes, nappe sonore d'instruments traditionnels 
+                et karaoké bilingue pour écouter le conteur vous transmettre la mémoire.
               </p>
               <div class="pt-2">
-                <a href="#campfire/yennenga" class="btn-primary text-xs py-3 px-6 shadow-xl shadow-orange-500/20">
-                  <span>🔥</span> <span>Démarrer une Veillée Immersive</span>
+                <a href="#campfire/yennenga" class="btn-primary text-xs sm:text-sm py-3.5 px-6 shadow-xl flex items-center gap-2">
+                  ${window.fasoIcon('play', 'w-3.5 h-3.5 fill-stone-950')}
+                  <span>Rejoindre la Veillée Immersive</span>
                 </a>
               </div>
             </div>
 
-            <div class="w-full md:w-80 h-56 rounded-2xl overflow-hidden border border-amber-500/30 shadow-2xl relative shrink-0">
-              <img src="/static/assets/illustrations/yennenga-hero.svg" alt="Veillée au feu" class="w-full h-full object-cover">
-              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent flex items-center justify-center">
-                <span class="w-14 h-14 rounded-full bg-amber-500/90 text-stone-950 flex items-center justify-center text-2xl font-bold shadow-xl animate-pulse">
-                  ▶
-                </span>
+            <div class="w-full md:w-88 h-60 rounded-2xl overflow-hidden border border-amber-500/30 shadow-2xl relative shrink-0 bg-stone-950 group cursor-pointer" onclick="window.fasoRouter.navigateTo('campfire', 'yennenga')">
+              <img src="/static/assets/illustrations/yennenga-hero.svg" alt="Veillée au coin du feu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-stone-950 flex items-center justify-center text-lg font-bold shadow-xl group-hover:scale-110 transition-transform">
+                  ${window.fasoIcon('play', 'w-5 h-5 fill-stone-950')}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ==================== SECTION 7 : PRÉSERVER NOTRE MÉMOIRE ==================== -->
+        <!-- ==================== SECTION 7 : SAUVEGARDE & CONTRIBUTION ==================== -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div class="max-w-2xl mx-auto space-y-3">
-            <span class="badge-culture">Engagement Patrimonial</span>
+          <div class="max-w-2xl mx-auto space-y-4">
+            <span class="badge-culture">Préservation Participative</span>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-              Une Bibliothèque Vivante Bâtie Ensemble
+              Une Mémoire Vivante Transmise par Tous
             </h2>
             <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
-              La mémoire d'un peuple est un arbre dont les racines plongent dans les cœurs des aînés.
-              Contribuez à enrichir ce sanctuaire numérique en soumettant un récit ou une variante locale.
+              Dépositaires de traditions, chercheurs, enseignants et aînés : contribuez à ce sanctuaire 
+              du patrimoine oral en soumettant un récit ou un enregistrement de voix humaine.
             </p>
             <div class="pt-2">
-              <a href="#contribute" class="btn-secondary text-xs py-2.5 px-6">
-                <span>✍️</span> <span>Contribuer au Patrimoine</span>
+              <a href="#contribute" class="btn-secondary text-xs sm:text-sm py-3 px-6 flex items-center gap-2 mx-auto inline-flex">
+                ${window.fasoIcon('quill', 'w-3.5 h-3.5 text-amber-400')}
+                <span>Contribuer au Patrimoine du Faso</span>
               </a>
             </div>
           </div>

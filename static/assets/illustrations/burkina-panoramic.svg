@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c0702"/>
+      <stop offset="35%" stop-color="#5a1a06"/>
+      <stop offset="65%" stop-color="#b45309"/>
+      <stop offset="90%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffbeb" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#fbbf24" stop-opacity="0.8"/>
+      <stop offset="80%" stop-color="#d97706" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#b45309" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cliffGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f"/>
+      <stop offset="100%" stop-color="#291205"/>
+    </linearGradient>
+    <linearGradient id="earthGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9a3412"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+    <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ciel Sahélien & Soleil Solaire d'Afrique -->
+  <rect width="1200" height="500" fill="url(#skyGrad)"/>
+  <circle cx="820" cy="220" r="160" fill="url(#sunGlow)"/>
+  <circle cx="820" cy="220" r="65" fill="#fef3c7"/>
+
+  <!-- Falaises de Banfora / Chaîne de Gobnangou à l'horizon -->
+  <path d="M0 320 L60 305 L140 315 L220 290 L310 300 L420 280 L540 295 L680 305 L800 290 L920 310 L1040 295 L1120 305 L1200 315 L1200 500 L0 500 Z" fill="url(#cliffGrad)" opacity="0.6"/>
+
+  <!-- Dômes de Fabedougou & Reliefs intermédiaires -->
+  <path d="M0 350 Q80 320 160 350 Q240 310 320 355 Q400 330 490 360 L1200 380 L1200 500 L0 500 Z" fill="url(#cliffGrad)" opacity="0.85"/>
+
+  <!-- Plaine et Plateau Latéritique Central du Faso -->
+  <path d="M0 380 Q300 365 600 390 Q900 375 1200 395 L1200 500 L0 500 Z" fill="url(#earthGrad)"/>
+
+  <!-- Fleuve Mouhoun (Volta Noire) serpentant à travers la plaine -->
+  <path d="M1200 440 Q950 410 750 445 T350 435 T0 470 L0 500 L1200 500 Z" fill="url(#riverGrad)" opacity="0.85"/>
+
+  <!-- Silhouette majestueuse de la Grande Mosquée de Dioulassoba (Banco et Torons de bois) -->
+  <g transform="translate(180, 240) scale(0.65)" fill="#1c0e05">
+    <!-- Base de la mosquée -->
+    <polygon points="0 180, 240 180, 230 110, 10 110"/>
+    <!-- Minaret pyramidal central -->
+    <polygon points="105 110, 135 110, 125 15, 115 15"/>
+    <circle cx="120" cy="12" r="6" fill="#f59e0b"/>
+    <!-- Minarets secondaires latéraux -->
+    <polygon points="35 110, 55 110, 50 40, 40 40"/>
+    <polygon points="185 110, 205 110, 200 40, 190 40"/>
+    <!-- Torons de bois traditionnels débordants (épines d'échafaudage) -->
+    <line x1="100" y1="35" x2="140" y2="35" stroke="#1c0e05" stroke-width="3"/>
+    <line x1="95" y1="55" x2="145" y2="55" stroke="#1c0e05" stroke-width="3"/>
+    <line x1="90" y1="75" x2="150" y2="75" stroke="#1c0e05" stroke-width="3"/>
+    <line x1="85" y1="95" x2="155" y2="95" stroke="#1c0e05" stroke-width="3"/>
+  </g>
+
+  <!-- Silhouette sacrée du Grand Baobab protecteur (Arbre à Palabres) -->
+  <g transform="translate(680, 190) scale(0.85)" fill="#120803">
+    <!-- Tronc colossal centenaire -->
+    <path d="M160 220 Q150 160 170 120 Q160 70 140 40 Q150 20 175 10 Q190 30 195 60 Q215 40 230 20 Q240 40 230 75 Q250 85 270 65 Q265 95 245 115 Q260 150 250 220 Z"/>
+    <!-- Couronne de branches majestueuses et feuillage dense -->
+    <circle cx="130" cy="40" r="38" opacity="0.95"/>
+    <circle cx="170" cy="20" r="45" opacity="0.95"/>
+    <circle cx="215" cy="15" r="42" opacity="0.95"/>
+    <circle cx="260" cy="40" r="38" opacity="0.95"/>
+    <circle cx="200" cy="50" r="50" opacity="0.98"/>
+  </g>
+
+  <!-- Étalon cabré de la Princesse Yennenga face au soleil levant -->
+  <g transform="translate(860, 240) scale(0.7)" fill="#120803">
+    <!-- Corps du cheval cabré -->
+    <path d="M60 150 Q70 110 95 90 Q120 70 140 50 Q135 35 125 25 Q135 15 150 20 Q160 35 150 55 Q170 70 175 90 Q180 120 170 150 L185 190 L160 190 L150 140 L130 140 L120 190 L100 190 L110 130 Q90 140 70 145 Z"/>
+    <!-- Cavaliers / Princesse Yennenga avec lance droite -->
+    <circle cx="115" cy="25" r="9"/>
+    <path d="M110 34 L125 34 L120 65 L105 65 Z"/>
+    <!-- Lance royale dressée vers le ciel -->
+    <line x1="90" y1="90" x2="145" y2="-10" stroke="#f59e0b" stroke-width="2.5"/>
+    <polygon points="143 -12, 149 -8, 145 -18" fill="#f59e0b"/>
+  </g>
+
+  <!-- Oiseaux migrateurs du Sahel survolant le fleuve -->
+  <path d="M380 180 Q390 170 400 180 Q410 170 420 180 Q410 174 400 176 Q390 174 380 180 Z" fill="#291205"/>
+  <path d="M430 160 Q438 152 446 160 Q454 152 462 160 Q454 155 446 157 Q438 155 430 160 Z" fill="#291205"/>
+  <path d="M470 175 Q476 168 482 175 Q488 168 494 175 Q488 171 482 172 Q476 171 470 175 Z" fill="#291205"/>
+</svg>
