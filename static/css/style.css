@@ -111,3 +111,9 @@ h1, h2, h3, .font-heading {
   border-color: rgba(245, 158, 11, 0.55);
   box-shadow: 0 12px 30px -8px rgba(245, 158, 11, 0.25);
 }
+
+/* Animation particules flottantes pour l'aventure interactive */
+@keyframes float-particle {
+  from { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+  to   { transform: translateY(-25px) rotate(180deg); opacity: 0.85; }
+}

@@ -147,7 +147,7 @@ class FasoQuizEngine {
       icon = "👑";
     } else if (this.score >= 4) {
       rankTitle = "Gardien des Coutumes du Faso";
-      rankDesc = "Un esprit attentif et éclairé. Les récits des 13 régions résonnent en vous.";
+      rankDesc = "Un esprit attentif et éclairé. Les récits des 17 régions résonnent en vous.";
       icon = "🛡️";
     }
 

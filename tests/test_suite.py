@@ -83,6 +83,8 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         self.assertTrue((static_dir / "js" / "views" / "story-view.js").exists())
         self.assertTrue((static_dir / "js" / "views" / "admin-view.js").exists())
         self.assertTrue((static_dir / "js" / "views" / "contribute-view.js").exists())
+        self.assertTrue((static_dir / "js" / "views" / "glossary-view.js").exists())
+        self.assertTrue((static_dir / "js" / "views" / "adventure-view.js").exists())
 
     def test_html_entry_point(self):
         """Vérifie que index.html charge les 17 régions et la nouvelle architecture"""
@@ -99,6 +101,20 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         content = report_file.read_text(encoding="utf-8")
         self.assertIn("Odilon.simpore@gobelab.org", content)
         self.assertIn("17", content)
+
+    def test_quiz_and_cultural_enhancements(self):
+        """Vérifie l'enrichissement du quiz avec les 17 régions et l'absence de l'ancien '13 régions' dans quiz.js"""
+        quiz_file = BASE_DIR / "static" / "js" / "quiz.js"
+        quiz_content = quiz_file.read_text(encoding="utf-8")
+        self.assertNotIn("13 régions", quiz_content)
+        self.assertIn("17 régions", quiz_content)
+
+        data_file = BASE_DIR / "static" / "js" / "data.js"
+        data_content = data_file.read_text(encoding="utf-8")
+        # Compte les questions dans FASO_QUIZ
+        quiz_section = data_content.split("const FASO_QUIZ =")[1].split("const FASO_INTERACTIVE_ADVENTURE")[0]
+        question_count = quiz_section.count('question:')
+        self.assertGreaterEqual(question_count, 14, f"FASO_QUIZ doit contenir au moins 14 questions, trouvé {question_count}")
 
 
 if __name__ == "__main__":

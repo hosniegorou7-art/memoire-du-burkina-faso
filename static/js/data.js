@@ -600,6 +600,42 @@ const FASO_QUIZ = [
     options: ["Le Lièvre (Soaamba)", "L'Hyène (Wamdé)", "L'Éléphant", "Le Léopard"],
     correct: 0,
     explanation: "Le lièvre Soaamba est l'éternel héros rusé des contes ouest-africains qui triomphe par l'esprit et l'ingéniosité."
+  },
+  {
+    question: "Quelle est la capitale administrative de la région de Kadiogo dans le nouveau découpage administratif officiel du Burkina Faso en 17 régions ?",
+    options: ["Koudougou", "Ouagadougou", "Manga", "Ziniaré"],
+    correct: 1,
+    explanation: "Ouagadougou, capitale nationale du Burkina Faso, est le chef-lieu de la région de Kadiogo dans l'organisation administrative officielle en 17 régions."
+  },
+  {
+    question: "La région de Liptako, dans le découpage en 17 régions, est historiquement réputée pour :",
+    options: ["La culture exclusive du coton humide", "Ses traditions pastorales peules, ses zébus et les poésies du Sahel", "Les cascades et falaises de Karfiguéla", "Les ruines de pierre fortifiée de Loropéni"],
+    correct: 1,
+    explanation: "La région de Liptako (chef-lieu Dori) est au cœur de la zone sahélienne pastorale, terre d'éleveurs peuls, de zébus et de respect scrupuleux du Pulaaku."
+  },
+  {
+    question: "Parmi les 17 régions du Burkina Faso, laquelle tire son nom du fleuve mythique autrefois appelé Volta Blanche ?",
+    options: ["Nakambé", "Guiriko", "Sirba", "Goulmou"],
+    correct: 0,
+    explanation: "La région de Nakambé tire son nom du fleuve Nakambé (anciennement Volta Blanche), qui traverse le plateau central burkinabè."
+  },
+  {
+    question: "Quel nom porte la région qui abrite les Cascades de Karfiguéla, les Dômes de Fabedougou et les Pics de Sindou ?",
+    options: ["Guiriko", "Tannounyan", "Sourou", "Nando"],
+    correct: 1,
+    explanation: "La région de Tannounyan (chef-lieu Banfora) englobe les spectaculaires formations géologiques des Cascades, des Dômes de Fabedougou et des Pics de Sindou."
+  },
+  {
+    question: "Le célèbre tissu artisanal burkinabè tissé à la main en coton pur, promu par Thomas Sankara comme étendard de souveraineté, est :",
+    options: ["Le Kente", "Le Boubou en bazin", "Le Faso Dan Fani", "Le Korhogo"],
+    correct: 2,
+    explanation: "Le Faso Dan Fani ('tissu tissé de la patrie') est le symbole patrimonial de la créativité et de l'émancipation économique burkinabè."
+  },
+  {
+    question: "Combien de régions administratives officielles structurent désormais l'intégralité du territoire du Burkina Faso ?",
+    options: ["10 régions", "13 régions (ancien découpage caduc)", "17 régions", "21 régions"],
+    correct: 2,
+    explanation: "Le Burkina Faso est officiellement structuré en 17 régions administratives (Bankui, Djôrô, Goulmou, Guiriko, Kadiogo, Kuilsé, Liptako, Nakambé, Nando, Nazinon, Oubri, Sirba, Soum, Sourou, Tapoa, Tannounyan, Yaadga)."
   }
 ];
 

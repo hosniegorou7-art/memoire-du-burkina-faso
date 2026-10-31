@@ -52,7 +52,7 @@ Le développement a été conduit rigoureusement selon les 7 modules prescrits :
 - **Palette chromatique culturelle :** Ocre de latérite (`#9C3D1B`), terre cuite (`#C85A32`), or solaire (`#E5A93C`), vert savane (`#1B4332`), brun banco (`#3D2314`) et noir charbon (`#12100E`).
 - **Motifs traditionnels :** Textures graphiques Faso Dan Fani en arrière-plan subtil et frises géométriques inspirées de Tiébélé.
 - **Typographie :** Double famille typographique (Cinzel pour la solennité des titres d'épopée, Plus Jakarta Sans pour le confort de lecture).
-- **Navigation SPA fluide :** Routeur sans rechargement (`#home`, `#map`, `#regions`, `#library`, `#story/:id`, `#campfire/:id`, `#quiz`, `#contribute`, `#admin`).
+- **Navigation SPA fluide :** Routeur sans rechargement (`#home`, `#map`, `#regions`, `#library`, `#story/:id`, `#campfire/:id`, `#quiz`, `#glossary`, `#adventure`, `#contribute`, `#admin`).
 
 ### Phase 2 : Carte Interactive des 17 Régions
 - **Carte 2D Vectorielle SVG :** Tracé dynamique des 17 régions avec mise en valeur polygonale, ondes de pulsation radar sur les hauts lieux et tiroir d'information latéral.
@@ -61,6 +61,9 @@ Le développement a été conduit rigoureusement selon les 7 modules prescrits :
 ### Phase 3 : Bibliothèque des Contes et Légendes
 - **Base de récits structurée :** Récits documentés par région avec synopsis, citations orales, texte bilingue parallèle et morale universelle.
 - **Moteur de recherche & filtres multi-critères :** Filtrage instantané par région, typologie, langue nationale et tranche d'âge.
+- **Glossaire Culturel & Sagesse des Proverbes (`#glossary`) :** Répertoire interactif interrogeable des concepts traditionnels (Pulaaku, Faso Dan Fani, Zaï, Naba, Dolo...) et recueil bilingue des sagesses orales ancestrales (Mooré, Dioula, Fulfulde).
+- **Aventure Interactive Ramifiée (`#adventure`) :** Récit interactif à choix multiples ("L'Épreuve de Yennenga") avec arbre de décision dynamique, attribution de titres honorifiques et badges de transmission culturelle.
+- **Quiz de Transmission Pédagogique (`#quiz`) :** 14 énigmes culturelles approfondies avec notation, explications historiques et attribution de rangs initiatiques reflétant fidèlement l'organisation en 17 régions.
 
 ### Phase 4 : Système Audio et Multilinguisme
 - **Honnêteté technologique :** Refus de fausses voix de synthèse TTS dénaturant les langues voltaïques ; priorité absolue aux dépositaires humains.

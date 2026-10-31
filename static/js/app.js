@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const campfireView = new FasoCampfireExperience("main-view-host");
   const contributeView = new FasoContributeView("main-view-host");
   const adminView = new FasoAdminView("main-view-host");
+  const glossaryView = new FasoGlossaryView("main-view-host");
+  const adventureView = new FasoAdventureView("main-view-host");
 
   // Lecteur Audio Global
   window.fasoAudioPlayer = new FasoAudioPlayer("global-audio-player-container");
@@ -44,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     contribute: () => contributeView.render(),
     admin: () => adminView.render(),
+    glossary: () => glossaryView.render(),
+    adventure: () => adventureView.render(),
     "*": () => homeView.render()
   });
 
