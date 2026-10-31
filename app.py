@@ -1,7 +1,7 @@
 """
-FASO ORALIA - SERVEUR UNIFIÉ BI-MODE (FASTAPI + REPLI STANDARD ZÉRO DÉPENDANCE)
-Plateforme Web Multimédia et Carte Interactive des Contes et Légendes du Burkina Faso
-Fonctionne dans TOUT environnement Python (avec ou sans environnement virtuel, zéro dépendance requise).
+MÉMOIRE DU BURKINA — SERVEUR BACKEND UNIFIÉ (FASTAPI + REPLI STANDARD ZÉRO DÉPENDANCE)
+Plateforme Web Multimédia Immersive des Contes, Légendes et 17 Régions du Burkina Faso
+Conforme au référentiel des 17 régions et aux directives de préservation patrimoniale.
 """
 
 import os
@@ -14,96 +14,195 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 
-# --- BASE DE DONNÉES CULTURELLE DU BURKINA FASO ---
+# --- BASE DE DONNÉES OFFICIELLE DES 17 RÉGIONS DU BURKINA FASO ---
 
 REGIONS_DATA = [
     {
-        "id": "centre",
-        "name": "Centre",
-        "chefLieu": "Ouagadougou",
-        "peoples": ["Mossi"],
-        "languages": ["Mooré", "Français"],
-        "emblem": "L'Étalon de Yennenga & Palais du Mogho Naba",
-        "description": "Cœur historique du royaume Mossi, carrefour politique et culturel d'Afrique de l'Ouest.",
-        "coords": [12.37, -1.52],
-        "color": "#D97706"
-    },
-    {
-        "id": "hauts-bassins",
-        "name": "Hauts-Bassins",
-        "chefLieu": "Bobo-Dioulasso",
-        "peoples": ["Bobo", "Dioula", "Tiéfo", "Bwaba"],
-        "languages": ["Dioula", "Bobo", "Français"],
-        "emblem": "Les Silures Sacrés de Dafra & la Mosquée de Dioulassoba",
-        "description": "Capitale économique et culturelle, terre de musique, kora, balafon et tolérance.",
-        "coords": [11.18, -4.29],
-        "color": "#2563EB"
-    },
-    {
-        "id": "sahel",
-        "name": "Sahel",
-        "chefLieu": "Dori",
-        "peoples": ["Peul", "Touareg", "Songhaï", "Bella"],
-        "languages": ["Fulfulde", "Tamasheq", "Songhaï", "Français"],
-        "emblem": "Les Dunes d'Oursi & les troupeaux Zébus sous le Pulaaku",
-        "description": "Vaste étendue sahélienne, berceau des poésies pastorales et de l'honneur de la parole donnée.",
-        "coords": [14.03, -0.03],
-        "color": "#EA580C"
-    },
-    {
-        "id": "cascades",
-        "name": "Cascades",
-        "chefLieu": "Banfora",
-        "peoples": ["Sénoufo", "Gouin", "Karaboro", "Turka"],
-        "languages": ["Dioula", "Sénoufo", "Gouin", "Français"],
-        "emblem": "Cascades de Karfiguéla & Dômes de Fabedougou",
-        "description": "Écrin de verdure et de falaises majestueuses, terre des forgerons sacrés et des danses de masques.",
-        "coords": [10.63, -4.76],
-        "color": "#059669"
-    },
-    {
-        "id": "sud-ouest",
-        "name": "Sud-Ouest",
-        "chefLieu": "Gaoua",
-        "peoples": ["Lobi", "Birifor", "Dagara"],
-        "languages": ["Dagara", "Lobi", "Français"],
-        "emblem": "Ruines de Loropéni (UNESCO) & Statuettes Bateba",
-        "description": "Royaume des bâtisseurs de pierre millénaires et de la spiritualité intime avec les esprits.",
-        "coords": [10.30, -3.53],
-        "color": "#9333EA"
-    },
-    {
-        "id": "centre-sud",
-        "name": "Centre-Sud",
-        "chefLieu": "Manga",
-        "peoples": ["Gourounsi", "Kasséna", "Nankana", "Mossi"],
-        "languages": ["Kassena", "Mooré", "Français"],
-        "emblem": "Cour Royale de Tiébélé & Peintures murales Kasséna",
-        "description": "Joyau d'architecture vernaculaire en terre crue peinte par les femmes.",
-        "coords": [11.09, -0.96],
-        "color": "#DC2626"
-    },
-    {
-        "id": "centre-ouest",
-        "name": "Centre-Ouest",
-        "chefLieu": "Koudougou",
-        "peoples": ["Gourounsi", "Mossi", "Nuni"],
-        "languages": ["Mooré", "Nuni", "Lyélé", "Français"],
-        "emblem": "Les Crocodiles Sacrés de Sabou & Théâtre du Faso",
-        "description": "Terre de sagesse et de pactes ancestraux de respect absolu entre hommes et animaux.",
-        "coords": [12.06, -2.23],
-        "color": "#0891B2"
-    },
-    {
-        "id": "boucle-mouhoun",
-        "name": "Boucle du Mouhoun",
-        "chefLieu": "Dédougou",
-        "peoples": ["Bwaba", "Samo", "Marka", "Ko"],
-        "languages": ["Bwamu", "San", "Dioula", "Français"],
-        "emblem": "Le fleuve Mouhoun & les Masques en feuilles de Dédougou",
-        "description": "Grenier du Faso traversé par le grand fleuve Mouhoun, foyer du FESTIMA.",
+        "id": "bankui",
+        "name": "Bankui",
+        "officialName": "Région de Bankui",
+        "capital": "Dédougou",
         "coords": [12.46, -3.46],
-        "color": "#16A34A"
+        "demographics": ["Bwaba", "Samo (San)", "Marka (Dafing)", "Ko"],
+        "languages": ["Bwamu", "San", "Dioula", "Français"],
+        "emblem": "Le fleuve sacré Mouhoun & le Festival International des Masques (FESTIMA)",
+        "description": "Grenier nourricier traversé par le grand fleuve Mouhoun, foyer de la tradition des masques de feuilles."
+    },
+    {
+        "id": "djoro",
+        "name": "Djôrô",
+        "officialName": "Région de Djôrô",
+        "capital": "Banfora",
+        "coords": [10.63, -4.76],
+        "demographics": ["Sénoufo", "Gouin", "Karaboro", "Turka"],
+        "languages": ["Sénoufo", "Gouin", "Dioula", "Français"],
+        "emblem": "Les Cascades de Karfiguéla & les Dômes de Fabedougou",
+        "description": "Joyau géologique et végétal du Sud-Ouest, terre des grands sculpteurs et des confréries initiatiques."
+    },
+    {
+        "id": "goulmou",
+        "name": "Goulmou",
+        "officialName": "Région du Goulmou",
+        "capital": "Fada N'Gourma",
+        "coords": [12.06, 0.36],
+        "demographics": ["Gourmantché", "Peul"],
+        "languages": ["Gulmancema", "Fulfulde", "Français"],
+        "emblem": "Royaume historique du Gulmu & la Harpe sacrée Kondé",
+        "description": "Terre de souveraineté séculaire et de traditions cynégétiques nobles, berceau des récits de chasseurs."
+    },
+    {
+        "id": "guiriko",
+        "name": "Guiriko",
+        "officialName": "Région de Guiriko",
+        "capital": "Bobo-Dioulasso",
+        "coords": [11.18, -4.29],
+        "demographics": ["Bobo", "Dioula", "Tiéfo", "Bwaba"],
+        "languages": ["Dioula", "Bobo Mandingue", "Français"],
+        "emblem": "Les Silures Sacrés de Dafra & la Grande Mosquée de Dioulassoba",
+        "description": "Carrefour artistique et musical d'Afrique de l'Ouest, berceau de la princesse Guimbi Ouattara."
+    },
+    {
+        "id": "kadiogo",
+        "name": "Kadiogo",
+        "officialName": "Région du Kadiogo",
+        "capital": "Ouagadougou",
+        "coords": [12.37, -1.52],
+        "demographics": ["Mossi", "communautés plurielles"],
+        "languages": ["Mooré", "Français", "Dioula"],
+        "emblem": "L'Étalon de Yennenga & le Palais du Mogho Naba",
+        "description": "Cœur politique et métropolitain du pays, sanctuaire de l'épopée de la princesse Yennenga."
+    },
+    {
+        "id": "kuilse",
+        "name": "Kuilsé",
+        "officialName": "Région de Kuilsé",
+        "capital": "Ziniaré",
+        "coords": [12.58, -1.30],
+        "demographics": ["Mossi"],
+        "languages": ["Mooré", "Français"],
+        "emblem": "Sculptures sacrées sur granit de Laongo & Musée de Manéga",
+        "description": "Sanctuaire artistique réputé pour ses sculpteurs sur pierre et la conservation des masques sacrés."
+    },
+    {
+        "id": "liptako",
+        "name": "Liptako",
+        "officialName": "Région du Liptako",
+        "capital": "Dori",
+        "coords": [14.03, -0.03],
+        "demographics": ["Peul (Fulɓe)", "Touareg", "Songhaï", "Bella"],
+        "languages": ["Fulfulde", "Tamasheq", "Songhaï", "Français"],
+        "emblem": "Dunes dorées d'Oursi, Zébus aux cornes en lyre & code du Pulaaku",
+        "description": "Contrée sahélienne de poésie pastorale où l'honneur et la fidélité à la parole donnée sont sacrés."
+    },
+    {
+        "id": "nakambe",
+        "name": "Nakambé",
+        "officialName": "Région du Nakambé",
+        "capital": "Kaya",
+        "coords": [13.09, -1.08],
+        "demographics": ["Mossi", "Peul"],
+        "languages": ["Mooré", "Fulfulde", "Français"],
+        "emblem": "Artisanat d'art du cuir de Kaya & Lac Dem",
+        "description": "Haut lieu de l'artisanat d'art du cuir tanné et du tissage des fils de coton Faso Dan Fani."
+    },
+    {
+        "id": "nando",
+        "name": "Nando",
+        "officialName": "Région de Nando",
+        "capital": "Koudougou",
+        "coords": [12.25, -2.36],
+        "demographics": ["Gourounsi (Lyélé)", "Mossi"],
+        "languages": ["Lyélé", "Mooré", "Français"],
+        "emblem": "Les Crocodiles Sacrés de Sabou & Théâtre populaire",
+        "description": "Terre de sagesse et d'alliances millénaires de respect absolu entre hommes et animaux totémiques."
+    },
+    {
+        "id": "nazinon",
+        "name": "Nazinon",
+        "officialName": "Région du Nazinon",
+        "capital": "Manga",
+        "coords": [11.09, -0.96],
+        "demographics": ["Gourounsi", "Kasséna", "Nankana", "Mossi"],
+        "languages": ["Kassena", "Mooré", "Français"],
+        "emblem": "La Cour Royale de Tiébélé & fresques géométriques peintes",
+        "description": "Joyau d'architecture vernaculaire en terre crue peinte par les mains virtuoses des femmes Kasséna."
+    },
+    {
+        "id": "oubri",
+        "name": "Oubri",
+        "officialName": "Région de l'Oubri",
+        "capital": "Kombissiri",
+        "coords": [12.07, -1.33],
+        "demographics": ["Mossi"],
+        "languages": ["Mooré", "Français"],
+        "emblem": "La mémoire de Naba Oubri, fondateur victorieux",
+        "description": "Région portant le nom vénéré du premier souverain de Ouagadougou, petit-fils de Yennenga."
+    },
+    {
+        "id": "sirba",
+        "name": "Sirba",
+        "officialName": "Région de la Sirba",
+        "capital": "Bogandé",
+        "coords": [12.97, -0.14],
+        "demographics": ["Gourmantché", "Peul"],
+        "languages": ["Gulmancema", "Fulfulde", "Français"],
+        "emblem": "La rivière légendaire Sirba & la mémoire des anciens orpailleurs",
+        "description": "Bassin historique d'échanges séculaires, riche des récits des anciens chercheurs d'or."
+    },
+    {
+        "id": "soum",
+        "name": "Soum",
+        "officialName": "Région du Soum",
+        "capital": "Djibo",
+        "coords": [14.10, -1.63],
+        "demographics": ["Peul", "Bella", "Mossi"],
+        "languages": ["Fulfulde", "Mooré", "Français"],
+        "emblem": "La grande transhumance du Soum & la poésie pastorale de Djibo",
+        "description": "Terre pastorale héroïque où se transmettent depuis des siècles les épopées de la vie nomade."
+    },
+    {
+        "id": "sourou",
+        "name": "Sourou",
+        "officialName": "Région du Sourou",
+        "capital": "Tougan",
+        "coords": [13.07, -3.07],
+        "demographics": ["Samo (San)", "Marka (Dafing)"],
+        "languages": ["San", "Marka", "Français"],
+        "emblem": "La Vallée du Sourou & le Rakiré (Parenté à Plaisanterie)",
+        "description": "Foyer emblématique du Rakiré, mécanisme traditionnel séculaire de désamorçage pacifique des conflits."
+    },
+    {
+        "id": "tapoa",
+        "name": "Tapoa",
+        "officialName": "Région de la Tapoa",
+        "capital": "Diapaga",
+        "coords": [12.07, 1.78],
+        "demographics": ["Gourmantché"],
+        "languages": ["Gulmancema", "Français"],
+        "emblem": "La Falaise de Gobnangou & le Parc National du W",
+        "description": "Forteresse naturelle majestueuse abritant les falaises de Gobnangou et les confréries de chasseurs Dozo."
+    },
+    {
+        "id": "tannounyan",
+        "name": "Tannounyan",
+        "officialName": "Région du Tannounyan",
+        "capital": "Gaoua",
+        "coords": [10.30, -3.53],
+        "demographics": ["Lobi", "Birifor", "Dagara"],
+        "languages": ["Dagara", "Lobi", "Français"],
+        "emblem": "Ruines de Loropéni (Patrimoine Mondial UNESCO) & Statuettes Bateba",
+        "description": "Murailles millénaires de latérite taillée de six mètres de haut dédiées au commerce transsaharien de l'or."
+    },
+    {
+        "id": "yaadga",
+        "name": "Yaadga",
+        "officialName": "Région du Yaadga",
+        "capital": "Ouahigouya",
+        "coords": [13.58, -2.42],
+        "demographics": ["Mossi", "Peul"],
+        "languages": ["Mooré", "Fulfulde", "Français"],
+        "emblem": "Royaume historique du Yatenga & la sagesse écologique du Zaï",
+        "description": "Ancien empire militaire du Yatenga ayant légué à l'humanité la technique agroécologique du Zaï."
     }
 ]
 
@@ -112,35 +211,24 @@ STORIES_DATA = [
         "id": "yennenga",
         "title": "L'Épopée de la Princesse Yennenga et l'Étalon Blanc",
         "nativeTitle": "Yennenga la wē-bīis naba (Mooré)",
-        "regionId": "centre",
-        "regionName": "Centre / Plateau-Central",
-        "place": "Gambaga & Tenkodogo",
+        "regionId": "kadiogo",
+        "regionName": "Kadiogo / Oubri",
         "category": "Légende Fondatrice",
         "ethnic": "Mossi / Dagomba / Bissa",
         "languages": ["Français", "Mooré"],
         "duration": "6 min",
         "year": "XIIe - XIIIe siècle",
         "heroImage": "yennenga-hero.svg",
-        "synopsis": "Fille intrépide du roi Nedega, cavalière hors pair refusant d'être mariée de force, Yennenga s'élance sur son étalon blanc pour conquérir sa liberté.",
+        "synopsis": "Fille intrépide du roi Nedega, cavalière hors pair refusant d'être mariée de force, Yennenga s'élance sur son étalon fougueux pour conquérir sa liberté.",
         "moral": "Le destin d'un peuple naît du courage individuel de briser les chaînes et de la rencontre féconde entre cultures.",
-        "tags": ["Émancipation", "Héroïsme", "Origines", "Royauté"],
-        "sections": [
-            {
-                "title": "1. La Vierge Guerrière de Gambaga",
-                "timeOffset": 0,
-                "textFr": "Au temps jadis, dans le royaume de Gambaga, vivait le roi Naba Nedega. Sa fille Yennenga était la plus formidable guerrière et cavalière du royaume...",
-                "textNative": "Kudum wakat, Gambaga tẽnga pʋgẽ, Naba Nedega n da be. A bi-pugl Yennenga zoeema ne we-rũng la tãosgo...",
-                "annotation": "Naba : Chef traditionnel chez les Mossi détenant le pouvoir légitime (Naam)."
-            }
-        ]
+        "tags": ["Émancipation", "Héroïsme", "Origines", "Royauté"]
     },
     {
         "id": "dafra",
         "title": "Les Silures Sacrés de Dafra",
         "nativeTitle": "Dafra jɛgɛ senumanw kò (Dioula)",
-        "regionId": "hauts-bassins",
-        "regionName": "Hauts-Bassins",
-        "place": "Falaise de Dafra, Bobo-Dioulasso",
+        "regionId": "guiriko",
+        "regionName": "Guiriko",
         "category": "Mythe & Esprit de la Nature",
         "ethnic": "Bobo / Dioula",
         "languages": ["Français", "Dioula"],
@@ -149,24 +237,14 @@ STORIES_DATA = [
         "heroImage": "dafra-hero.svg",
         "synopsis": "Dans une gorge spectaculaire près de Bobo-Dioulasso nagent de gigantesques silures noirs vénérés comme les protecteurs spirituels de la cité.",
         "moral": "L'harmonie entre la nature, l'eau et les hommes repose sur le respect inconditionnel des pactes sacrés.",
-        "tags": ["Sacré", "Nature", "Totem", "Spiritualité"],
-        "sections": [
-            {
-                "title": "1. La Falaise Sacrée au Sud de Sya",
-                "timeOffset": 0,
-                "textFr": "À quelques kilomètres de Sya, la terre s'ouvre sur un canyon vertigineux où résident les silures sacrés...",
-                "textNative": "Sya dugu kɛrɛfɛ, kulu dɔ bɛ yen ka kɔrɔ kosɛbɛ. Dafra kɔ la, jɛgɛ finba caman bɛ yen...",
-                "annotation": "Sya : Nom d'origine de Bobo-Dioulasso."
-            }
-        ]
+        "tags": ["Sacré", "Nature", "Totem", "Spiritualité"]
     },
     {
         "id": "guimbi-ouattara",
         "title": "Guimbi Ouattara, la Diplomate et Guerrière de Sya",
         "nativeTitle": "Guimbi Ouattara, Sya cɛfarin muso (Dioula)",
-        "regionId": "hauts-bassins",
-        "regionName": "Hauts-Bassins",
-        "place": "Bobo-Dioulasso",
+        "regionId": "guiriko",
+        "regionName": "Guiriko",
         "category": "Récit Historique",
         "ethnic": "Dioula / Mandingue",
         "languages": ["Français", "Dioula"],
@@ -175,24 +253,14 @@ STORIES_DATA = [
         "heroImage": "guimbi-hero.svg",
         "synopsis": "Grande dame d'État et stratège militaire écoutée dans toute la sous-région, elle utilisa son intelligence diplomatique pour préserver Sya.",
         "moral": "La force brute détruit ; la sagesse diplomatique et l'intelligence protègent les peuples.",
-        "tags": ["Leadership", "Diplomatie", "Histoire", "Paix"],
-        "sections": [
-            {
-                "title": "1. Une Fille de Prince élevée pour Régner",
-                "timeOffset": 0,
-                "textFr": "Née vers 1836 à Bobo-Dioulasso, Guimbi était la fille aînée de Diori Ouattara...",
-                "textNative": "Guimbi Ouattara bangera k'a to Diori Ouattara bolo. A y'a kɛ muso kunsigi ye...",
-                "annotation": "Dynastie de Kong : Souverains du royaume de Sya."
-            }
-        ]
+        "tags": ["Leadership", "Diplomatie", "Histoire", "Paix"]
     },
     {
         "id": "sabou",
         "title": "Les Crocodiles Sacrés de Sabou",
         "nativeTitle": "Sabou ebmẽ wã la bãmb zoodo (Mooré)",
-        "regionId": "centre-ouest",
-        "regionName": "Centre-Ouest",
-        "place": "Mare de Sabou, Boulkiemdé",
+        "regionId": "nando",
+        "regionName": "Nando",
         "category": "Alliance Totémique",
         "ethnic": "Gourounsi / Mossi",
         "languages": ["Français", "Mooré"],
@@ -201,50 +269,30 @@ STORIES_DATA = [
         "heroImage": "sabou-hero.svg",
         "synopsis": "Égaré et mourant de soif dans la savane, un chasseur fut guidé par un crocodile vers une mare cachée. Un pacte fraternel éternel fut scellé.",
         "moral": "La gratitude sincère transforme un ennemi redoutable en un frère protecteur.",
-        "tags": ["Totem", "Amitié", "Gratitude", "Animaux"],
-        "sections": [
-            {
-                "title": "1. La Soif Mortelle dans la Brousse Brûlante",
-                "timeOffset": 0,
-                "textFr": "Il y a des siècles, le chasseur Badaye s'effondra au pied d'un baobab, terrassé par l'Harmattan...",
-                "textNative": "Kudum wakat, we-rũng toagd a ye n da boond Badaye...",
-                "annotation": "Harmattan : Vent chaud et sec du désert."
-            }
-        ]
+        "tags": ["Totem", "Amitié", "Gratitude", "Animaux"]
     },
     {
         "id": "lievre-hyene",
         "title": "Le Lièvre, l'Hyène et le Puits de la Sécheresse",
         "nativeTitle": "Soaamba la Wamdé ko-bʋgã zaba (Mooré / Dioula)",
-        "regionId": "boucle-mouhoun",
-        "regionName": "Boucle du Mouhoun",
-        "place": "Bords du fleuve Mouhoun",
+        "regionId": "bankui",
+        "regionName": "Bankui / Sourou",
         "category": "Conte Moral & Initiatique",
-        "ethnic": "Universel",
+        "ethnic": "Bwaba / Dioula / Mossi",
         "languages": ["Français", "Mooré", "Dioula"],
         "duration": "6 min 15",
         "year": "Tradition Millénaire",
         "heroImage": "lievre-hero.svg",
         "synopsis": "L'hyène refuse de participer à l'effort collectif pour creuser le puits du village et vole l'eau la nuit. Le lièvre lui tend un piège magistral.",
         "moral": "La ruse bienveillante et le travail collectif triomphent toujours de l'égoïsme et de la cupidité.",
-        "tags": ["Ruse", "Humour", "Solidarité", "Enfance"],
-        "sections": [
-            {
-                "title": "1. La Grande Soif des Animaux de la Savane",
-                "timeOffset": 0,
-                "textFr": "Le sol craquelait comme une calebasse brisée. Le Roi Lion ordonna de creuser un puits d'eau...",
-                "textNative": "Wĩntooga tula wusgo, koom ka be ye. Gampɛlga n bool rũmsã...",
-                "annotation": "Soaamba & Wamdé : Les deux figures légendaires de l'initiation orale."
-            }
-        ]
+        "tags": ["Ruse", "Humour", "Solidarité", "Enfance"]
     },
     {
         "id": "loropeni",
         "title": "Le Mystère des Bâtisseurs des Ruines de Loropéni",
         "nativeTitle": "Loropéni kulu dãgara bãngr (Dagara / Français)",
-        "regionId": "sud-ouest",
-        "regionName": "Sud-Ouest",
-        "place": "Loropéni, Poni",
+        "regionId": "tannounyan",
+        "regionName": "Tannounyan",
         "category": "Récit Historique & Patrimoine",
         "ethnic": "Lobi / Dagara / Kaan",
         "languages": ["Français", "Dagara"],
@@ -253,72 +301,203 @@ STORIES_DATA = [
         "heroImage": "loropeni-hero.svg",
         "synopsis": "Inscrites à l'UNESCO, les imposantes murailles de latérite taillée protégeaient les souverains et les trésors d'or du commerce transsaharien.",
         "moral": "Les pierres façonnées avec honneur instruisent les générations à travers les millénaires.",
-        "tags": ["UNESCO", "Histoire", "Architecture", "Mystère"],
-        "sections": [
-            {
-                "title": "1. La Forteresse de Pierre Oubliée dans la Jungle",
-                "timeOffset": 0,
-                "textFr": "Classées à l'UNESCO, les ruines de Loropéni comptent parmi les trésors architecturaux les plus précieux...",
-                "textNative": "Loropéni kparaga tãmsã wosa hal n yɩɩd yʋm tuhuri...",
-                "annotation": "UNESCO : Site inscrit en 2009 au patrimoine mondial."
-            }
-        ]
+        "tags": ["UNESCO", "Histoire", "Architecture", "Mystère"]
     },
     {
         "id": "berger-sahel",
         "title": "Le Berger Peul et le Génie du Sahel",
         "nativeTitle": "Gaynaako e Jinnaaru Sahel (Fulfulde / Français)",
-        "regionId": "sahel",
-        "regionName": "Sahel",
-        "place": "Dunes d'Oursi, Dori",
+        "regionId": "liptako",
+        "regionName": "Liptako / Soum",
         "category": "Légende Pastorale",
-        "ethnic": "Peul (Fulani)",
+        "ethnic": "Peul (Fulɓe)",
         "languages": ["Français", "Fulfulde"],
         "duration": "5 min",
         "year": "XVe siècle",
         "heroImage": "sahel-hero.svg",
         "synopsis": "Un génie propose à un jeune berger une source d'eau inépuisable contre sa parole d'honneur. Fidèle au code du Pulaaku, Amadou refuse de trahir.",
         "moral": "La dignité et le respect de la parole donnée valent plus que toutes les richesses du monde.",
-        "tags": ["Honneur", "Sahel", "Éthique", "Pulaaku"],
-        "sections": [
-            {
-                "title": "1. La Transhumance sous le Ciel d'Ocre",
-                "timeOffset": 0,
-                "textFr": "Le berger Amadou guidait ses zébus à travers les dunes d'Oursi...",
-                "textNative": "Amadou gaynaako suka gorko ina ɗowoo jawdi mum hakkunde Dori e Oursi...",
-                "annotation": "Pulaaku : Code d'honneur et de retenue des Peuls."
-            }
-        ]
+        "tags": ["Honneur", "Sahel", "Éthique", "Pulaaku"]
     },
     {
         "id": "tiebele",
         "title": "Les Murs Peints de Tiébélé et la Sagesse Kasséna",
         "nativeTitle": "Tiébélé kora na luri zõnga (Kassena / Mooré)",
-        "regionId": "centre-sud",
-        "regionName": "Centre-Sud",
-        "place": "Cour Royale de Tiébélé, Nahouri",
+        "regionId": "nazinon",
+        "regionName": "Nazinon",
         "category": "Art & Sagesse Ancestrale",
         "ethnic": "Gourounsi / Kasséna",
-        "languages": ["Français", "Mooré", "Kassena"],
+        "languages": ["Français", "Kassena", "Mooré"],
         "duration": "5 min 15",
         "year": "XVIe siècle à nos jours",
         "heroImage": "tiebele-hero.svg",
         "synopsis": "Les femmes kasséna peignent à la main des chefs-d'œuvre de fresques géométriques en latérite et kaolin sur les maisons en banco de Tiébélé.",
         "moral": "L'art est un bouclier protecteur de la mémoire collective et le fil sacré reliant les générations.",
-        "tags": ["Art", "Architecture", "Femmes", "Transmission"],
-        "sections": [
-            {
-                "title": "1. La Forteresse de Terre Vernie",
-                "timeOffset": 0,
-                "textFr": "Au pied des collines de granite du Nahouri se dresse la Cour Royale de Tiébélé...",
-                "textNative": "Tiébélé tẽnga yaa tẽng kãsenga Nahouri tẽngrẽ...",
-                "annotation": "UNESCO : Savoir-faire d'architecture vernaculaire remarquable."
-            }
-        ]
+        "tags": ["Art", "Architecture", "Femmes", "Transmission"]
+    },
+    {
+        "id": "domes-fabedougou",
+        "title": "Le Secret des Dômes de Fabedougou et les Chutes Vives",
+        "nativeTitle": "Fabedougou kuru kò (Sénoufo / Dioula)",
+        "regionId": "djoro",
+        "regionName": "Djôrô",
+        "category": "Mythe & Esprit de la Nature",
+        "ethnic": "Sénoufo / Gouin",
+        "languages": ["Français", "Dioula", "Sénoufo"],
+        "duration": "5 min",
+        "year": "Temps immémorial",
+        "heroImage": "dafra-hero.svg",
+        "synopsis": "Sculptés par les vents et les pluies depuis des millions d'années, les dômes de Fabedougou ressemblent à des châteaux de géants veillant sur les eaux de Banfora.",
+        "moral": "La patience du vent et de l'eau façonne ce que nulle force humaine ne peut abattre.",
+        "tags": ["Nature", "Géologie", "Eau", "Sénoufo"]
+    },
+    {
+        "id": "yendabri-gulmu",
+        "title": "L'Épopée du Roi Yendabri et la Harpe Kondé",
+        "nativeTitle": "O Naba Yendabri kpatuagndi (Gulmancéma)",
+        "regionId": "goulmou",
+        "regionName": "Goulmou",
+        "category": "Récit Historique",
+        "ethnic": "Gourmantché",
+        "languages": ["Français", "Gulmancema"],
+        "duration": "6 min",
+        "year": "XVIIIe siècle",
+        "heroImage": "yennenga-hero.svg",
+        "synopsis": "Grand souverain du Gulmu, Yendabri unifia les chefferies de l'Est et scella un pacte sacré avec les chasseurs au son de la harpe Kondé.",
+        "moral": "Un chef ne règne pas par la terreur mais par la parole donnée et l'écoute des anciens.",
+        "tags": ["Royauté", "Histoire", "Paix", "Gulmancéma"]
+    },
+    {
+        "id": "sculpteurs-laongo",
+        "title": "Le Souffle des Pierres de Laongo",
+        "nativeTitle": "Laongo kug-rãmb goama (Mooré)",
+        "regionId": "kuilse",
+        "regionName": "Kuilsé",
+        "category": "Art & Sagesse Ancestrale",
+        "ethnic": "Mossi",
+        "languages": ["Français", "Mooré"],
+        "duration": "4 min 30",
+        "year": "Tradition séculaire",
+        "heroImage": "sabou-hero.svg",
+        "synopsis": "Sur les étendues de granit brut de Laongo, chaque roche sculptée raconte une fable sur le respect des êtres vivants et l'humilité face à la terre mère.",
+        "moral": "L'œuvre de l'artiste survit aux siècles lorsqu'elle célèbre la beauté et la fraternité.",
+        "tags": ["Sculpture", "Art", "Granite", "Kuilsé"]
+    },
+    {
+        "id": "maitre-tanneur-kaya",
+        "title": "Le Maître Tanneur de Kaya et le Coton Céleste",
+        "nativeTitle": "Kaya gãng-tʋʋmd naba (Mooré)",
+        "regionId": "nakambe",
+        "regionName": "Nakambé",
+        "category": "Légende Agraire & Artisanat",
+        "ethnic": "Mossi / Peul",
+        "languages": ["Français", "Mooré"],
+        "duration": "5 min",
+        "year": "XVIIe siècle",
+        "heroImage": "tiebele-hero.svg",
+        "synopsis": "À Kaya, l'alliance séculaire entre les maîtres tanneurs et les fileuses de coton donna naissance aux étoffes royales protégées par le lac Dem.",
+        "moral": "Le labeur honnête et la recherche de l'excellence élèvent l'artisan au rang des maîtres.",
+        "tags": ["Artisanat", "Cuir", "Faso Dan Fani", "Nakambé"]
+    },
+    {
+        "id": "conquete-naba-oubri",
+        "title": "Naba Oubri et le Serment de la Forêt Sacrée",
+        "nativeTitle": "Naba Oubri sōorã (Mooré)",
+        "regionId": "oubri",
+        "regionName": "Oubri",
+        "category": "Légende Fondatrice",
+        "ethnic": "Mossi",
+        "languages": ["Français", "Mooré"],
+        "duration": "5 min 30",
+        "year": "XIIIe siècle",
+        "heroImage": "yennenga-hero.svg",
+        "synopsis": "Petit-fils de Yennenga, Naba Oubri fonda Ouagadougou en partageant le pouvoir avec les Tengsoba gardiens spirituels de la terre.",
+        "moral": "La paix véritable exige le respect mutuel entre force politique et autorité spirituelle de la terre.",
+        "tags": ["Fondation", "Histoire", "Royauté", "Oubri"]
+    },
+    {
+        "id": "tresor-riviere-sirba",
+        "title": "Le Génie de l'Or et les Piroguiers de la Sirba",
+        "nativeTitle": "Sirba baa daana (Gulmancéma / Fulfulde)",
+        "regionId": "sirba",
+        "regionName": "Sirba",
+        "category": "Conte Initiatique",
+        "ethnic": "Gourmantché / Peul",
+        "languages": ["Français", "Gulmancema", "Fulfulde"],
+        "duration": "4 min 45",
+        "year": "XVIIIe siècle",
+        "heroImage": "dafra-hero.svg",
+        "synopsis": "La rivière Sirba ne livre son or qu'aux cœurs purs qui refusent l'avidité et partagent leur premier grain avec les plus fragiles du village.",
+        "moral": "L'or de la terre enrichit les mains, mais l'or du partage enrichit l'âme pour l'éternité.",
+        "tags": ["Générosité", "Rivière", "Sirba", "Sagesse"]
+    },
+    {
+        "id": "epreuve-berger-soum",
+        "title": "La Traversée de la Mare aux Étoiles de Djibo",
+        "nativeTitle": "Djibo weendu koodde (Fulfulde)",
+        "regionId": "soum",
+        "regionName": "Soum",
+        "category": "Conte Pastoral & Sagesse",
+        "ethnic": "Peul / Bella",
+        "languages": ["Français", "Fulfulde"],
+        "duration": "5 min",
+        "year": "XIXe siècle",
+        "heroImage": "sahel-hero.svg",
+        "synopsis": "Pendant la sécheresse, un jeune berger guidé par la seule étoile polaire découvrit la mare secrète des génies et sauva les troupeaux de la soif.",
+        "moral": "Celui qui sait écouter les étoiles et le vent ne perd jamais son chemin dans la tourmente.",
+        "tags": ["Pastorale", "Courage", "Étoiles", "Soum"]
+    },
+    {
+        "id": "rakire-paix-sourou",
+        "title": "Le Pacte Sacré du Rakiré et le Rire qui Éteignit la Guerre",
+        "nativeTitle": "Rakiré zãmsg la laafya (San / Mooré)",
+        "regionId": "sourou",
+        "regionName": "Sourou",
+        "category": "Tradition & Résolution Pacifique",
+        "ethnic": "Samo (San) / Marka / Mossi",
+        "languages": ["Français", "San", "Mooré"],
+        "duration": "5 min 30",
+        "year": "Temps immémorial",
+        "heroImage": "lievre-hero.svg",
+        "synopsis": "Deux armées allaient s'affronter quand la parenté à plaisanterie (Rakiré) fut invoquée. Les rires désarmèrent les soldats et scellèrent une paix éternelle.",
+        "moral": "L'humour codifié désarme l'orgueil et préserve la vie là où les armes sèment le deuil.",
+        "tags": ["Paix", "Cohésion", "Rakiré", "Sourou"]
+    },
+    {
+        "id": "falaises-gobnangou-tapoa",
+        "title": "Le Gardien Dozo des Falaises de Gobnangou",
+        "nativeTitle": "Gobnangou gbandi dozo (Gulmancéma)",
+        "regionId": "tapoa",
+        "regionName": "Tapoa",
+        "category": "Mythe & Confrérie Dozo",
+        "ethnic": "Gourmantché",
+        "languages": ["Français", "Gulmancema"],
+        "duration": "6 min",
+        "year": "XVIe siècle",
+        "heroImage": "loropeni-hero.svg",
+        "synopsis": "Au sommet des falaises de Gobnangou, un chasseur Dozo reçut des génies la plante maîtresse guérissant les morsures et le devoir sacré de protéger la faune.",
+        "moral": "La nature livre ses remèdes à ceux qui la respectent comme une mère.",
+        "tags": ["Chasseurs", "Dozo", "Nature", "Tapoa"]
+    },
+    {
+        "id": "genie-zai-yaadga",
+        "title": "La Légende du Zaï et le Maître de la Terre de Ouahigouya",
+        "nativeTitle": "Zaï bãngr nengẽ Yatenga (Mooré)",
+        "regionId": "yaadga",
+        "regionName": "Yaadga",
+        "category": "Sagesse Écologique & Savoir Ancestral",
+        "ethnic": "Mossi / Peul",
+        "languages": ["Français", "Mooré"],
+        "duration": "5 min 15",
+        "year": "XXe siècle",
+        "heroImage": "yennenga-hero.svg",
+        "synopsis": "Face à la désertification, un cultivateur de Ouahigouya réinventa le Zaï ancestral : poquets de compost pour piéger l'eau et faire reverdir le Sahel.",
+        "moral": "L'intelligence respectueuse de la terre féconde le sol le plus stérile.",
+        "tags": ["Écologie", "Zaï", "Yatenga", "Yaadga"]
     }
 ]
 
-# --- DÉTECTION ET CONFIGURATION FASTAPI ---
+# --- CHARGEMENT FASTAPI / DÉTECTION ---
 
 try:
     from fastapi import FastAPI, HTTPException, Query
@@ -327,9 +506,9 @@ try:
     from fastapi.staticfiles import StaticFiles
 
     app = FastAPI(
-        title="Faso Oralia API",
-        description="API de valorisation, numérisation et transmission des contes et légendes du Burkina Faso.",
-        version="1.0.0",
+        title="Mémoire du Burkina API",
+        description="API officielle de préservation et transmission des contes et des 17 régions du Burkina Faso.",
+        version="2.0.0",
         docs_url="/docs",
         redoc_url="/redoc"
     )
@@ -347,46 +526,47 @@ try:
     @app.get("/", response_class=HTMLResponse)
     async def serve_home():
         index_file = STATIC_DIR / "index.html"
-        if not index_file.exists():
-            raise HTTPException(status_code=404, detail="Index file not found")
         return FileResponse(index_file)
 
     @app.get("/report", response_class=HTMLResponse)
     async def serve_report():
         report_file = STATIC_DIR / "report" / "index.html"
-        if not report_file.exists():
-            raise HTTPException(status_code=404, detail="Report file not found")
         return FileResponse(report_file)
 
     @app.get("/api/health")
     async def health_check():
         return {
             "status": "online",
-            "platform": "Faso Oralia - Plateforme Web Multimédia des Contes et Légendes du Burkina Faso",
-            "version": "1.0.0",
-            "engine": "FastAPI + Uvicorn",
-            "stories_count": len(STORIES_DATA),
-            "regions_count": len(REGIONS_DATA)
+            "platform": "Mémoire du Burkina — Plateforme Multimédia des 17 Régions",
+            "version": "2.0.0",
+            "regions_count": len(REGIONS_DATA),
+            "stories_count": len(STORIES_DATA)
         }
 
     @app.get("/api/regions")
     async def get_regions():
         return REGIONS_DATA
 
+    @app.get("/api/regions/{region_id}")
+    async def get_region_by_id(region_id: str):
+        reg = next((r for r in REGIONS_DATA if r["id"] == region_id), None)
+        if not reg:
+            raise HTTPException(status_code=404, detail=f"Région '{region_id}' non trouvée.")
+        return reg
+
     @app.get("/api/contes")
-    async def get_stories(category: str = None, language: str = None, search: str = None):
-        results = STORIES_DATA
+    async def get_stories(category: str = None, language: str = None, region_id: str = None, search: str = None):
+        res = STORIES_DATA
         if category and category.lower() != "all":
-            results = [s for s in results if category.lower() in s["category"].lower()]
+            res = [s for s in res if category.lower() in s["category"].lower()]
         if language and language.lower() != "all":
-            results = [s for s in results if any(language.lower() == l.lower() for l in s["languages"])]
+            res = [s for s in res if any(language.lower() == l.lower() for l in s["languages"])]
+        if region_id and region_id.lower() != "all":
+            res = [s for s in res if s["regionId"] == region_id]
         if search:
             q = search.lower()
-            results = [
-                s for s in results
-                if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower() or q in s["ethnic"].lower()
-            ]
-        return results
+            res = [s for s in res if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower()]
+        return res
 
     @app.get("/api/contes/{story_id}")
     async def get_story_by_id(story_id: str):
@@ -402,7 +582,7 @@ except ImportError:
     app = None
 
 
-# --- SERVEUR DE REPLI STANDARD PYTHON (ZÉRO DÉPENDANCE REQUISE) ---
+# --- SERVEUR DE REPLI STANDARD ZÉRO DÉPENDANCE ---
 
 if not HAS_FASTAPI:
     import http.server
@@ -410,9 +590,8 @@ if not HAS_FASTAPI:
 
     class FasoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         def end_headers(self):
-            # Autorise les requêtes CORS dans tous les navigateurs
             self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "*")
             super().end_headers()
 
@@ -425,54 +604,57 @@ if not HAS_FASTAPI:
             path = parsed.path
             params = urllib.parse.parse_qs(parsed.query)
 
-            # Route Racine : Index HTML
             if path in ("/", "/index.html"):
                 self.serve_file(STATIC_DIR / "index.html", "text/html; charset=utf-8")
                 return
 
-            # Route Rapport Officiel Gobelab
             if path in ("/report", "/report/"):
                 self.serve_file(STATIC_DIR / "report" / "index.html", "text/html; charset=utf-8")
                 return
 
-            # API Health Check
             if path == "/api/health":
                 self.send_json({
                     "status": "online",
-                    "platform": "Faso Oralia - Plateforme Web Multimédia des Contes et Légendes du Burkina Faso",
-                    "version": "1.0.0",
+                    "platform": "Mémoire du Burkina — Plateforme Multimédia des 17 Régions",
+                    "version": "2.0.0",
                     "engine": "Python Standard HTTP (Zéro Dépendance)",
-                    "stories_count": len(STORIES_DATA),
-                    "regions_count": len(REGIONS_DATA)
+                    "regions_count": len(REGIONS_DATA),
+                    "stories_count": len(STORIES_DATA)
                 })
                 return
 
-            # API Régions
             if path == "/api/regions":
                 self.send_json(REGIONS_DATA)
                 return
 
-            # API Contes avec filtres
+            if path.startswith("/api/regions/"):
+                reg_id = path.replace("/api/regions/", "").strip("/")
+                reg = next((r for r in REGIONS_DATA if r["id"] == reg_id), None)
+                if reg:
+                    self.send_json(reg)
+                else:
+                    self.send_error(404, f"Région '{reg_id}' non trouvée.")
+                return
+
             if path == "/api/contes":
                 category = params.get("category", [None])[0]
                 language = params.get("language", [None])[0]
                 search = params.get("search", [None])[0]
+                region_id = params.get("region_id", [None])[0]
 
-                results = STORIES_DATA
+                res = STORIES_DATA
                 if category and category.lower() != "all":
-                    results = [s for s in results if category.lower() in s["category"].lower()]
+                    res = [s for s in res if category.lower() in s["category"].lower()]
                 if language and language.lower() != "all":
-                    results = [s for s in results if any(language.lower() == l.lower() for l in s["languages"])]
+                    res = [s for s in res if any(language.lower() == l.lower() for l in s["languages"])]
+                if region_id and region_id.lower() != "all":
+                    res = [s for s in res if s["regionId"] == region_id]
                 if search:
                     q = search.lower()
-                    results = [
-                        s for s in results
-                        if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower() or q in s["ethnic"].lower()
-                    ]
-                self.send_json(results)
+                    res = [s for s in res if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower()]
+                self.send_json(res)
                 return
 
-            # API Détail d'un conte : /api/contes/{id}
             if path.startswith("/api/contes/"):
                 story_id = path.replace("/api/contes/", "").strip("/")
                 story = next((s for s in STORIES_DATA if s["id"] == story_id), None)
@@ -482,7 +664,6 @@ if not HAS_FASTAPI:
                     self.send_error(404, f"Récit '{story_id}' introuvable.")
                 return
 
-            # Fichiers statiques (/static/...)
             if path.startswith("/static/"):
                 rel_path = path[len("/static/"):]
                 file_path = (STATIC_DIR / rel_path).resolve()
@@ -515,19 +696,14 @@ if not HAS_FASTAPI:
 
 
 def run_standalone_server(host="0.0.0.0", port=8000):
-    """Lance le serveur HTTP standard (aucune dépendance requise)"""
-    import http.server
     import socketserver
-
-    handler = FasoHTTPRequestHandler
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.ThreadingTCPServer((host, port), handler) as httpd:
+    with socketserver.ThreadingTCPServer((host, port), FasoHTTPRequestHandler) as httpd:
         print(f"\n==================================================================")
-        print(f"🇧🇫 FASO ORALIA - SERVEUR ACTIF (Mode Standard Zéro Dépendance)")
+        print(f"🇧🇫 MÉMOIRE DU BURKINA — SERVEUR ACTIF (17 Régions)")
         print(f"==================================================================")
-        print(f"🌐 Application Web   : http://localhost:{port}")
+        print(f"🌐 Plateforme Web   : http://localhost:{port}")
         print(f"📋 Rapport Officiel : http://localhost:{port}/report")
-        print(f"💡 Info : Tourne sans FastAPI/uvicorn sur la bibliothèque standard !")
         print(f"==================================================================\n")
         try:
             httpd.serve_forever()
@@ -535,11 +711,8 @@ def run_standalone_server(host="0.0.0.0", port=8000):
             print("\nArrêt propre du serveur.")
 
 
-# --- POINT D'ENTRÉE PRINCIPAL ---
-
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-
     if HAS_FASTAPI:
         try:
             import uvicorn
@@ -548,6 +721,4 @@ if __name__ == "__main__":
         except Exception:
             run_standalone_server(port=port)
     else:
-        print("ℹ️ Module 'fastapi' non détecté dans cet environnement Python.")
-        print("⚡ Activation automatique du serveur Web standard intégré (100% autonome).")
         run_standalone_server(port=port)

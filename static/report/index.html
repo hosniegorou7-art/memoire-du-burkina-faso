@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rapport de Projet — Plateforme des Contes et Légendes du Burkina Faso</title>
+  <title>Rapport Officiel de Projet — Mémoire du Burkina (17 Régions) — Gobelab</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @media print {
@@ -16,7 +16,7 @@
 </head>
 <body class="bg-stone-100 text-stone-900 font-sans p-4 sm:p-8 md:p-12">
 
-  <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-stone-200 overflow-hidden">
+  <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl border border-stone-200 overflow-hidden">
 
     <!-- Barre d'action supérieure (non imprimée) -->
     <div class="no-print bg-stone-900 px-6 py-4 flex flex-wrap items-center justify-between gap-4 text-white">
@@ -33,253 +33,321 @@
     </div>
 
     <!-- En-tête officiel du rapport -->
-    <div class="p-8 sm:p-12 border-b border-stone-200 bg-gradient-to-br from-amber-50 to-orange-50">
+    <div class="p-8 sm:p-12 border-b border-stone-200 bg-gradient-to-br from-amber-50 via-orange-50 to-stone-50">
       <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-200/60 text-amber-900 text-xs font-bold border border-amber-300">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-200/70 text-amber-950 text-xs font-bold border border-amber-300">
           <span>🇧🇫</span> <span>RAPPORT DE PROJET OFFICIEL • GOBELAB</span>
         </div>
         <div class="text-xs text-stone-500 font-mono">Date de livraison : 31 Octobre 2026</div>
       </div>
 
       <h1 class="text-2xl sm:text-4xl font-extrabold text-stone-900 leading-tight mb-4">
-        Plateforme Web Multimédia et Carte Interactive des Contes et Légendes du Burkina Faso
+        MÉMOIRE DU BURKINA
       </h1>
+      <p class="text-base sm:text-lg font-semibold text-amber-900 mb-2">
+        Plateforme Web Multimédia Immersive des Contes, Légendes et Récits des 17 Régions du Burkina Faso
+      </p>
 
-      <p class="text-sm sm:text-base text-stone-700 leading-relaxed max-w-3xl">
+      <p class="text-xs sm:text-sm text-stone-700 leading-relaxed max-w-3xl">
         Dossier de conception, d'architecture technique et de valorisation culturelle pour la préservation,
-        la numérisation et la transmission du patrimoine oral burkinabè en langues nationales (Mooré, Dioula, Fulfulde, etc.).
+        la numérisation et la transmission du patrimoine oral immatériel burkinabè en langues nationales
+        (Mooré, Dioula, Fulfulde, Gulmancéma, Dagara, Bwamu, Kasséna, Lyélé, San).
       </p>
 
       <!-- Cartouche d'informations officielles -->
       <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-white border border-amber-200/80 shadow-sm text-xs">
         <div>
-          <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Destinataire</span>
+          <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Destinataire Officiel</span>
           <span class="font-bold text-stone-800 text-sm">M. Odilon Simpore</span>
           <span class="block text-amber-800 font-mono text-[11px]">Odilon.simpore@gobelab.org</span>
         </div>
         <div>
-          <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Cadre</span>
+          <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Cadre Institutionnel</span>
           <span class="font-bold text-stone-800 text-sm">Laboratoire Gobelab</span>
-          <span class="block text-stone-500">Innovation & Patrimoine</span>
+          <span class="block text-stone-500">Innovation, SIG & Patrimoine</span>
         </div>
         <div>
           <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Délai Imparti</span>
           <span class="font-bold text-amber-700 text-sm">4 Novembre 2026</span>
-          <span class="block text-emerald-600 font-semibold">Livrable dans les délais</span>
+          <span class="block text-emerald-600 font-semibold">Livrable achevé dans les délais</span>
         </div>
         <div>
           <span class="block text-stone-400 font-medium uppercase tracking-wider text-[10px]">Lien du Démonstrateur</span>
-          <a href="/" class="font-bold text-blue-600 hover:underline block text-sm">Accéder au site</a>
-          <span class="text-stone-400 text-[10px]">Serveur FastAPI actif</span>
+          <a href="/" class="font-bold text-blue-600 hover:underline block text-sm">Accéder au site web</a>
+          <span class="text-stone-400 text-[10px]">Serveur FastAPI / REST actif</span>
         </div>
       </div>
     </div>
 
-    <!-- Contenu détaillé du rapport -->
-    <div class="p-8 sm:p-12 space-y-10 text-stone-800 leading-relaxed text-sm sm:text-base">
+    <!-- Contenu détaillé du rapport structuré par Modules -->
+    <div class="p-8 sm:p-12 space-y-12 text-stone-800 leading-relaxed text-sm sm:text-base">
 
       <!-- 1. Résumé Exécutif -->
       <section>
         <h2 class="text-xl font-bold text-amber-900 border-b border-amber-200 pb-2 mb-4 flex items-center gap-2">
-          <span>1.</span> <span>Résumé Exécutif</span>
+          <span>1.</span> <span>Résumé Exécutif & Vision</span>
         </h2>
         <p class="mb-3">
-          Le présent projet répond aux exigences définies dans le cahier des charges de Gobelab concernant le développement
-          d'une <strong>application web immersive</strong> visant à préserver, numériser et transmettre le patrimoine oral burkinabè.
+          Le présent projet répond avec la plus haute rigueur technique et culturelle aux exigences formulées par le laboratoire Gobelab.
+          Face à l'urbanisation rapide, à l'érosion mémorielle et au recul progressif des veillées sous le baobab,
+          <strong>MÉMOIRE DU BURKINA</strong> restitue un arbre à palabres numérique moderne, pérenne et accessible à toutes les générations.
+        </p>
+        <p class="mb-3">
+          Le socle géographique adopte sans compromis le <strong>découpage administratif officiel actuel à 17 régions</strong> du Burkina Faso
+          (Bankui, Djôrô, Goulmou, Guiriko, Kadiogo, Kuilsé, Liptako, Nakambé, Nando, Nazinon, Oubri, Sirba, Soum, Sourou, Tapoa, Tannounyan, Yaadga),
+          écartant définitivement l'ancien découpage obsolète à 13 régions.
         </p>
         <p>
-          Face à l'urbanisation croissante et au recul progressif des veillées traditionnelles autour du feu, cette plateforme
-          reconstitue un <em>Arbre à Palabres numérique</em> accessible à toutes les générations. Elle allie la rigueur scientifique
-          du recueil des récits oraux à l'innovation technologique de pointe : cartographie bidimensionnelle vectorielle,
-          représentation tridimensionnelle en relief avec éclairage atmosphérique en temps réel, moteur audio Web Audio API
-          générant les sonorités des instruments du terroir (Kora, Balafon, Djembé) et narration synchronisée en langues nationales.
+          L'architecture logicielle allie un design system inspiré du Faso Dan Fani et des fresques de Tiébélé,
+          un double système cartographique (2D vectoriel et 3D isométrique en relief), une bibliothèque de récits bilingues,
+          un synthétiseur audio Web Audio API reproduisant les instruments du terroir (Kora, Balafon, Djembé),
+          le mode signature <em>« Écouter autour du feu »</em> avec particules et karaoké synchronisé,
+          une console d'administration complète et une gouvernance des contributions conforme à la convention UNESCO 2003.
         </p>
       </section>
 
-      <!-- 2. Concept & Objectifs Pédagogiques -->
+      <!-- 2. Les 17 Régions Officielles du Burkina Faso -->
       <section>
         <h2 class="text-xl font-bold text-amber-900 border-b border-amber-200 pb-2 mb-4 flex items-center gap-2">
-          <span>2.</span> <span>Concept & Piliers Fondateurs</span>
+          <span>2.</span> <span>Référentiel Territorial des 17 Régions</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
-          <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-200">
-            <h3 class="font-bold text-amber-950 mb-1 text-sm">1. Préserver</h3>
-            <p class="text-xs text-stone-600">
-              Fixer par l'écrit et le son les récits fondateurs, les mythes de la faune totémique et les hauts faits historiques
-              avant leur érosion mémorielle.
-            </p>
+        <p class="mb-4 text-xs sm:text-sm text-stone-600">
+          Chaque région dispose d'une fiche monographique exhaustive comprenant chef-lieu, coordonnées SIG, composantes ethnolinguistiques,
+          emblèmes, paysages, traditions orales et instruments de musique spécifiques :
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">1. Bankui</strong>
+            <span class="text-stone-500">Chef-lieu : Dédougou</span><br>
+            <span class="text-amber-800">Bwaba, San, Marka • FESTIMA & Masques de feuilles</span>
           </div>
-          <div class="p-4 rounded-xl bg-orange-50/80 border border-orange-200">
-            <h3 class="font-bold text-amber-950 mb-1 text-sm">2. Numériser</h3>
-            <p class="text-xs text-stone-600">
-              Structurer les données orales selon les standards modernes du web (GeoJSON, vectorisation SVG, synthèse sonore,
-              compatibilité mobile et offline).
-            </p>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">2. Djôrô</strong>
+            <span class="text-stone-500">Chef-lieu : Banfora</span><br>
+            <span class="text-amber-800">Sénoufo, Gouin • Cascades de Karfiguéla & Dômes</span>
           </div>
-          <div class="p-4 rounded-xl bg-yellow-50/80 border border-yellow-200">
-            <h3 class="font-bold text-amber-950 mb-1 text-sm">3. Transmettre</h3>
-            <p class="text-xs text-stone-600">
-              Rendre la culture vivante et interactive pour la jeunesse grâce au mode branching narrative (« dont vous êtes le héros »)
-              et au quiz éducatif certifiant.
-            </p>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">3. Goulmou</strong>
+            <span class="text-stone-500">Chef-lieu : Fada N'Gourma</span><br>
+            <span class="text-amber-800">Gourmantché • Harpe Kondé & Royaume du Gulmu</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">4. Guiriko</strong>
+            <span class="text-stone-500">Chef-lieu : Bobo-Dioulasso</span><br>
+            <span class="text-amber-800">Bobo, Dioula, Tiéfo • Silures de Dafra & Guimbi Ouattara</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">5. Kadiogo</strong>
+            <span class="text-stone-500">Chef-lieu : Ouagadougou</span><br>
+            <span class="text-amber-800">Mossi • Étalon de Yennenga & Mogho Naba</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">6. Kuilsé</strong>
+            <span class="text-stone-500">Chef-lieu : Ziniaré</span><br>
+            <span class="text-amber-800">Mossi • Granit de Laongo & Musée de Manéga</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">7. Liptako</strong>
+            <span class="text-stone-500">Chef-lieu : Dori</span><br>
+            <span class="text-amber-800">Peul, Touareg • Dunes d'Oursi, Hoddu & Pulaaku</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">8. Nakambé</strong>
+            <span class="text-stone-500">Chef-lieu : Kaya</span><br>
+            <span class="text-amber-800">Mossi, Peul • Métiers du cuir & filature Dan Fani</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">9. Nando</strong>
+            <span class="text-stone-500">Chef-lieu : Koudougou</span><br>
+            <span class="text-amber-800">Lyélé, Mossi • Crocodiles sacrés de Sabou & NAK</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">10. Nazinon</strong>
+            <span class="text-stone-500">Chef-lieu : Manga</span><br>
+            <span class="text-amber-800">Kasséna, Mossi • Cour de Tiébélé & fresques murales</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">11. Oubri</strong>
+            <span class="text-stone-500">Chef-lieu : Kombissiri</span><br>
+            <span class="text-amber-800">Mossi • Épopée de Naba Oubri, fondateur royal</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">12. Sirba</strong>
+            <span class="text-stone-500">Chef-lieu : Bogandé</span><br>
+            <span class="text-amber-800">Gourmantché, Peul • Vallée de la Sirba & traditions orifères</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">13. Soum</strong>
+            <span class="text-stone-500">Chef-lieu : Djibo</span><br>
+            <span class="text-amber-800">Peul, Bella • Poésie pastorale nomade & grandes steppes</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">14. Sourou</strong>
+            <span class="text-stone-500">Chef-lieu : Tougan</span><br>
+            <span class="text-amber-800">San (Samo), Marka • Rakiré (parenté à plaisanterie)</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">15. Tapoa</strong>
+            <span class="text-stone-500">Chef-lieu : Diapaga</span><br>
+            <span class="text-amber-800">Gourmantché • Falaise de Gobnangou & confrérie Dozo</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">16. Tannounyan</strong>
+            <span class="text-stone-500">Chef-lieu : Gaoua</span><br>
+            <span class="text-amber-800">Lobi, Dagara • Forteresse de Loropéni (UNESCO) & Bateba</span>
+          </div>
+          <div class="p-3 rounded-xl bg-stone-50 border border-stone-200">
+            <strong class="text-stone-900 block text-sm">17. Yaadga</strong>
+            <span class="text-stone-500">Chef-lieu : Ouahigouya</span><br>
+            <span class="text-amber-800">Mossi, Peul • Royaume du Yatenga & génie du Zaï</span>
           </div>
         </div>
       </section>
 
-      <!-- 3. Architecture Technique & Choix d'Ingénierie -->
+      <!-- 3. Réalisation Détaillée par Phase Modulaire -->
       <section class="page-break">
         <h2 class="text-xl font-bold text-amber-900 border-b border-amber-200 pb-2 mb-4 flex items-center gap-2">
-          <span>3.</span> <span>Architecture Technique & Innovations Développées</span>
+          <span>3.</span> <span>Développement Réalisé : Les 7 Phases Modulaires</span>
         </h2>
-        <p class="mb-4">
-          L'application a été conçue selon une architecture modulaire, performante et propre, sans dépendance lourde,
-          garantissant une pérennité maximale et une exécution immédiate :
-        </p>
 
-        <div class="space-y-4">
-          <div class="p-4 rounded-xl border border-stone-200 bg-stone-50">
-            <h4 class="font-bold text-stone-900 text-sm mb-1">A. Backend & API RESTful (Python 3.14 + FastAPI + Uvicorn)</h4>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Exposition d'une API asynchrone haute performance documentée automatiquement via Swagger UI (accessible sur <code class="bg-stone-200 px-1 py-0.5 rounded">/docs</code>).
-              Points d'accès pour les contes, régions, données géographiques, glossaires et quiz. Prise en charge des requêtes CORS et service de fichiers statiques optimisé.
+        <div class="space-y-6">
+          <!-- Phase 1 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 1 : Identité Visuelle, Ergonomie & Design System Culturel</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Élaboration d'une identité visuelle d'inspiration burkinabè contemporaine : palette chromatique fondée sur l'ocre de latérite (<code>#9C3D1B</code>),
+              la terre cuite (<code>#C85A32</code>), l'or solaire (<code>#E5A93C</code>), le vert savane (<code>#1B4332</code>) et le noir charbon (<code>#12100E</code>).
+              Motifs géométriques Faso Dan Fani en trame de fond, bordures gravées façon Tiébélé et typographies contrastées (Cinzel pour les titres d'apparat, Plus Jakarta Sans pour le confort de lecture).
             </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/css/design-system.css, static/css/campfire.css, static/js/core/router.js</div>
           </div>
 
-          <div class="p-4 rounded-xl border border-stone-200 bg-stone-50">
-            <h4 class="font-bold text-stone-900 text-sm mb-1">B. Carte Interactive 2D Vectorielle (Moteur SVG)</h4>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Cartographie personnalisée des 13 régions du Burkina Faso avec coordonnées administratives exactes,
-              tracés fluviaux sacrés (Mouhoun, Nakambé), ondes de pulsation radar sur les balises de légendes et infobulles contextuelles enrichies.
+          <!-- Phase 2 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 2 : Carte Interactive des 17 Régions (2D Vectorielle & 3D Isométrique)</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Double moteur de visualisation cartographique :
+              (1) Carte vectorielle 2D en SVG responsive avec tracé polygonal des 17 régions, pulsation radar sur les balises de légendes et tiroir contextuel interactif ;
+              (2) Moteur 3D isométrique développé sur Canvas HTML5 avec topographie en relief (falaises du Sud-Ouest, dômes de Fabedougou, plateau central, dunes du Sahel),
+              orbite libre à la souris et cycle atmosphérique à 4 ambiances (Aube, Plein jour, Crépuscule, Nuit étoilée).
             </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/js/components/map2d.js, static/js/components/map3d.js, static/js/views/map-view.js</div>
           </div>
 
-          <div class="p-4 rounded-xl border border-stone-200 bg-stone-50">
-            <h4 class="font-bold text-stone-900 text-sm mb-1">C. Moteur Cartographique 3D Isométrique & Relief (Canvas HTML5 temps réel)</h4>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Modélisation en maillage 3D avec prise en compte du relief (élévation des falaises de Banfora dans les Cascades, plateau central ondulé,
-              dunes du Sahel à Oursi). Orbite libre 360°, inclinaison interactive, zoom et cycle d'éclairage atmosphérique à 4 modes
-              (Aube, Plein jour, Crépuscule sahélien, Nuit étoilée au clair de lune avec particules d'étoiles).
+          <!-- Phase 3 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 3 : Bibliothèque Multimédia des Contes & Récits</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Catalogue complet filtrable par région administrative, typologie (Épopées fondatrices, Mythes & Nature, Récits historiques, Contes animaliers),
+              langues nationales et public cible. Recherche instantanée avec surbrillance, fiches éditoriales complètes, citations en langue maternelle et glossaire des termes traditionnels.
             </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/js/data/stories.js, static/js/views/library-view.js, static/js/views/story-view.js</div>
           </div>
 
-          <div class="p-4 rounded-xl border border-stone-200 bg-stone-50">
-            <h4 class="font-bold text-stone-900 text-sm mb-1">D. Synthétiseur Audio Web Audio API & Narration Bilingue</h4>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Génération temps réel et 100% autonome en local (sans requérir de fichiers MP3 volumineux) des sonorités traditionnelles :
-              cordes pincées de Kora, percussion boisée de Balafon, pulsations graves de Djembé et bruissement nocturne des grillons sahéliens.
-              Le module intègre la lecture vocale synchronisée au texte avec affichage bilingue parallèle (Français et Langues Nationales).
+          <!-- Phase 4 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 4 : Système Audio & Multilinguisme Authentique</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Reconnaissance sans concession de la réalité technologique : les API de TTS commerciales (ElevenLabs, Google TTS) ignorent les langues nationales voltaïques.
+              La plateforme privilégie la voix humaine et intègre un synthétiseur Web Audio API autonome d'instruments traditionnels (Kora mandingue, Balafon pentatonique, Djembé rythmique, ambiance nocturne de grillons sahéliens) et la lecture bilingue avec horodatage mot à mot.
             </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/js/audio.js, static/js/components/audio-player.js, static/js/data/languages.js</div>
+          </div>
+
+          <!-- Phase 5 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 5 : Illustrations Vectorielles & Expérience Immersive « Autour du Feu »</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Série d'illustrations vectorielles SVG éditoriales authentiques représentant les grandes figures et lieux du Faso (Yennenga, Dafra, Guimbi Ouattara, Sabou, Loropéni, Tiébélé, Sahel).
+              Mode signature <em>« Écouter autour du feu »</em> avec obscurcissement de l'écran, particules cinétiques de braises incandescentes montantes, mode enfant à typographie élargie et karaoké bilingue.
+            </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/assets/illustrations/*.svg, static/js/components/campfire.js, static/css/campfire.css</div>
+          </div>
+
+          <!-- Phase 6 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 6 : Console d'Administration & Collecte Participative UNESCO</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Tableau de bord d'administration complet avec indicateurs clés (KPIs), interface CRUD pour les contes et les 17 régions,
+              gestionnaire des narrateurs traditionnels certifiés et pipeline de modération des soumissions citoyennes respectant le consentement préalable libre et éclairé (Convention UNESCO 2003).
+            </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : static/js/views/admin-view.js, static/js/views/contribute-view.js</div>
+          </div>
+
+          <!-- Phase 7 -->
+          <div class="p-4 rounded-2xl border border-stone-200 bg-stone-50">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-stone-900 text-sm">Phase 7 : Tests Automatisés, Optimisation & Déploiement Universel</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">100% Opérationnel</span>
+            </div>
+            <p class="text-xs text-stone-600 mb-2">
+              Architecture serveur bi-mode résiliente : fonctionne avec FastAPI + Uvicorn si installés, ou bascule automatiquement et instantanément
+              vers le serveur multithread standard <code>http.server</code> de Python 3 sans aucune dépendance externe à installer.
+              Suite de tests automatisée unifiée validant l'intégrité des 17 régions, des API REST et des composants visuels.
+            </p>
+            <div class="text-[11px] text-stone-500 font-mono">Fichiers : app.py, tests/test_suite.py, RAPPORT_PROJET.md, README.md</div>
           </div>
         </div>
       </section>
 
-      <!-- 4. Corpus des Récits et Légendes Intégrés -->
+      <!-- 4. Guide de Déploiement et d'Exécution -->
       <section>
         <h2 class="text-xl font-bold text-amber-900 border-b border-amber-200 pb-2 mb-4 flex items-center gap-2">
-          <span>4.</span> <span>Corpus Culturel & Récits Intégrés</span>
+          <span>4.</span> <span>Guide de Déploiement & Mode d'Emploi</span>
         </h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs border-collapse">
-            <thead>
-              <tr class="bg-amber-100/70 border-b border-amber-200 text-amber-950 font-bold">
-                <th class="p-2.5">Récit & Légende</th>
-                <th class="p-2.5">Région & Lieu</th>
-                <th class="p-2.5">Groupe & Langue</th>
-                <th class="p-2.5">Thématique & Morale</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-stone-200 text-stone-700">
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">L'Épopée de Yennenga</td>
-                <td class="p-2.5">Centre / Plateau-Central</td>
-                <td class="p-2.5">Mossi • Mooré</td>
-                <td class="p-2.5">Émancipation féminine, courage et fondation de la nation.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Silures Sacrés de Dafra</td>
-                <td class="p-2.5">Hauts-Bassins (Bobo)</td>
-                <td class="p-2.5">Bobo / Dioula</td>
-                <td class="p-2.5">Pacte des eaux sacrées, écologie ancestrale et respect des tabous.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Guimbi Ouattara</td>
-                <td class="p-2.5">Hauts-Bassins (Sya)</td>
-                <td class="p-2.5">Dioula / Mandingue</td>
-                <td class="p-2.5">Leadership féminin, diplomatie éclairée et protection des peuples.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Crocodiles Sacrés de Sabou</td>
-                <td class="p-2.5">Centre-Ouest (Sabou)</td>
-                <td class="p-2.5">Gourounsi • Mooré</td>
-                <td class="p-2.5">Gratitude perpétuelle et pacte totémique homme-animal.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Le Lièvre et l'Hyène</td>
-                <td class="p-2.5">Boucle du Mouhoun</td>
-                <td class="p-2.5">Universel (Bwaba/Dioula)</td>
-                <td class="p-2.5">Solidarité collective contre égoïsme, ruse bienveillante.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Ruines de Loropéni</td>
-                <td class="p-2.5">Sud-Ouest (Poni)</td>
-                <td class="p-2.5">Lobi / Dagara (UNESCO)</td>
-                <td class="p-2.5">Mémoire millénaire de l'or et pérennité des œuvres de l'esprit.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Le Berger Peul et le Sahel</td>
-                <td class="p-2.5">Sahel (Dori/Oursi)</td>
-                <td class="p-2.5">Peul • Fulfulde</td>
-                <td class="p-2.5">Code d'honneur Pulaaku et sacralité de la parole donnée.</td>
-              </tr>
-              <tr>
-                <td class="p-2.5 font-bold text-stone-900">Murs Peints de Tiébélé</td>
-                <td class="p-2.5">Centre-Sud (Nahouri)</td>
-                <td class="p-2.5">Kasséna • Gourounsi</td>
-                <td class="p-2.5">Génie artistique des femmes, architecture et transmission.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- 5. Guide de Déploiement et d'Exécution -->
-      <section>
-        <h2 class="text-xl font-bold text-amber-900 border-b border-amber-200 pb-2 mb-4 flex items-center gap-2">
-          <span>5.</span> <span>Guide de Déploiement & Mode d'Emploi</span>
-        </h2>
-        <div class="bg-stone-900 text-stone-100 p-4 rounded-2xl font-mono text-xs space-y-2 overflow-x-auto">
-          <p class="text-stone-400"># 1. Démarrage instantané du serveur d'application</p>
-          <p class="text-amber-300">python3 app.py</p>
-          <p class="text-stone-400"># 2. Accès à la plateforme dans le navigateur</p>
-          <p class="text-emerald-400">http://localhost:8000</p>
-          <p class="text-stone-400"># 3. Documentation interactive des API (Swagger UI)</p>
+        <div class="bg-stone-900 text-stone-100 p-5 rounded-2xl font-mono text-xs space-y-3 overflow-x-auto">
+          <p class="text-stone-400"># 1. Lancement du serveur (compatible tout environnement Python 3.9+)</p>
+          <p class="text-amber-300 font-bold">python3 app.py</p>
+          <p class="text-stone-400"># 2. Accès à la plateforme web dans le navigateur</p>
+          <p class="text-emerald-400 font-bold">http://localhost:8000</p>
+          <p class="text-stone-400"># 3. Exécution de la suite de tests automatisés</p>
+          <p class="text-amber-300 font-bold">python3 tests/test_suite.py</p>
+          <p class="text-stone-400"># 4. Documentation OpenAPI / Swagger (si FastAPI est présent)</p>
           <p class="text-blue-400">http://localhost:8000/docs</p>
         </div>
       </section>
 
-      <!-- 6. Conclusion et Perspectives -->
+      <!-- 5. Conclusion & Perspectives -->
       <section class="border-t border-stone-200 pt-6">
-        <h2 class="text-xl font-bold text-amber-900 mb-2">Conclusion & Perspectives d'Évolution</h2>
+        <h2 class="text-xl font-bold text-amber-900 mb-2">Conclusion & Perspectives d'Évolution pour Gobelab</h2>
         <p class="mb-3">
-          Le projet Faso Oralia démontre avec force qu'il est possible de conjuguer les technologies contemporaines
-          du web avec la noblesse immémoriale du patrimoine oral africain.
+          Le projet <strong>MÉMOIRE DU BURKINA</strong> prouve qu'il est possible de concilier la pointe du génie logiciel contemporain
+          (moteur cartographique 2D/3D temps réel, synthèse sonore Web Audio, réactivité SPA) avec l'authenticité sacrée des traditions orales africaines.
         </p>
         <p class="text-stone-600 text-xs leading-relaxed">
-          Dans le cadre d'un déploiement à grande échelle pour le laboratoire Gobelab, plusieurs axes prometteurs peuvent être étendus :
-          l'intégration d'un mode PWA (Progressive Web App) avec cache hors-ligne complet pour les zones rurales à connectivité intermittente,
-          un espace participatif permettant aux anciens et griots locaux d'enregistrer directement de nouvelles variantes orales après validation par un comité scientifique,
-          et la réalité augmentée (WebXR) sur les sites historiques majeurs (Tiébélé, Loropéni, Dafra).
+          Pour la suite du programme de recherche au sein du laboratoire Gobelab, trois axes d'extension naturelle sont proposés :
+          (1) Déploiement d'un mode PWA hors-ligne intégral avec synchronisation différentielle pour les zones sahéliennes blanches ;
+          (2) Enregistrement audio géolocalisé in-situ lors des fêtes coutumières (FESTIMA, FESPACO, NAK) par les dépositaires de la tradition ;
+          (3) Expériences de Réalité Augmentée (WebXR) sur les sites historiques inscrits au patrimoine mondial (Loropéni, Tiébélé).
         </p>
       </section>
 
       <!-- Signature officielle -->
       <div class="pt-8 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
         <div>
-          <strong>Faso Oralia</strong> — Développé avec excellence pour Gobelab.<br>
-          Destiné à : <em>Odilon.simpore@gobelab.org</em>
+          <strong class="text-stone-800">MÉMOIRE DU BURKINA</strong> — Développé avec rigueur et passion pour Gobelab.<br>
+          Rapport adressé à : <em class="text-amber-900 font-bold">Odilon.simpore@gobelab.org</em>
         </div>
         <div class="text-right font-serif italic text-amber-900 font-bold">
-          "La parole est comme l'eau : bien guidée, elle fertilise les générations."
+          "Un vieillard qui meurt est une bibliothèque qui brûle." — Amadou Hampâté Bâ
         </div>
       </div>
 

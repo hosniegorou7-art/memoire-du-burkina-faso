@@ -1,0 +1,213 @@
+/* ==========================================================================
+   MÉMOIRE DU BURKINA — SYSTÈME DE DESIGN & IDENTITÉ VISUELLE CULTURELLE
+   Inspiré des pigments de latérite, du tissage Faso Dan Fani et de l'architecture en banco.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  /* Palette Chromatique Fondatrice */
+  --c-ocre-laterite: #9c3d1b;
+  --c-terre-cuite: #c85a32;
+  --c-or-solaire: #e5a93c;
+  --c-or-vif: #f59e0b;
+  --c-or-clair: #fef3c7;
+  --c-vert-savane: #1b4332;
+  --c-vert-emeraude: #2d6a4f;
+  --c-brun-karite: #3d2314;
+  --c-brun-banco: #58331e;
+  --c-beige-sable: #f5ebe1;
+  --c-ivoire: #faf7f2;
+  --c-noir-charbon: #12100e;
+  --c-charbon-doux: #1c1917;
+  --c-charbon-carte: #292524;
+
+  /* Typographies */
+  --font-heading: 'Cinzel', serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+
+  /* Rayons et Ombres */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 4px 20px -2px rgba(18, 16, 14, 0.4);
+  --shadow-elevation: 0 12px 36px -4px rgba(156, 61, 27, 0.25);
+  --shadow-gold-glow: 0 0 30px rgba(229, 169, 60, 0.3);
+  --shadow-fire-glow: 0 0 45px rgba(200, 90, 50, 0.35);
+}
+
+/* Base Document */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--c-noir-charbon);
+  color: var(--c-beige-sable);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typographies Utilitaires */
+h1, h2, h3, .font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Texture Culturelle Faso Dan Fani (Fond en rayures géométriques et losanges subtils) */
+.bg-danfani {
+  background-color: var(--c-noir-charbon);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(229, 169, 60, 0.05) 0%, transparent 60%),
+    linear-gradient(rgba(229, 169, 60, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 90, 50, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+}
+
+/* Frise géométrique inspirée des façades Kasséna de Tiébélé */
+.border-kassena {
+  border-image: repeating-linear-gradient(
+    45deg,
+    var(--c-or-solaire),
+    var(--c-or-solaire) 10px,
+    var(--c-ocre-laterite) 10px,
+    var(--c-ocre-laterite) 20px,
+    var(--c-brun-karite) 20px,
+    var(--c-brun-karite) 30px
+  ) 1;
+}
+
+/* Panneau en Verre Dépoli Sahélien (Glassmorphism) */
+.glass-sahel {
+  background: rgba(28, 25, 23, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(229, 169, 60, 0.2);
+}
+
+.glass-sahel-deep {
+  background: rgba(18, 16, 14, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(200, 90, 50, 0.25);
+}
+
+/* Dégradés Royaux et Solaires */
+.bg-gradient-gold {
+  background: linear-gradient(135deg, var(--c-or-vif) 0%, var(--c-or-solaire) 50%, var(--c-terre-cuite) 100%);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fef08a 0%, var(--c-or-vif) 50%, var(--c-or-solaire) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-laterite {
+  background: linear-gradient(135deg, var(--c-terre-cuite) 0%, var(--c-ocre-laterite) 60%, var(--c-brun-karite) 100%);
+}
+
+/* Boutons Stylisés */
+.btn-primary {
+  background: linear-gradient(135deg, var(--c-or-vif), var(--c-terre-cuite));
+  color: var(--c-noir-charbon);
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.4rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(229, 169, 60, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(229, 169, 60, 0.4);
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  background: rgba(41, 37, 36, 0.85);
+  color: var(--c-beige-sable);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.4rem;
+  border: 1px solid rgba(229, 169, 60, 0.3);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(58, 43, 30, 0.9);
+  border-color: var(--c-or-solaire);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Badges Culturels */
+.badge-culture {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(229, 169, 60, 0.12);
+  color: var(--c-or-vif);
+  border: 1px solid rgba(229, 169, 60, 0.25);
+}
+
+/* Animations Fluides */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.03); }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s infinite ease-in-out;
+}
+
+@keyframes fadeInView {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-view {
+  animation: fadeInView 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Barre de défilement stylisée aux tons de latérite */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-noir-charbon);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-brun-banco);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-terre-cuite);
+}
