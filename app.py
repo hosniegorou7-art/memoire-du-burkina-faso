@@ -1,81 +1,20 @@
 """
-FASO ORALIA - SERVEUR BACKEND FASTAPI
+FASO ORALIA - SERVEUR UNIFIÉ BI-MODE (FASTAPI + REPLI STANDARD ZÉRO DÉPENDANCE)
 Plateforme Web Multimédia et Carte Interactive des Contes et Légendes du Burkina Faso
+Fonctionne dans TOUT environnement Python (avec ou sans environnement virtuel, zéro dépendance requise).
 """
 
 import os
+import sys
+import json
+import mimetypes
+import urllib.parse
 from pathlib import Path
-from typing import List, Optional
-from fastapi import FastAPI, HTTPException, Query
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 
-app = FastAPI(
-    title="Faso Oralia API",
-    description="API de valorisation, numérisation et transmission des contes et légendes du Burkina Faso.",
-    version="1.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc"
-)
-
-# Configuration CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Montage des fichiers statiques
-app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
-
-
-# --- MODÈLES DE DONNÉES PYDANTIC ---
-
-class StorySection(BaseModel):
-    title: str
-    timeOffset: int
-    textFr: str
-    textNative: str
-    annotation: Optional[str] = None
-
-class Story(BaseModel):
-    id: str
-    title: str
-    nativeTitle: Optional[str] = None
-    regionId: str
-    regionName: str
-    place: str
-    category: str
-    ethnic: str
-    languages: List[str]
-    duration: str
-    year: str
-    heroImage: str
-    synopsis: str
-    sections: List[StorySection]
-    moral: str
-    tags: List[str]
-
-class Region(BaseModel):
-    id: str
-    name: str
-    chefLieu: str
-    peoples: List[str]
-    languages: List[str]
-    emblem: str
-    description: str
-    coords: List[float]
-    color: str
-
-
-# --- BASE DE DONNÉES CULTURELLE (Synchronisée avec le front-end) ---
+# --- BASE DE DONNÉES CULTURELLE DU BURKINA FASO ---
 
 REGIONS_DATA = [
     {
@@ -379,73 +318,236 @@ STORIES_DATA = [
     }
 ]
 
+# --- DÉTECTION ET CONFIGURATION FASTAPI ---
 
-# --- ROUTES PRINCIPALES (PAGES HTML) ---
+try:
+    from fastapi import FastAPI, HTTPException, Query
+    from fastapi.middleware.cors import CORSMiddleware
+    from fastapi.responses import FileResponse, HTMLResponse
+    from fastapi.staticfiles import StaticFiles
 
-@app.get("/", response_class=HTMLResponse)
-async def serve_home():
-    """Page d'accueil principale avec Carte Interactive 2D/3D et Bibliothèque"""
-    index_file = STATIC_DIR / "index.html"
-    if not index_file.exists():
-        raise HTTPException(status_code=404, detail="Index file not found")
-    return FileResponse(index_file)
+    app = FastAPI(
+        title="Faso Oralia API",
+        description="API de valorisation, numérisation et transmission des contes et légendes du Burkina Faso.",
+        version="1.0.0",
+        docs_url="/docs",
+        redoc_url="/redoc"
+    )
 
-@app.get("/report", response_class=HTMLResponse)
-async def serve_report():
-    """Rapport officiel pour Gobelab (destiné à Odilon.simpore@gobelab.org)"""
-    report_file = STATIC_DIR / "report" / "index.html"
-    if not report_file.exists():
-        raise HTTPException(status_code=404, detail="Report file not found")
-    return FileResponse(report_file)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+    @app.get("/", response_class=HTMLResponse)
+    async def serve_home():
+        index_file = STATIC_DIR / "index.html"
+        if not index_file.exists():
+            raise HTTPException(status_code=404, detail="Index file not found")
+        return FileResponse(index_file)
+
+    @app.get("/report", response_class=HTMLResponse)
+    async def serve_report():
+        report_file = STATIC_DIR / "report" / "index.html"
+        if not report_file.exists():
+            raise HTTPException(status_code=404, detail="Report file not found")
+        return FileResponse(report_file)
+
+    @app.get("/api/health")
+    async def health_check():
+        return {
+            "status": "online",
+            "platform": "Faso Oralia - Plateforme Web Multimédia des Contes et Légendes du Burkina Faso",
+            "version": "1.0.0",
+            "engine": "FastAPI + Uvicorn",
+            "stories_count": len(STORIES_DATA),
+            "regions_count": len(REGIONS_DATA)
+        }
+
+    @app.get("/api/regions")
+    async def get_regions():
+        return REGIONS_DATA
+
+    @app.get("/api/contes")
+    async def get_stories(category: str = None, language: str = None, search: str = None):
+        results = STORIES_DATA
+        if category and category.lower() != "all":
+            results = [s for s in results if category.lower() in s["category"].lower()]
+        if language and language.lower() != "all":
+            results = [s for s in results if any(language.lower() == l.lower() for l in s["languages"])]
+        if search:
+            q = search.lower()
+            results = [
+                s for s in results
+                if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower() or q in s["ethnic"].lower()
+            ]
+        return results
+
+    @app.get("/api/contes/{story_id}")
+    async def get_story_by_id(story_id: str):
+        story = next((s for s in STORIES_DATA if s["id"] == story_id), None)
+        if not story:
+            raise HTTPException(status_code=404, detail=f"Récit '{story_id}' introuvable.")
+        return story
+
+    HAS_FASTAPI = True
+
+except ImportError:
+    HAS_FASTAPI = False
+    app = None
 
 
-# --- ROUTES REST API ---
+# --- SERVEUR DE REPLI STANDARD PYTHON (ZÉRO DÉPENDANCE REQUISE) ---
 
-@app.get("/api/health")
-async def health_check():
-    """Contrôle d'état du serveur"""
-    return {
-        "status": "online",
-        "platform": "Faso Oralia - Plateforme Web Multimédia des Contes et Légendes du Burkina Faso",
-        "version": "1.0.0",
-        "stories_count": len(STORIES_DATA),
-        "regions_count": len(REGIONS_DATA)
-    }
+if not HAS_FASTAPI:
+    import http.server
+    import socketserver
 
-@app.get("/api/regions")
-async def get_regions():
-    """Retourne la liste des 13 régions culturelles du Burkina Faso"""
-    return REGIONS_DATA
+    class FasoHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+        def end_headers(self):
+            # Autorise les requêtes CORS dans tous les navigateurs
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "*")
+            super().end_headers()
 
-@app.get("/api/contes")
-async def get_stories(
-    category: Optional[str] = Query(None, description="Filtrer par catégorie"),
-    language: Optional[str] = Query(None, description="Filtrer par langue (Mooré, Dioula, Fulfulde...)"),
-    search: Optional[str] = Query(None, description="Recherche textuelle")
-):
-    """Retourne la liste des contes et légendes filtrés"""
-    results = STORIES_DATA
-    if category and category.lower() != "all":
-        results = [s for s in results if category.lower() in s["category"].lower()]
-    if language and language.lower() != "all":
-        results = [s for s in results if any(language.lower() == l.lower() for l in s["languages"])]
-    if search:
-        q = search.lower()
-        results = [
-            s for s in results
-            if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower() or q in s["ethnic"].lower()
-        ]
-    return results
+        def do_OPTIONS(self):
+            self.send_response(200)
+            self.end_headers()
 
-@app.get("/api/contes/{story_id}")
-async def get_story_by_id(story_id: str):
-    """Retourne le détail complet d'un conte avec ses sections et transcriptions bilingues"""
-    story = next((s for s in STORIES_DATA if s["id"] == story_id), None)
-    if not story:
-        raise HTTPException(status_code=404, detail=f"Récit avec l'identifiant '{story_id}' introuvable.")
-    return story
+        def do_GET(self):
+            parsed = urllib.parse.urlparse(self.path)
+            path = parsed.path
+            params = urllib.parse.parse_qs(parsed.query)
 
+            # Route Racine : Index HTML
+            if path in ("/", "/index.html"):
+                self.serve_file(STATIC_DIR / "index.html", "text/html; charset=utf-8")
+                return
+
+            # Route Rapport Officiel Gobelab
+            if path in ("/report", "/report/"):
+                self.serve_file(STATIC_DIR / "report" / "index.html", "text/html; charset=utf-8")
+                return
+
+            # API Health Check
+            if path == "/api/health":
+                self.send_json({
+                    "status": "online",
+                    "platform": "Faso Oralia - Plateforme Web Multimédia des Contes et Légendes du Burkina Faso",
+                    "version": "1.0.0",
+                    "engine": "Python Standard HTTP (Zéro Dépendance)",
+                    "stories_count": len(STORIES_DATA),
+                    "regions_count": len(REGIONS_DATA)
+                })
+                return
+
+            # API Régions
+            if path == "/api/regions":
+                self.send_json(REGIONS_DATA)
+                return
+
+            # API Contes avec filtres
+            if path == "/api/contes":
+                category = params.get("category", [None])[0]
+                language = params.get("language", [None])[0]
+                search = params.get("search", [None])[0]
+
+                results = STORIES_DATA
+                if category and category.lower() != "all":
+                    results = [s for s in results if category.lower() in s["category"].lower()]
+                if language and language.lower() != "all":
+                    results = [s for s in results if any(language.lower() == l.lower() for l in s["languages"])]
+                if search:
+                    q = search.lower()
+                    results = [
+                        s for s in results
+                        if q in s["title"].lower() or q in s["synopsis"].lower() or q in s["regionName"].lower() or q in s["ethnic"].lower()
+                    ]
+                self.send_json(results)
+                return
+
+            # API Détail d'un conte : /api/contes/{id}
+            if path.startswith("/api/contes/"):
+                story_id = path.replace("/api/contes/", "").strip("/")
+                story = next((s for s in STORIES_DATA if s["id"] == story_id), None)
+                if story:
+                    self.send_json(story)
+                else:
+                    self.send_error(404, f"Récit '{story_id}' introuvable.")
+                return
+
+            # Fichiers statiques (/static/...)
+            if path.startswith("/static/"):
+                rel_path = path[len("/static/"):]
+                file_path = (STATIC_DIR / rel_path).resolve()
+                if file_path.exists() and file_path.is_file() and str(file_path).startswith(str(STATIC_DIR)):
+                    mime, _ = mimetypes.guess_type(str(file_path))
+                    self.serve_file(file_path, mime or "application/octet-stream")
+                    return
+
+            self.send_error(404, "Page ou ressource introuvable")
+
+        def serve_file(self, file_path, content_type):
+            try:
+                with open(file_path, "rb") as f:
+                    content = f.read()
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(content)))
+                self.end_headers()
+                self.wfile.write(content)
+            except Exception as e:
+                self.send_error(500, f"Erreur de lecture : {e}")
+
+        def send_json(self, data):
+            body = json.dumps(data, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+
+def run_standalone_server(host="0.0.0.0", port=8000):
+    """Lance le serveur HTTP standard (aucune dépendance requise)"""
+    import http.server
+    import socketserver
+
+    handler = FasoHTTPRequestHandler
+    socketserver.TCPServer.allow_reuse_address = True
+    with socketserver.ThreadingTCPServer((host, port), handler) as httpd:
+        print(f"\n==================================================================")
+        print(f"🇧🇫 FASO ORALIA - SERVEUR ACTIF (Mode Standard Zéro Dépendance)")
+        print(f"==================================================================")
+        print(f"🌐 Application Web   : http://localhost:{port}")
+        print(f"📋 Rapport Officiel : http://localhost:{port}/report")
+        print(f"💡 Info : Tourne sans FastAPI/uvicorn sur la bibliothèque standard !")
+        print(f"==================================================================\n")
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nArrêt propre du serveur.")
+
+
+# --- POINT D'ENTRÉE PRINCIPAL ---
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+
+    if HAS_FASTAPI:
+        try:
+            import uvicorn
+            print(f"\n🚀 Démarrage FastAPI + Uvicorn sur http://0.0.0.0:{port}...")
+            uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
+        except Exception:
+            run_standalone_server(port=port)
+    else:
+        print("ℹ️ Module 'fastapi' non détecté dans cet environnement Python.")
+        print("⚡ Activation automatique du serveur Web standard intégré (100% autonome).")
+        run_standalone_server(port=port)
