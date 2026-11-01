@@ -22,8 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const glossaryView = new FasoGlossaryView("main-view-host");
   const adventureView = new FasoAdventureView("main-view-host");
 
-  // Lecteur Audio Global
+  // Lecteur Audio Global (instancié ici, disponible partout via window.fasoAudioPlayer)
   window.fasoAudioPlayer = new FasoAudioPlayer("global-audio-player-container");
+
+  // Initialise le moteur audio (sans démarrer l'ambiance automatiquement —
+  // les navigateurs bloquent l'AudioContext avant un geste utilisateur)
+  // La voix et la musique démarrent seulement quand l'utilisateur clique.
 
   // 2. Configuration du Routeur SPA
   const router = new FasoRouter({
@@ -57,10 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const navSoundscapeBtn = document.getElementById("btn-nav-ambience");
   if (navSoundscapeBtn && window.fasoAudio) {
     navSoundscapeBtn.addEventListener("click", () => {
-      const active = window.fasoAudio.toggleAmbience("veillee");
-      navSoundscapeBtn.classList.toggle("bg-amber-500/30", active);
-      navSoundscapeBtn.classList.toggle("text-amber-200", active);
-      navSoundscapeBtn.innerHTML = active ? `<span>🎶</span> <span class="hidden sm:inline">Kora Sahélienne : On</span>` : `<span>🎵</span> <span class="hidden sm:inline">Ambiance Kora : Off</span>`;
+      window.fasoAudio.initAudioContext();
+      const active = window.fasoAudio.isAmbiancePlaying;
+      if (active) {
+        window.fasoAudio.stopAmbience();
+      } else {
+        window.fasoAudio.startAmbience("veillee");
+      }
+      navSoundscapeBtn.classList.toggle("bg-amber-500/30", !active);
+      navSoundscapeBtn.classList.toggle("text-amber-200", !active);
+      const icon = window.fasoIcon ? window.fasoIcon('audio', 'w-3.5 h-3.5') : '♪';
+      navSoundscapeBtn.innerHTML = !active
+        ? `${icon} <span class="hidden sm:inline">Kora : Active</span>`
+        : `${icon} <span class="hidden sm:inline">Ambiance Kora</span>`;
     });
   }
 

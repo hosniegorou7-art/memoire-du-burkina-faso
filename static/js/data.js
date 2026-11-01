@@ -759,3 +759,15 @@ const FASO_INTERACTIVE_ADVENTURE = {
     }
   }
 };
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EXPORTS GLOBAUX — accessible depuis tous les modules JS du site
+// ─────────────────────────────────────────────────────────────────────────────
+window.FASO_REGIONS = FASO_REGIONS;
+window.FASO_STORIES = FASO_STORIES;          // données enrichies avec sections & textFr
+window.FASO_STORIES_DB = FASO_STORIES;       // alias utilisé dans campfire & story-view
+window.FASO_GLOSSARY = FASO_GLOSSARY;
+window.FASO_PROVERBS = FASO_PROVERBS;
+window.FASO_QUIZ = FASO_QUIZ;
+window.FASO_INTERACTIVE_ADVENTURE = FASO_INTERACTIVE_ADVENTURE;

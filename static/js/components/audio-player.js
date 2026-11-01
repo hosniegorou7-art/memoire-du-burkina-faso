@@ -1,329 +1,358 @@
 /**
- * MÉMOIRE DU BURKINA — LECTEUR AUDIO PROFESSIONNEL & MULTILINGUE
- * Streaming HTML5 Audio direct des pistes MP3 de chaque conte (/static/audio/),
- * intégration MediaSession API, gestion du volume, saut temporel,
- * et double moteur (Piste audio du terroir + Synthèse vocale de lecture).
+ * MÉMOIRE DU BURKINA — LECTEUR AUDIO COMPLET AVEC NARRATION VOCALE
+ * =================================================================
+ * Double mode de lecture :
+ *   1. NARRATION VOCALE (primaire) — Web Speech API lit l'histoire à voix haute en français
+ *      et dans la langue nationale, phrase par phrase, avec texte synchronisé
+ *   2. AMBIANCE MUSICALE (secondaire) — boucle Kora/Balafon en fond pendant la narration
+ *   3. PISTE MP3 (instrumentale) — la musique du terroir seule si la voix n'est pas demandée
  */
 
 class FasoAudioPlayer {
-  constructor(containerId = "global-audio-player-container") {
+  constructor(containerId = 'global-audio-player-container') {
     this.container = document.getElementById(containerId);
-    this.audioElement = new Audio();
+    this.mp3Element = new Audio();       // piste instrumentale de fond
     this.currentStory = null;
     this.isPlaying = false;
-    this.onTimeUpdateCallback = null;
-    this.enableVoiceNarration = false; // Bascule voix parlée + musique
+    this.isSpeaking = false;
+    this.currentLang = 'fr-FR';         // langue de narration active
+    this.sentences = [];                 // phrases découpées prêtes à lire
+    this.currentSentenceIdx = 0;
+    this.totalSentences = 0;
 
-    this.initAudioListeners();
+    this._initMp3Listeners();
   }
 
-  initAudioListeners() {
-    this.audioElement.addEventListener("timeupdate", () => {
-      if (this.onTimeUpdateCallback) {
-        this.onTimeUpdateCallback(this.audioElement.currentTime, this.audioElement.duration);
-      }
-      this.updateUIProgress();
+  _initMp3Listeners() {
+    this.mp3Element.addEventListener('error', () => {
+      // Si le MP3 est manquant, continuer avec la narration vocale uniquement
+      console.warn('MP3 de fond non chargé, narration vocale seule.');
     });
-
-    this.audioElement.addEventListener("ended", () => {
-      this.isPlaying = false;
-      this.updatePlayBtnUI();
-      if (window.fasoStore) {
-        window.fasoStore.updateAudio({ isPlaying: false });
-      }
-    });
-
-    this.audioElement.addEventListener("play", () => {
-      this.isPlaying = true;
-      this.updatePlayBtnUI();
-      this.setupMediaSession();
-      if (window.fasoStore) {
-        window.fasoStore.updateAudio({ isPlaying: true });
-      }
-    });
-
-    this.audioElement.addEventListener("pause", () => {
-      this.isPlaying = false;
-      this.updatePlayBtnUI();
-      if (window.fasoStore) {
-        window.fasoStore.updateAudio({ isPlaying: false });
-      }
-    });
-
-    this.audioElement.addEventListener("error", (e) => {
-      console.warn("Piste audio MP3 non trouvée, bascule vers le synthétiseur audio Web Audio...");
-      // Si le fichier audio échoue, Web Audio API prend le relais
-      if (window.fasoAudio) {
-        window.fasoAudio.startAmbience("veillee");
-      }
-    });
+    this.mp3Element.volume = 0.12; // très subtil, la voix doit dominer
+    this.mp3Element.loop = true;
   }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // EXTRACTION DU TEXTE DE NARRATION
+  // ─────────────────────────────────────────────────────────────────────────
+
+  _extractSentences(story, lang = 'fr-FR') {
+    const allText = [];
+
+    // Si l'histoire a des sections détaillées (data.js)
+    if (story.sections && story.sections.length > 0) {
+      for (const sec of story.sections) {
+        const text = lang === 'fr-FR' ? sec.textFr : (sec.textNative || sec.textFr);
+        if (text) allText.push(text);
+      }
+    } else {
+      // Fallback : synopsis + moral
+      if (story.synopsis) allText.push(story.synopsis);
+      if (story.moral) allText.push('La sagesse de cette histoire : ' + story.moral);
+    }
+
+    // Découpe en phrases courtes (évite le bug Chrome 15s)
+    const raw = allText.join(' ');
+    return FasoAudioEngine.splitIntoSentences(raw);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CHARGEMENT D'UNE HISTOIRE
+  // ─────────────────────────────────────────────────────────────────────────
 
   loadStory(story, autoPlay = true) {
     this.currentStory = story;
+    this.currentSentenceIdx = 0;
+    this.sentences = this._extractSentences(story, this.currentLang);
+    this.totalSentences = this.sentences.length;
+
+    // Charge le MP3 de fond en silence
+    this.mp3Element.src = `/static/audio/${story.id}.mp3`;
+    this.mp3Element.load();
+
     if (window.fasoStore) {
       window.fasoStore.updateAudio({ currentStory: story });
       window.fasoStore.logListening(story.id, 0);
     }
 
-    // Assigne le fichier audio réel présent dans /static/audio/
-    const audioUrl = `/static/audio/${story.id}.mp3`;
-    this.audioElement.src = audioUrl;
-    this.audioElement.load();
-
     this.render();
-
-    if (autoPlay) {
-      this.play();
-    }
+    if (autoPlay) this.startNarration();
   }
 
-  play() {
+  // ─────────────────────────────────────────────────────────────────────────
+  // CONTRÔLE DE LA NARRATION
+  // ─────────────────────────────────────────────────────────────────────────
+
+  startNarration() {
     if (!this.currentStory) return;
 
-    // Démarre l'AudioContext si Web Audio est sollicité
-    if (window.fasoAudio && window.fasoAudio.ctx && window.fasoAudio.ctx.state === "suspended") {
-      window.fasoAudio.ctx.resume();
+    // Démarrage de l'ambiance musicale (Kora en arrière-plan)
+    if (window.fasoAudio) {
+      window.fasoAudio.initAudioContext();
+      if (window.fasoAudio.ctx && window.fasoAudio.ctx.state === 'suspended') {
+        window.fasoAudio.ctx.resume();
+      }
+      if (!window.fasoAudio.isAmbiancePlaying) {
+        window.fasoAudio.startAmbience('veillee');
+      }
     }
 
-    // Démarre la lecture native HTML5
-    const playPromise = this.audioElement.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        this.isPlaying = true;
-        this.updatePlayBtnUI();
-      }).catch(err => {
-        console.warn("Lecture bloquée par la politique d'autoplay du navigateur:", err);
-        this.isPlaying = false;
-        this.updatePlayBtnUI();
-      });
-    }
+    // Démarrage du MP3 de fond instrumental (volume très bas)
+    try {
+      this.mp3Element.volume = 0.10;
+      this.mp3Element.play().catch(() => {});
+    } catch (e) {}
 
-    // Si la synthèse vocale est activée par l'utilisateur
-    if (this.enableVoiceNarration && window.fasoAudio) {
-      const textToSpeak = this.currentStory.sections
-        ? this.currentStory.sections.map(sec => sec.textFr).join(". ")
-        : this.currentStory.synopsis;
-      window.fasoAudio.speakStorySection(textToSpeak, "fr-FR");
+    // Narration vocale principale
+    this.isSpeaking = true;
+    this.isPlaying = true;
+    this.updatePlayBtnUI();
+
+    if (window.fasoAudio && this.sentences.length > 0) {
+      window.fasoAudio.speakStory(
+        this.sentences,
+        this.currentLang,
+        (idx, total) => {
+          this.currentSentenceIdx = idx;
+          this.totalSentences = total;
+          this._updateSentenceProgress(idx, total);
+        },
+        () => {
+          this.isPlaying = false;
+          this.isSpeaking = false;
+          this.updatePlayBtnUI();
+          if (window.fasoAudio) window.fasoAudio.stopAmbience();
+          this.mp3Element.pause();
+        }
+      );
+    } else {
+      // Fallback : lecture MP3 seule (si pas de texte disponible)
+      this.mp3Element.volume = 0.9;
+      this.mp3Element.play().catch(() => {});
     }
   }
 
-  pause() {
-    this.audioElement.pause();
+  stopNarration() {
     if (window.fasoAudio) {
       window.fasoAudio.stopNarration();
+      window.fasoAudio.stopAmbience();
     }
+    this.mp3Element.pause();
+    this.mp3Element.currentTime = 0;
     this.isPlaying = false;
+    this.isSpeaking = false;
     this.updatePlayBtnUI();
   }
 
   togglePlay() {
-    if (this.isPlaying) {
-      this.pause();
+    if (this.isPlaying || this.isSpeaking) {
+      this.stopNarration();
     } else {
-      this.play();
+      // Re-lit depuis le début
+      this.sentences = this._extractSentences(this.currentStory, this.currentLang);
+      this.startNarration();
     }
   }
 
-  skip(seconds) {
-    if (this.audioElement && this.audioElement.duration) {
-      this.audioElement.currentTime = Math.max(0, Math.min(this.audioElement.duration, this.audioElement.currentTime + seconds));
+  switchLanguage(lang) {
+    this.currentLang = lang;
+    this.sentences = this._extractSentences(this.currentStory, lang);
+    this.totalSentences = this.sentences.length;
+    if (this.isPlaying || this.isSpeaking) {
+      this.stopNarration();
+      setTimeout(() => this.startNarration(), 300);
     }
+    this._updateLangButtons(lang);
   }
 
-  setSpeed(rate) {
-    this.audioElement.playbackRate = rate;
-  }
-
-  setVolume(vol) {
-    this.audioElement.volume = Math.max(0, Math.min(1, vol));
-  }
-
-  setupMediaSession() {
-    if ("mediaSession" in navigator && this.currentStory) {
-      const s = this.currentStory;
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: s.title,
-        artist: s.narratorName || "Griot du Burkina Faso",
-        album: `Mémoire du Burkina • ${s.regionName}`,
-        artwork: [
-          { src: `/static/assets/illustrations/${s.heroImage}`, sizes: "512x512", type: "image/svg+xml" }
-        ]
-      });
-
-      navigator.mediaSession.setActionHandler("play", () => this.togglePlay());
-      navigator.mediaSession.setActionHandler("pause", () => this.togglePlay());
-      navigator.mediaSession.setActionHandler("seekbackward", () => this.skip(-10));
-      navigator.mediaSession.setActionHandler("seekforward", () => this.skip(10));
-    }
-  }
+  // ─────────────────────────────────────────────────────────────────────────
+  // RENDU HTML
+  // ─────────────────────────────────────────────────────────────────────────
 
   render() {
     if (!this.container || !this.currentStory) return;
     const s = this.currentStory;
+    const hasNativeLang = s.languages && s.languages.length > 1;
+    const nativeLang = hasNativeLang ? s.languages[1] : null;
+
+    const langOptions = [
+      `<button data-lang="fr-FR" class="lang-btn px-2.5 py-1 text-[11px] rounded-lg font-bold border transition-all ${this.currentLang === 'fr-FR' ? 'bg-amber-500 text-stone-950 border-amber-500' : 'bg-stone-800 text-stone-300 border-stone-700 hover:border-amber-500/60'}">
+        ${window.fasoIcon ? window.fasoIcon('globe', 'w-3 h-3 inline mr-1') : ''}Français
+      </button>`
+    ];
+    if (nativeLang) {
+      langOptions.push(`<button data-lang="native" class="lang-btn px-2.5 py-1 text-[11px] rounded-lg font-bold border transition-all ${this.currentLang === 'native' ? 'bg-amber-500 text-stone-950 border-amber-500' : 'bg-stone-800 text-stone-300 border-stone-700 hover:border-amber-500/60'}">
+        ${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3 inline mr-1') : ''}${nativeLang}
+      </button>`);
+    }
 
     this.container.innerHTML = `
-      <div class="fixed bottom-0 left-0 right-0 z-40 bg-stone-950/95 border-t border-amber-500/30 shadow-2xl backdrop-blur-xl px-4 py-3 animate-fade-in text-stone-100">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-          
-          <!-- Infos du récit en cours -->
-          <div class="flex items-center gap-3 min-w-[220px] max-w-sm">
-            <div class="w-12 h-12 rounded-xl overflow-hidden border border-amber-500/40 shrink-0 bg-stone-900">
-              <img src="/static/assets/illustrations/${s.heroImage}" alt="${s.title}" class="w-full h-full object-cover">
-            </div>
-            <div class="overflow-hidden">
-              <h5 class="text-xs sm:text-sm font-bold text-amber-100 truncate">${s.title}</h5>
-              <div class="flex items-center gap-1.5 text-[11px] text-amber-400/80 truncate">
-                <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span>Piste Audio Active • ${s.regionName}</span>
+      <div id="faso-audio-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-stone-950/97 backdrop-blur-xl border-t border-amber-900/50 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+
+          <!-- Info histoire -->
+          <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center shrink-0">
+                ${window.fasoIcon ? window.fasoIcon('speaker', 'w-4 h-4 text-stone-950') : '♪'}
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-amber-100 truncate max-w-[280px]">${s.title}</div>
+                <div class="text-[10px] text-stone-400">${s.regionName} • ${s.ethnic}</div>
               </div>
             </div>
-          </div>
 
-          <!-- Commandes centrales de lecture -->
-          <div class="flex flex-col items-center gap-1.5 flex-1 max-w-md">
-            <div class="flex items-center gap-4">
-              <button id="btn-skip-back" class="text-stone-400 hover:text-amber-300 transition-colors text-xs font-mono font-bold px-2 py-1" title="Reculer de 10 secondes">
-                -10s
-              </button>
-              <button id="btn-audio-toggle" class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 hover:scale-105 active:scale-95 text-stone-950 flex items-center justify-center font-bold text-base shadow-lg transition-all" title="Lecture / Pause">
-                <span id="audio-play-icon" class="w-4 h-4 flex items-center justify-center">
-                  ${this.isPlaying ? window.fasoIcon('pause', 'w-4 h-4 fill-stone-950') : window.fasoIcon('play', 'w-4 h-4 fill-stone-950')}
+            <!-- Boutons de langue -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[10px] text-stone-500 font-semibold uppercase tracking-wider">Langue :</span>
+              ${langOptions.join('')}
+            </div>
+
+            <!-- Contrôles -->
+            <div class="flex items-center gap-2">
+              <!-- Play/Stop -->
+              <button id="btn-audio-toggle" class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-950 flex items-center justify-center transition-all shadow-lg shadow-amber-500/30">
+                <span id="audio-play-icon">
+                  ${window.fasoIcon ? window.fasoIcon('pause', 'w-4 h-4 fill-stone-950') : '⏸'}
                 </span>
               </button>
-              <button id="btn-skip-fwd" class="text-stone-400 hover:text-amber-300 transition-colors text-xs font-mono font-bold px-2 py-1" title="Avancer de 10 secondes">
-                +10s
-              </button>
-            </div>
 
-            <!-- Barre de progression continue -->
-            <div class="w-full flex items-center gap-2 text-[10px] text-stone-400 font-mono">
-              <span id="audio-time-current">0:00</span>
-              <div class="flex-1 bg-stone-800 h-1.5 rounded-full overflow-hidden cursor-pointer" id="progress-bar-container">
-                <div id="audio-progress-bar" class="bg-gradient-to-r from-amber-500 to-yellow-400 h-full w-0 transition-all"></div>
-              </div>
-              <span id="audio-time-total">${s.duration || "0:30"}</span>
+              <!-- Test son -->
+              <button id="btn-audio-test" class="px-2.5 py-1.5 text-[11px] rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 transition-all flex items-center gap-1" title="Tester le son et la voix">
+                ${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3 text-amber-400') : '🔊'}
+                <span class="hidden md:inline">Test voix</span>
+              </button>
+
+              <!-- Veillée au feu -->
+              <button id="btn-open-campfire" class="px-2.5 py-1.5 text-[11px] font-bold rounded-lg bg-amber-950/60 hover:bg-amber-900/60 text-amber-200 border border-amber-500/40 transition-all flex items-center gap-1.5">
+                ${window.fasoIcon ? window.fasoIcon('flame', 'w-3 h-3 text-orange-400') : '🔥'}
+                <span class="hidden sm:inline">Autour du feu</span>
+              </button>
+
+              <!-- Fermer -->
+              <button id="btn-close-player" class="w-7 h-7 flex items-center justify-center text-stone-500 hover:text-white rounded-full hover:bg-stone-800 transition-all text-sm font-bold" title="Fermer">✕</button>
             </div>
           </div>
 
-          <!-- Contrôles secondaires (Vitesse, Test Son, Mode Feu, Fermer) -->
-          <div class="flex items-center gap-2">
-            <!-- Test Son / Enceintes -->
-            <button id="btn-audio-test" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 border border-stone-700 transition-all flex items-center gap-1" title="Tester la sortie audio">
-              ${window.fasoIcon('speaker', 'w-3 h-3 text-amber-400')}
-              <span class="hidden md:inline">Test Son</span>
-            </button>
-
-            <!-- Vitesse -->
-            <select id="select-audio-speed" class="bg-stone-800 border border-stone-700 text-stone-300 text-[11px] rounded-lg px-2 py-1 focus:outline-none">
-              <option value="0.8">0.8x</option>
-              <option value="1.0" selected>1.0x</option>
-              <option value="1.2">1.2x</option>
-            </select>
-
-            <!-- Accès Mode Feu -->
-            <button id="btn-open-campfire" class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-amber-950/60 hover:bg-amber-900/60 text-amber-200 border border-amber-500/40 transition-all flex items-center gap-1.5">
-              ${window.fasoIcon('flame', 'w-3 h-3 text-orange-400')}
-              <span class="hidden sm:inline">Autour du feu</span>
-            </button>
-
-            <!-- Fermer le lecteur -->
-            <button id="btn-close-player" class="text-stone-400 hover:text-white p-1 text-sm font-bold ml-1" title="Fermer le lecteur">
-              ✕
-            </button>
+          <!-- Barre de progression des phrases -->
+          <div class="mt-2.5">
+            <div class="flex items-center justify-between mb-1">
+              <div id="narration-status" class="text-[10px] text-amber-400 font-semibold flex items-center gap-1.5">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                Narration vocale en cours...
+              </div>
+              <div id="sentence-counter" class="text-[10px] text-stone-500">
+                Phrase <span id="sent-cur">1</span> / <span id="sent-tot">${this.totalSentences}</span>
+              </div>
+            </div>
+            <div class="h-1 bg-stone-800 rounded-full overflow-hidden">
+              <div id="narration-progress-bar" class="h-full bg-gradient-to-r from-amber-600 to-orange-500 rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div id="current-sentence-text" class="mt-1.5 text-[11px] text-stone-300 italic leading-relaxed min-h-[2em] line-clamp-2">
+              <!-- Phrase en cours de lecture -->
+            </div>
           </div>
 
         </div>
       </div>
     `;
 
-    this.bindPlayerEvents();
+    this._bindEvents();
   }
 
-  bindPlayerEvents() {
-    const playBtn = this.container.querySelector("#btn-audio-toggle");
-    const skipBackBtn = this.container.querySelector("#btn-skip-back");
-    const skipFwdBtn = this.container.querySelector("#btn-skip-fwd");
-    const speedSelect = this.container.querySelector("#select-audio-speed");
-    const campfireBtn = this.container.querySelector("#btn-open-campfire");
-    const testBtn = this.container.querySelector("#btn-audio-test");
-    const closeBtn = this.container.querySelector("#btn-close-player");
-    const pContainer = this.container.querySelector("#progress-bar-container");
+  _bindEvents() {
+    const playBtn = this.container.querySelector('#btn-audio-toggle');
+    const testBtn = this.container.querySelector('#btn-audio-test');
+    const campfireBtn = this.container.querySelector('#btn-open-campfire');
+    const closeBtn = this.container.querySelector('#btn-close-player');
+    const langBtns = this.container.querySelectorAll('.lang-btn');
 
-    if (playBtn) playBtn.addEventListener("click", () => this.togglePlay());
-    if (skipBackBtn) skipBackBtn.addEventListener("click", () => this.skip(-10));
-    if (skipFwdBtn) skipFwdBtn.addEventListener("click", () => this.skip(10));
-    if (speedSelect) speedSelect.addEventListener("change", (e) => this.setSpeed(parseFloat(e.target.value)));
-    
+    if (playBtn) playBtn.addEventListener('click', () => this.togglePlay());
+
     if (testBtn) {
-      testBtn.addEventListener("click", () => {
-        if (window.fasoAudio) {
-          window.fasoAudio.initAudioContext();
-          window.fasoAudio.playKoraNote(293.66, 0, 1.2);
-          setTimeout(() => window.fasoAudio.playKoraNote(440.00, 0, 1.2), 200);
-          testBtn.classList.add("bg-emerald-950", "text-emerald-300");
-          setTimeout(() => testBtn.classList.remove("bg-emerald-950", "text-emerald-300"), 800);
-        }
-      });
-    }
-
-    if (pContainer) {
-      pContainer.addEventListener("click", (e) => {
-        const rect = pContainer.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-        if (this.audioElement.duration) {
-          this.audioElement.currentTime = ratio * this.audioElement.duration;
-        }
+      testBtn.addEventListener('click', () => {
+        if (window.fasoAudio) window.fasoAudio.testSound();
+        testBtn.textContent = '✓ Test en cours...';
+        setTimeout(() => {
+          testBtn.innerHTML = `${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3 text-amber-400') : ''}<span class="hidden md:inline ml-1">Test voix</span>`;
+        }, 3000);
       });
     }
 
     if (campfireBtn) {
-      campfireBtn.addEventListener("click", () => {
+      campfireBtn.addEventListener('click', () => {
         if (window.fasoRouter && this.currentStory) {
-          window.fasoRouter.navigateTo("campfire", this.currentStory.id);
+          window.fasoRouter.navigateTo('campfire', this.currentStory.id);
         }
       });
     }
 
     if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        this.pause();
-        this.container.innerHTML = "";
+      closeBtn.addEventListener('click', () => {
+        this.stopNarration();
+        this.container.innerHTML = '';
       });
     }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        this.switchLanguage(lang);
+      });
+    });
   }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // MISE À JOUR DE L'UI
+  // ─────────────────────────────────────────────────────────────────────────
 
   updatePlayBtnUI() {
-    const iconSpan = this.container.querySelector("#audio-play-icon");
+    const iconSpan = this.container ? this.container.querySelector('#audio-play-icon') : null;
     if (iconSpan) {
-      iconSpan.innerHTML = this.isPlaying
-        ? window.fasoIcon('pause', 'w-4 h-4 fill-stone-950')
-        : window.fasoIcon('play', 'w-4 h-4 fill-stone-950');
+      iconSpan.innerHTML = (this.isPlaying || this.isSpeaking)
+        ? (window.fasoIcon ? window.fasoIcon('pause', 'w-4 h-4 fill-stone-950') : '⏸')
+        : (window.fasoIcon ? window.fasoIcon('play', 'w-4 h-4 fill-stone-950') : '▶');
+    }
+
+    const status = this.container ? this.container.querySelector('#narration-status') : null;
+    if (status) {
+      if (this.isPlaying || this.isSpeaking) {
+        status.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Narration vocale en cours...`;
+      } else {
+        status.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-stone-500"></span> En pause — cliquez ▶ pour reprendre`;
+      }
     }
   }
 
-  updateUIProgress() {
-    const pBar = this.container.querySelector("#audio-progress-bar");
-    const timeCurr = this.container.querySelector("#audio-time-current");
-    const timeTotal = this.container.querySelector("#audio-time-total");
-    if (!this.audioElement || isNaN(this.audioElement.duration)) return;
+  _updateSentenceProgress(idx, total) {
+    const bar = this.container ? this.container.querySelector('#narration-progress-bar') : null;
+    const cur = this.container ? this.container.querySelector('#sent-cur') : null;
+    const tot = this.container ? this.container.querySelector('#sent-tot') : null;
+    const textEl = this.container ? this.container.querySelector('#current-sentence-text') : null;
 
-    const cur = this.audioElement.currentTime || 0;
-    const dur = this.audioElement.duration || 1;
-    const pct = Math.min(100, (cur / dur) * 100);
+    const pct = total > 0 ? Math.round(((idx + 1) / total) * 100) : 0;
+    if (bar) bar.style.width = pct + '%';
+    if (cur) cur.textContent = idx + 1;
+    if (tot) tot.textContent = total;
+    if (textEl && this.sentences[idx]) {
+      textEl.textContent = '« ' + this.sentences[idx].substring(0, 160) + (this.sentences[idx].length > 160 ? '…' : '') + ' »';
+    }
+  }
 
-    if (pBar) pBar.style.width = `${pct}%`;
-    if (timeCurr) {
-      const mins = Math.floor(cur / 60);
-      const secs = Math.floor(cur % 60).toString().padStart(2, "0");
-      timeCurr.textContent = `${mins}:${secs}`;
-    }
-    if (timeTotal && dur > 1) {
-      const mins = Math.floor(dur / 60);
-      const secs = Math.floor(dur % 60).toString().padStart(2, "0");
-      timeTotal.textContent = `${mins}:${secs}`;
-    }
+  _updateLangButtons(activeLang) {
+    const btns = this.container ? this.container.querySelectorAll('.lang-btn') : [];
+    btns.forEach(btn => {
+      const isActive = btn.dataset.lang === activeLang;
+      btn.className = btn.className
+        .replace(/bg-amber-500 text-stone-950 border-amber-500/g, '')
+        .replace(/bg-stone-800 text-stone-300 border-stone-700 hover:border-amber-500\/60/g, '')
+        .trim();
+      if (isActive) {
+        btn.classList.add('bg-amber-500', 'text-stone-950', 'border-amber-500');
+      } else {
+        btn.classList.add('bg-stone-800', 'text-stone-300', 'border-stone-700', 'hover:border-amber-500/60');
+      }
+    });
   }
 }
 

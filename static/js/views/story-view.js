@@ -158,9 +158,17 @@ class FasoStoryView {
 
     if (playBtn) {
       playBtn.addEventListener("click", () => {
-        if (window.fasoAudioPlayer) {
-          window.fasoAudioPlayer.loadStory(s, true);
+        // Instancie le lecteur audio si pas encore créé
+        if (!window.fasoAudioPlayer) {
+          window.fasoAudioPlayer = new FasoAudioPlayer("global-audio-player-container");
         }
+        // Lance la narration vocale complète de l'histoire
+        window.fasoAudioPlayer.loadStory(s, true);
+        // Scroll vers le bas pour voir le lecteur
+        setTimeout(() => {
+          const bar = document.getElementById('faso-audio-bar');
+          if (bar) bar.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 300);
       });
     }
 
@@ -170,12 +178,14 @@ class FasoStoryView {
       });
     }
 
+    // Lecture phrase par phrase dans les sections
     sectionAudioBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         const idx = parseInt(btn.getAttribute("data-idx"), 10);
-        const sec = s.sections[idx];
+        const sec = s.sections ? s.sections[idx] : null;
         if (sec && window.fasoAudio) {
-          window.fasoAudio.speakStorySection(sec.textFr, "fr-FR");
+          const sentences = FasoAudioEngine.splitIntoSentences(sec.textFr);
+          window.fasoAudio.speakStory(sentences, 'fr-FR', null, null);
         }
       });
     });

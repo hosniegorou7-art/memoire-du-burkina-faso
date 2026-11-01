@@ -156,10 +156,18 @@ class FasoLibraryView {
 
         <div class="p-4 pt-2 border-t border-stone-800 flex items-center justify-between text-xs text-stone-400">
           <span class="font-mono text-[11px]">${s.languages.join(", ")}</span>
-          <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-            <span>Lire &amp; Écouter</span>
-            ${window.fasoIcon ? window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400') : ''}
-          </span>
+          <div class="flex items-center gap-2">
+            <!-- Bouton écoute rapide (lance la narration sans quitter la bibliothèque) -->
+            <button class="btn-quick-listen px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-[10px] font-bold flex items-center gap-1 transition-all"
+              data-story-id="${s.id}" onclick="event.stopPropagation(); (function(id){ const allStories = window.FASO_STORIES||[]; const st=allStories.find(x=>x.id===id)||{id:id,title:'${s.title.replace(/'/g,"\\'")}',synopsis:'${s.synopsis.replace(/'/g,"\\'")}',regionName:'${s.regionName}',ethnic:'${s.ethnic}',languages:${JSON.stringify(s.languages)}}; if(!window.fasoAudioPlayer)window.fasoAudioPlayer=new FasoAudioPlayer('global-audio-player-container'); window.fasoAudioPlayer.loadStory(st,true); })('${s.id}')">
+              ${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3') : '♪'}
+              <span>Écouter</span>
+            </button>
+            <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+              <span>Lire</span>
+              ${window.fasoIcon ? window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400') : ''}
+            </span>
+          </div>
         </div>
       </div>
     `).join("");
