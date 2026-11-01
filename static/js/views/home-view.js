@@ -1,308 +1,345 @@
 /**
- * MÉMOIRE DU BURKINA — VUE D'ACCUEIL CINÉMATOGRAPHIQUE & ÉPURÉE
- * 7 grandes sections du cahier des charges, illustrées et aérées :
- * - Section 1 : Hero immersif avec grande fresque panoramique du Faso
- * - Section 2 : Carte interactive des 17 régions
- * - Section 3 : Récits et épopées phares illustrés
- * - Section 4 : Voix des terroirs et langues nationales
- * - Section 5 : Mosaïque des 17 régions et hauts lieux patrimoniaux
- * - Section 6 : Expérience signature « Écouter autour du feu »
- * - Section 7 : Sauvegarde collective & contribution UNESCO
+ * MÉMOIRE DU BURKINA — VUE D'ACCUEIL MODERNE & AÉRÉE
+ * - Grand message de bienvenue défilant dans les langues nationales du Burkina Faso
+ * - Esthétique contemporaine épurée inspirée du Faso Dan Fani et de la terre cuite
+ * - Mosaïque des traditions et ethnies illustrées avec les photographies réelles
+ * - Accès direct aux 32 contes, à la carte 3D du relief et à l'expérience autour du feu
  */
 
 class FasoHomeView {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
+    this.welcomeInterval = null;
+    this.currentWelcomeIndex = 0;
+
+    // Messages de bienvenue dans les principales langues nationales du Burkina Faso
+    this.welcomeMessages = [
+      {
+        lang: "Mooré",
+        greeting: "Ne y beogo !",
+        phonetic: "Nyaam ! Bienvenue en terre Mossi",
+        region: "Kadiogo, Yaadga, Oubri",
+        meaning: "Que la paix et la fraîcheur du matin soient sur vous"
+      },
+      {
+        lang: "Dioula",
+        greeting: "Aw bissimilah !",
+        phonetic: "I ni ce ! Bienvenue au carrefour de Sya",
+        region: "Guiriko, Hauts-Bassins",
+        meaning: "Soyez les très bienvenus dans nos demeures"
+      },
+      {
+        lang: "Fulfulde",
+        greeting: "On jaraama !",
+        phonetic: "Jam tan ! Bienvenue en terre Peule",
+        region: "Sahel, Soum, Liptako",
+        meaning: "Bénédiction et quiétude pour votre voyage"
+      },
+      {
+        lang: "Gulmancéma",
+        greeting: "Yendie !",
+        phonetic: "Fo boncianla ! Bienvenue au Gulmu",
+        region: "Goulmou, Tapoa, Sirba",
+        meaning: "Que la journée vous apporte la joie et l'abondance"
+      },
+      {
+        lang: "San (Samo)",
+        greeting: "Oun yé !",
+        phonetic: "Bienvenue dans la vallée du Sourou",
+        region: "Sourou, Nayala",
+        meaning: "Fraternité et alliance sacrée sous l'arbre à palabres"
+      },
+      {
+        lang: "Sénoufo",
+        greeting: "Tchegana !",
+        phonetic: "Bienvenue au pays des Cascades",
+        region: "Djôrô, Banfora",
+        meaning: "La terre hospitalière des collines vous accueille"
+      },
+      {
+        lang: "Bissa",
+        greeting: "Burum !",
+        phonetic: "An baara ! Bienvenue en terre Bissa",
+        region: "Nakambé, Tenkodogo",
+        meaning: "Honneur et prospérité à nos hôtes"
+      },
+      {
+        lang: "Dagara",
+        greeting: "Bé song !",
+        phonetic: "Bienvenue en pays Dagara",
+        region: "Tannounyan, Sud-Ouest",
+        meaning: "Que les ancêtres guident vos pas en paix"
+      },
+      {
+        lang: "Bwaba",
+        greeting: "Vaama !",
+        phonetic: "Bienvenue en pays Bwa",
+        region: "Bankui, Boucle du Mouhoun",
+        meaning: "Salutations fraternelles sous la garde des masques"
+      },
+      {
+        lang: "Français",
+        greeting: "Bienvenue au Faso",
+        phonetic: "La patrie des Hommes Intègres",
+        region: "17 Régions unies",
+        meaning: "32 contes oraux, 17 terroirs et une mémoire vivante"
+      }
+    ];
   }
 
   render() {
     if (!this.container) return;
     const stories = window.FASO_STORIES_DB || [];
-    const regions = window.FASO_17_REGIONS || [];
-    const languages = window.FASO_LANGUAGES || [];
-
-    // Illustrations emblématiques pour les cartes de régions
-    const regionIllustrations = {
-      guiriko: "mosquee-bobo.svg",
-      djoro: "cascades-banfora.svg",
-      nazinon: "cour-tiebele.svg",
-      tannounyan: "loropeni-hero.svg",
-      nando: "sabou-hero.svg",
-      kadiogo: "yennenga-hero.svg",
-      liptako: "sahel-hero.svg",
-      bankui: "lievre-hero.svg"
-    };
+    const featuredStories = stories.slice(0, 6);
 
     this.container.innerHTML = `
-      <div class="space-y-24 pb-20 animate-fade-in text-stone-100">
+      <div class="space-y-28 pb-24 animate-fade-in text-stone-100">
 
-        <!-- ==================== SECTION 1 : HERO IMMERSIF PANORAMIQUE ==================== -->
-        <section class="relative pt-6 pb-16 md:pt-10 md:pb-24 overflow-hidden">
+        <!-- ==================== HERO SECTION : BIENVENUE DÉFILANTE ==================== -->
+        <section class="relative pt-6 sm:pt-10 overflow-hidden">
           
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-center">
 
-            <!-- Bannière Panoramique Artistique du Burkina Faso -->
-            <div class="relative w-full h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden border border-amber-900/30 shadow-2xl bg-stone-950 group">
-              <img
-                src="/static/assets/illustrations/burkina-panoramic.svg"
-                alt="Panorama du Burkina Faso — Mosquée de Bobo, Baobab millénaire et Yennenga"
-                class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-1000"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent flex flex-col justify-end p-6 sm:p-10 md:p-12 space-y-4">
+            <!-- Pastille Souveraine -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-stone-900/90 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-widest shadow-lg backdrop-blur-md">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+              <span>Patrimoine Oral • 17 Régions • 32 Contes &amp; Récits</span>
+            </div>
+
+            <!-- GRAND MESSAGE DE BIENVENUE DÉFILANT -->
+            <div class="relative py-8 sm:py-12 px-6 sm:px-12 rounded-3xl bg-gradient-to-b from-stone-900/90 via-stone-950/80 to-stone-950 border border-amber-900/40 shadow-2xl overflow-hidden group">
+              
+              <!-- Effet de halo chaud en arrière-plan -->
+              <div class="absolute -top-24 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div class="relative z-10 space-y-4">
                 
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-900/90 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider self-start shadow-md backdrop-blur-md">
-                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                  <span>Patrimoine Oral des 17 Régions</span>
-                </div>
-
-                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-amber-50 tracking-tight leading-tight max-w-4xl font-heading drop-shadow-lg">
-                  Chaque région a une histoire.<br>
-                  Chaque voix garde <span class="text-gradient-gold">une mémoire.</span>
-                </h1>
-
-                <p class="text-sm sm:text-base md:text-lg text-stone-200 max-w-2xl leading-relaxed font-sans drop-shadow-md">
-                  Explorez le Burkina Faso à travers ses contes fondateurs, ses légendes héroïques 
-                  et ses sagesses transmises en langues nationales.
-                </p>
-
-                <div class="flex flex-wrap items-center gap-3.5 pt-2">
-                  <a href="#map" class="btn-primary text-xs sm:text-sm px-6 py-3 shadow-xl flex items-center gap-2">
-                    ${window.fasoIcon('map', 'w-4 h-4')}
-                    <span>Explorer la Carte des 17 Régions</span>
-                  </a>
-                  <a href="#histoires" class="btn-secondary text-xs sm:text-sm px-6 py-3 flex items-center gap-2">
-                    ${window.fasoIcon('book', 'w-4 h-4')}
-                    <span>La Collection (#histoires)</span>
-                  </a>
-                  <a href="#campfire/yennenga" class="px-5 py-3 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-200 border border-amber-500/40 font-bold text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg backdrop-blur-sm">
-                    ${window.fasoIcon('flame', 'w-4 h-4 text-orange-400')}
-                    <span>Autour du Feu</span>
-                  </a>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- 4 Indicateurs Clés Aérés -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
-              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
-                <div class="text-3xl font-black text-amber-300 font-mono">17</div>
-                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Régions Souveraines</div>
-              </div>
-              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
-                <div class="text-3xl font-black text-amber-300 font-mono">10+</div>
-                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Langues Documentées</div>
-              </div>
-              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
-                <div class="text-3xl font-black text-amber-300 font-mono">20</div>
-                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Pistes Audio &amp; Contes</div>
-              </div>
-              <div class="p-5 rounded-2xl bg-stone-900/50 border border-stone-800 text-center space-y-1">
-                <div class="text-3xl font-black text-amber-300 font-mono">UNESCO</div>
-                <div class="text-[11px] text-stone-400 font-bold uppercase tracking-wider">Sauvegarde &amp; Éthique</div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- ==================== SECTION 2 : EXPLORER PAR LA CARTE ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span class="badge-culture mb-2">Cartographie Immersive</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Le Territoire à Travers ses Récits
-              </h2>
-              <p class="text-xs sm:text-sm text-stone-400 mt-1 max-w-xl">
-                Sélectionnez une des 17 régions officielles pour accéder instantanément à ses traditions orales et son patrimoine.
-              </p>
-            </div>
-            <a href="#map" class="btn-secondary text-xs self-start md:self-auto flex items-center gap-1.5">
-              <span>Vue Cartographique Complète (2D / 3D)</span>
-              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
-            </a>
-          </div>
-
-          <div id="home-map-preview-container" class="w-full min-h-[460px] rounded-3xl overflow-hidden border border-stone-800"></div>
-        </section>
-
-        <!-- ==================== SECTION 3 : RÉCITS À DÉCOUVRIR ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span class="badge-culture mb-2">Sélection Patrimoniale</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Contes &amp; Épopées Emblématiques
-              </h2>
-              <p class="text-xs sm:text-sm text-stone-400 mt-1">
-                Des figures héroïques fondatrices aux mythes totémiques de la nature.
-              </p>
-            </div>
-            <a href="#histoires" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
-              <span>Voir les ${stories.length} récits disponibles</span>
-              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
-            </a>
-          </div>
-
-          <!-- Grille des Contes -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            ${stories.slice(0, 4).map(s => `
-              <article class="bg-stone-900/60 border border-stone-800 hover:border-amber-500/40 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 flex flex-col group cursor-pointer" onclick="window.fasoRouter.navigateTo('story', '${s.id}')">
-                <div class="relative w-full h-48 overflow-hidden bg-stone-950">
-                  <img src="/static/assets/illustrations/${s.heroImage}" alt="${s.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                  <div class="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-transparent to-transparent"></div>
-                  <span class="absolute top-3 left-3 px-2.5 py-0.5 text-[10px] font-bold rounded-lg bg-stone-950/80 text-amber-300 border border-amber-500/30">
-                    ${s.category}
+                <!-- Badge de Langue active -->
+                <div class="flex items-center justify-center gap-2">
+                  <span id="welcome-lang-badge" class="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-bold uppercase tracking-widest transition-all duration-300 font-mono">
+                    Mooré
+                  </span>
+                  <span id="welcome-region-badge" class="text-xs text-stone-400 transition-all duration-300">
+                    Kadiogo, Yaadga, Oubri
                   </span>
                 </div>
-                <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div>
-                    <span class="text-[10px] uppercase tracking-wider text-amber-500 font-semibold block mb-1">${s.regionName}</span>
-                    <h4 class="text-sm font-bold text-stone-100 group-hover:text-amber-200 transition-colors line-clamp-1 font-heading">${s.title}</h4>
-                    <p class="text-xs text-stone-400 line-clamp-2 mt-1.5 leading-relaxed">${s.synopsis}</p>
+
+                <!-- GRAND TITRE DU MESSAGE DÉFILANT -->
+                <h1 id="welcome-greeting-text" class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-amber-50 tracking-tight font-heading leading-tight transition-all duration-500 drop-shadow-xl min-h-[1.2em] flex items-center justify-center">
+                  Ne y beogo !
+                </h1>
+
+                <!-- Traduction / Signification -->
+                <p id="welcome-meaning-text" class="text-sm sm:text-lg md:text-xl text-amber-200/90 font-serif italic max-w-2xl mx-auto transition-all duration-300">
+                  « Que la paix et la fraîcheur du matin soient sur vous »
+                </p>
+
+                <!-- Boutons Précédent / Pause / Suivant & Indicateurs -->
+                <div class="flex items-center justify-center gap-3 pt-4">
+                  <button id="btn-welcome-prev" class="w-9 h-9 rounded-full bg-stone-900/90 hover:bg-stone-800 text-stone-300 hover:text-amber-300 border border-stone-800 flex items-center justify-center transition-all" title="Langue précédente">
+                    ‹
+                  </button>
+                  
+                  <!-- Puces d'indicateur de défilement -->
+                  <div id="welcome-dots-host" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-900/60 border border-stone-800">
+                    ${this.welcomeMessages.map((_, i) => `
+                      <span class="welcome-dot w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-amber-400 w-5' : 'bg-stone-700'}" data-index="${i}"></span>
+                    `).join('')}
                   </div>
-                  <div class="pt-3 border-t border-stone-800 flex items-center justify-between text-[11px] text-stone-400">
-                    <span class="font-mono text-stone-400">${s.languages[0] || 'Français'}</span>
-                    <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                      <span>Écouter</span>
-                      ${window.fasoIcon('play', 'w-2.5 h-2.5 fill-amber-400')}
-                    </span>
-                  </div>
+
+                  <button id="btn-welcome-next" class="w-9 h-9 rounded-full bg-stone-900/90 hover:bg-stone-800 text-stone-300 hover:text-amber-300 border border-stone-800 flex items-center justify-center transition-all" title="Langue suivante">
+                    ›
+                  </button>
                 </div>
-              </article>
-            `).join("")}
-          </div>
-        </section>
 
-        <!-- ==================== SECTION 4 : LES VOIX DU BURKINA ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-amber-950/20 via-stone-900/80 to-stone-950 border border-stone-800 space-y-8">
-            <div class="max-w-2xl space-y-2">
-              <span class="badge-culture">Diversité Linguistique</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Écouter la Parole dans les Langues du Terroir
-              </h2>
-              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                Le patrimoine oral prend tout son relief dans les sonorités et les proverbes des communautés linguistiques burkinabè.
-              </p>
-            </div>
-
-            <!-- Grille des Langues -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              ${languages.slice(0, 6).map(l => `
-                <div class="p-5 rounded-2xl bg-stone-950/60 border border-stone-800/80 hover:border-amber-500/30 transition-all space-y-2.5">
-                  <div class="flex items-center justify-between">
-                    <h4 class="text-sm font-bold text-amber-200 font-heading">${l.nameFr} (${l.nativeName})</h4>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">ISO: ${l.code}</span>
-                  </div>
-                  <div class="text-xs italic text-amber-100 font-serif">"${l.greeting.native}"</div>
-                  <p class="text-[11px] text-stone-400 leading-relaxed">${l.greeting.translation}</p>
-                  <div class="pt-2 border-t border-stone-800/80 text-[10px] text-emerald-400 font-semibold flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                    <span>Traditions documentées</span>
-                  </div>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SECTION 5 : VOYAGER DANS LES RÉGIONS AVEC ILLUSTRATIONS ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span class="badge-culture mb-2">Hauts Lieux Patrimoniaux</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-                Voyager à Travers les 17 Régions
-              </h2>
-              <p class="text-xs sm:text-sm text-stone-400 mt-1">
-                Monuments sacrés, paysages emblématiques et cours royales du Burkina Faso.
-              </p>
-            </div>
-            <a href="#regions" class="btn-secondary text-xs flex items-center gap-1.5">
-              <span>Voir les 17 Fiches Régionales</span>
-              ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
-            </a>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${regions.slice(0, 6).map(r => {
-              const illu = regionIllustrations[r.id] || "burkina-panoramic.svg";
-              return `
-                <div class="rounded-2xl bg-stone-900/60 border border-stone-800 hover:border-amber-500/40 transition-all overflow-hidden flex flex-col justify-between group cursor-pointer shadow-md" onclick="window.fasoRouter.navigateTo('regions', '${r.id}')">
-                  <div class="h-36 overflow-hidden bg-stone-950 relative">
-                    <img src="/static/assets/illustrations/${illu}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent"></div>
-                    <span class="absolute top-2.5 right-2.5 text-[10px] font-mono px-2 py-0.5 rounded bg-stone-950/80 text-amber-300 border border-amber-500/30">
-                      ${r.capital}
-                    </span>
-                  </div>
-                  <div class="p-5 space-y-2">
-                    <h4 class="text-base font-black text-amber-100 group-hover:text-amber-300 transition-colors font-heading">${r.name}</h4>
-                    <p class="text-xs text-stone-300 line-clamp-2 leading-relaxed">${r.description}</p>
-                    <div class="pt-3 border-t border-stone-800 text-[11px] flex items-center justify-between text-stone-400">
-                      <span class="truncate">${r.languages.slice(0, 2).join(", ")}</span>
-                      <span class="text-amber-400 font-bold group-hover:translate-x-1 transition-transform shrink-0 ml-2">Explorer ➔</span>
-                    </div>
-                  </div>
-                </div>
-              `;
-            }).join("")}
-          </div>
-        </section>
-
-        <!-- ==================== SECTION 6 : EXPÉRIENCE SIGNATURE AUTOUR DU FEU ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="p-8 sm:p-12 md:p-14 rounded-3xl bg-gradient-to-br from-amber-950/30 via-stone-900 to-stone-950 border border-amber-500/30 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl">
-            <div class="space-y-4 max-w-xl">
-              <div class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30">
-                ${window.fasoIcon('flame', 'w-3.5 h-3.5 text-orange-400')}
-                <span>Veillée Traditionnelle</span>
               </div>
-              <h2 class="text-2xl sm:text-4xl font-extrabold text-amber-50 font-heading leading-tight">
-                Mode « Écouter autour du feu »
-              </h2>
-              <p class="text-xs sm:text-sm text-stone-300 leading-relaxed font-sans">
-                Retrouvez l'intimité des veillées sous le grand baobab. 
-                Lueur des braises montantes, nappe sonore d'instruments traditionnels 
-                et karaoké bilingue pour écouter le conteur vous transmettre la mémoire.
+
+            </div>
+
+            <!-- Sous-titre aéré & Boutons d'appel à l'action -->
+            <div class="space-y-6 pt-2 max-w-3xl mx-auto">
+              <p class="text-base sm:text-lg text-stone-300 leading-relaxed font-sans">
+                Explorez la mémoire vivante du Burkina Faso à travers ses contes authentiques, 
+                ses sagesses ancestrales racontées par les dépositaires de nos traditions orales.
               </p>
-              <div class="pt-2">
-                <a href="#campfire/yennenga" class="btn-primary text-xs sm:text-sm py-3.5 px-6 shadow-xl flex items-center gap-2">
-                  ${window.fasoIcon('play', 'w-3.5 h-3.5 fill-stone-950')}
-                  <span>Rejoindre la Veillée Immersive</span>
+
+              <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                <a href="#map" class="btn-primary text-xs sm:text-sm px-6 py-3.5 shadow-xl flex items-center gap-2">
+                  ${window.fasoIcon('layers', 'w-4 h-4')}
+                  <span>Voir la Carte 3D du Relief</span>
+                </a>
+                <a href="#histoires" class="btn-secondary text-xs sm:text-sm px-6 py-3.5 flex items-center gap-2">
+                  ${window.fasoIcon('book', 'w-4 h-4')}
+                  <span>Écouter les Contes (${stories.length})</span>
+                </a>
+                <a href="#campfire/yennenga" class="px-5 py-3.5 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-200 border border-amber-500/40 font-bold text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg backdrop-blur-sm">
+                  ${window.fasoIcon('flame', 'w-4 h-4 text-orange-400')}
+                  <span>Au Coin du Feu</span>
                 </a>
               </div>
             </div>
 
-            <div class="w-full md:w-88 h-60 rounded-2xl overflow-hidden border border-amber-500/30 shadow-2xl relative shrink-0 bg-stone-950 group cursor-pointer" onclick="window.fasoRouter.navigateTo('campfire', 'yennenga')">
-              <img src="/static/assets/illustrations/yennenga-hero.svg" alt="Veillée au coin du feu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent flex items-center justify-center">
-                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-500 to-yellow-400 text-stone-950 flex items-center justify-center text-lg font-bold shadow-xl group-hover:scale-110 transition-transform">
-                  ${window.fasoIcon('play', 'w-5 h-5 fill-stone-950')}
-                </div>
+          </div>
+
+        </section>
+
+        <!-- ==================== SECTION 2 : APERÇU DE LA MAQUETTE 3D ==================== -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="p-6 sm:p-10 rounded-3xl bg-gradient-to-tr from-stone-950 via-stone-900 to-stone-950 border border-amber-900/40 shadow-2xl space-y-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div class="space-y-2">
+                <span class="badge-culture">Topographie &amp; Géographie</span>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-amber-50 font-heading">
+                  Le Relief Sculpté du Burkina Faso
+                </h2>
+                <p class="text-xs sm:text-sm text-stone-300 max-w-xl">
+                  Une cartographie 3D fidèle aux 17 régions, aux biomes sahéliens, aux falaises gréseuses et aux fleuves historiques Mouhoun et Nakambé.
+                </p>
               </div>
+              <a href="#map" class="btn-primary text-xs px-5 py-2.5 self-start md:self-auto flex items-center gap-2">
+                <span>Ouvrir la Carte 3D Plein Écran</span>
+                <span>→</span>
+              </a>
             </div>
+
+            <!-- Carte 3D Hébergée directement sur l'accueil -->
+            <div id="home-map3d-slot" class="w-full"></div>
+
           </div>
         </section>
 
-        <!-- ==================== SECTION 7 : SAUVEGARDE & CONTRIBUTION ==================== -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <div class="max-w-2xl mx-auto space-y-4">
-            <span class="badge-culture">Préservation Participative</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-100 font-heading">
-              Une Mémoire Vivante Transmise par Tous
+        <!-- ==================== SECTION 3 : LES CONTES DU PATRIMOINE (AVEC PHOTOS AUTHENTIQUES) ==================== -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <span class="badge-culture mb-2">Traditions Orales &amp; Voix des Terroirs</span>
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-amber-50 font-heading">
+                Récits &amp; Légendes des 17 Régions
+              </h2>
+              <p class="text-xs sm:text-sm text-stone-400 mt-1 max-w-xl">
+                Écoutez les contes originaux en langues nationales : Mooré, Dioula, Fulfulde, Gulmancéma, San, Sénoufo et Bissa.
+              </p>
+            </div>
+            <a href="#histoires" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 self-start sm:self-auto">
+              <span>Voir toute la collection (${stories.length} récits)</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          <!-- Grille des Contes avec vraies photographies culturelles -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            ${featuredStories.map(story => `
+              <div class="group relative rounded-3xl overflow-hidden bg-stone-900/80 border border-stone-800/80 hover:border-amber-500/50 shadow-xl transition-all duration-300 flex flex-col">
+                
+                <!-- Image d'en-tête culturelle authentique -->
+                <div class="relative w-full h-48 overflow-hidden bg-stone-950">
+                  <img
+                    src="${story.heroImage ? (story.heroImage.startsWith('/') ? story.heroImage : '/static/assets/illustrations/' + story.heroImage) : '/static/assets/illustrations/etnies/culture-faso.jpg'}"
+                    alt="${story.title}"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent"></div>
+                  
+                  <!-- Badge Langue & Région -->
+                  <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                    <span class="px-2.5 py-0.5 rounded-lg bg-stone-950/85 border border-amber-500/40 text-amber-300 text-[10px] font-bold backdrop-blur-md">
+                      ${story.languages ? story.languages[0] : 'Tradition'}
+                    </span>
+                  </div>
+
+                  <div class="absolute bottom-3 right-3 text-[10px] text-stone-300 bg-stone-950/80 px-2 py-0.5 rounded-md font-mono">
+                    ${story.duration || 'Conte oral'}
+                  </div>
+                </div>
+
+                <!-- Contenu & Synopsis -->
+                <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div class="space-y-1.5">
+                    <div class="text-[11px] text-amber-400/90 font-medium">
+                      ${story.regionName || story.place || 'Burkina Faso'}
+                    </div>
+                    <h3 class="text-base font-bold text-amber-100 group-hover:text-amber-300 transition-colors font-heading leading-snug line-clamp-2">
+                      ${story.title}
+                    </h3>
+                    <p class="text-xs text-stone-300 line-clamp-2 leading-relaxed">
+                      ${story.synopsis}
+                    </p>
+                  </div>
+
+                  <!-- Lecteur audio intégré rapide -->
+                  <div class="pt-2 border-t border-stone-800/80 space-y-2">
+                    ${story.audioUrl ? `
+                      <audio controls class="w-full h-8 rounded-lg accent-amber-500" preload="none">
+                        <source src="${story.audioUrl}" type="audio/mpeg">
+                      </audio>
+                    ` : ''}
+
+                    <div class="flex items-center justify-between text-xs pt-1">
+                      <a href="#story/${story.id}" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
+                        <span>Lire le texte</span>
+                        <span>→</span>
+                      </a>
+                      <a href="#campfire/${story.id}" class="text-stone-400 hover:text-amber-200 flex items-center gap-1 text-[11px]">
+                        ${window.fasoIcon('flame', 'w-3 h-3 text-orange-400')}
+                        <span>Veillée</span>
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            `).join('')}
+          </div>
+
+        </section>
+
+        <!-- ==================== SECTION 4 : LES HAUTS LIEUX DU FASO ==================== -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div class="text-center space-y-2 max-w-2xl mx-auto">
+            <span class="badge-culture">Patrimoine Mondial &amp; Mémoire</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-50 font-heading">
+              Les Sanctuaires &amp; Trésors du Burkina Faso
             </h2>
-            <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
-              Dépositaires de traditions, chercheurs, enseignants et aînés : contribuez à ce sanctuaire 
-              du patrimoine oral en soumettant un récit ou un enregistrement de voix humaine.
+            <p class="text-xs sm:text-sm text-stone-400">
+              Des murailles de Loropéni aux fresques de Tiébélé, en passant par les cascades de Banfora et la cour du Mogho Naba.
             </p>
-            <div class="pt-2">
-              <a href="#contribute" class="btn-secondary text-xs sm:text-sm py-3 px-6 flex items-center gap-2 mx-auto inline-flex">
-                ${window.fasoIcon('quill', 'w-3.5 h-3.5 text-amber-400')}
-                <span>Contribuer au Patrimoine du Faso</span>
-              </a>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+            <div class="group relative rounded-2xl overflow-hidden h-44 sm:h-52 bg-stone-900 border border-stone-800">
+              <img src="/static/assets/illustrations/etnies/loropeni-ruines.jpg" alt="Ruines de Loropéni UNESCO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent flex flex-col justify-end p-3">
+                <span class="text-[10px] text-amber-400 font-bold">UNESCO • Tannounyan</span>
+                <span class="text-xs font-bold text-white font-heading">Ruines de Loropéni</span>
+              </div>
+            </div>
+
+            <div class="group relative rounded-2xl overflow-hidden h-44 sm:h-52 bg-stone-900 border border-stone-800">
+              <img src="/static/assets/illustrations/etnies/tiebele-case.jpg" alt="Cour Royale Peinte de Tiébélé UNESCO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent flex flex-col justify-end p-3">
+                <span class="text-[10px] text-amber-400 font-bold">UNESCO • Nazinon</span>
+                <span class="text-xs font-bold text-white font-heading">Cour de Tiébélé</span>
+              </div>
+            </div>
+
+            <div class="group relative rounded-2xl overflow-hidden h-44 sm:h-52 bg-stone-900 border border-stone-800">
+              <img src="/static/assets/illustrations/etnies/ethnie-senoufo.jpg" alt="Cascades de Banfora & Dômes de Fabedougou" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent flex flex-col justify-end p-3">
+                <span class="text-[10px] text-amber-400 font-bold">Nature • Djôrô</span>
+                <span class="text-xs font-bold text-white font-heading">Cascades de Banfora</span>
+              </div>
+            </div>
+
+            <div class="group relative rounded-2xl overflow-hidden h-44 sm:h-52 bg-stone-900 border border-stone-800">
+              <img src="/static/assets/illustrations/etnies/ethnie-mossi.jpg" alt="Monument de Yennenga & Mogho Naba" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent flex flex-col justify-end p-3">
+                <span class="text-[10px] text-amber-400 font-bold">Histoire • Kadiogo</span>
+                <span class="text-xs font-bold text-white font-heading">Princesse Yennenga</span>
+              </div>
             </div>
           </div>
         </section>
@@ -310,10 +347,88 @@ class FasoHomeView {
       </div>
     `;
 
-    // Montage de l'aperçu cartographique interactif en Section 2
-    const mapPreviewEl = this.container.querySelector("#home-map-preview-container");
-    if (mapPreviewEl && window.Faso17Map2D) {
-      new window.Faso17Map2D("home-map-preview-container");
+    this.initWelcomeRotator();
+    this.mountHomeMap3D();
+  }
+
+  initWelcomeRotator() {
+    const greetingEl = this.container.querySelector("#welcome-greeting-text");
+    const meaningEl = this.container.querySelector("#welcome-meaning-text");
+    const langBadge = this.container.querySelector("#welcome-lang-badge");
+    const regionBadge = this.container.querySelector("#welcome-region-badge");
+    const dots = this.container.querySelectorAll(".welcome-dot");
+
+    const updateWelcome = (idx) => {
+      this.currentWelcomeIndex = (idx + this.welcomeMessages.length) % this.welcomeMessages.length;
+      const msg = this.welcomeMessages[this.currentWelcomeIndex];
+
+      if (greetingEl) {
+        greetingEl.style.opacity = "0";
+        greetingEl.style.transform = "translateY(8px)";
+        setTimeout(() => {
+          greetingEl.textContent = msg.greeting;
+          greetingEl.style.opacity = "1";
+          greetingEl.style.transform = "translateY(0)";
+        }, 200);
+      }
+
+      if (meaningEl) meaningEl.textContent = `« ${msg.meaning} »`;
+      if (langBadge) langBadge.textContent = msg.lang;
+      if (regionBadge) regionBadge.textContent = msg.region;
+
+      dots.forEach((dot, i) => {
+        if (i === this.currentWelcomeIndex) {
+          dot.className = "welcome-dot w-5 h-2 rounded-full bg-amber-400 transition-all duration-300";
+        } else {
+          dot.className = "welcome-dot w-2 h-2 rounded-full bg-stone-700 transition-all duration-300";
+        }
+      });
+    };
+
+    // Défilement automatique toutes les 3,8 secondes
+    if (this.welcomeInterval) clearInterval(this.welcomeInterval);
+    this.welcomeInterval = setInterval(() => {
+      updateWelcome(this.currentWelcomeIndex + 1);
+    }, 3800);
+
+    // Boutons Suivant / Précédent
+    const btnNext = this.container.querySelector("#btn-welcome-next");
+    const btnPrev = this.container.querySelector("#btn-welcome-prev");
+
+    if (btnNext) {
+      btnNext.addEventListener("click", () => {
+        clearInterval(this.welcomeInterval);
+        updateWelcome(this.currentWelcomeIndex + 1);
+      });
+    }
+
+    if (btnPrev) {
+      btnPrev.addEventListener("click", () => {
+        clearInterval(this.welcomeInterval);
+        updateWelcome(this.currentWelcomeIndex - 1);
+      });
+    }
+
+    // Puces cliquables
+    dots.forEach(d => {
+      d.addEventListener("click", () => {
+        clearInterval(this.welcomeInterval);
+        const idx = parseInt(d.getAttribute("data-index"), 10);
+        updateWelcome(idx);
+      });
+    });
+  }
+
+  mountHomeMap3D() {
+    const slot = this.container.querySelector("#home-map3d-slot");
+    if (!slot || !window.Faso17Map3D) return;
+    new window.Faso17Map3D("home-map3d-slot");
+  }
+
+  unmount() {
+    if (this.welcomeInterval) {
+      clearInterval(this.welcomeInterval);
+      this.welcomeInterval = null;
     }
   }
 }

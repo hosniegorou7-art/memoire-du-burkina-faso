@@ -17,18 +17,18 @@
 </head>
 <body class="bg-danfani text-stone-100 min-h-screen flex flex-col selection:bg-amber-500 selection:text-stone-950">
 
-  <!-- ==================== BARRE DE NAVIGATION SUPÉRIEURE ==================== -->
+  <!-- ==================== BARRE DE NAVIGATION SUPÉRIEURE (MODERNE & ÉPURÉE) ==================== -->
   <header class="sticky top-0 z-50 bg-stone-950/90 backdrop-blur-xl border-b border-amber-900/40 transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
-      <!-- Logo et Identité -->
+      <!-- Logo et Identité Épurée -->
       <a href="#home" class="flex items-center gap-3 group">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-yellow-500 to-amber-600 flex items-center justify-center text-stone-950 shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
           <svg class="w-5 h-5 text-stone-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
         </div>
         <div>
           <span class="text-base sm:text-lg font-black tracking-wider text-amber-50 group-hover:text-amber-400 transition-colors font-heading block leading-none">
-            MÉMOIRE DU BURKINA
+            MÉMOIRE DU FASO
           </span>
           <span class="text-[9px] text-amber-500 font-bold tracking-widest uppercase mt-1 block">
             Patrimoine Oral • 17 Régions
@@ -36,39 +36,46 @@
         </div>
       </a>
 
-      <!-- Menu Principal Bureau -->
-      <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold">
-        <a href="#home" data-nav-route="home" class="text-stone-300 hover:text-amber-400 transition-colors">Accueil</a>
-        <a href="#map" data-nav-route="map" class="text-stone-300 hover:text-amber-400 transition-colors">Carte Interactive</a>
-        <a href="#regions" data-nav-route="regions" class="text-stone-300 hover:text-amber-400 transition-colors">Les 17 Régions</a>
-        <a href="#histoires" data-nav-route="histoires" class="text-stone-300 hover:text-amber-400 transition-colors">La Collection</a>
-        <a href="#campfire/yennenga" data-nav-route="campfire" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5 font-bold">
-          <svg class="w-3.5 h-3.5 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-          <span>Autour du Feu</span>
+      <!-- Menu Principal Bureau Allégé & Moderne -->
+      <nav class="hidden lg:flex items-center gap-7 text-xs font-semibold">
+        <a href="#home" data-nav-route="home" class="text-stone-300 hover:text-amber-400 transition-colors py-1">Accueil</a>
+        <a href="#map" data-nav-route="map" class="text-stone-300 hover:text-amber-400 transition-colors py-1 flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span>Carte 3D</span>
         </a>
-        <a href="#quiz" data-nav-route="quiz" class="text-stone-300 hover:text-amber-400 transition-colors">Quiz</a>
-        <a href="#glossary" data-nav-route="glossary" class="text-stone-300 hover:text-amber-400 transition-colors">Glossaire</a>
-        <a href="#adventure" data-nav-route="adventure" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-          <span>Aventure</span>
+        <a href="#regions" data-nav-route="regions" class="text-stone-300 hover:text-amber-400 transition-colors py-1">17 Régions</a>
+        <a href="#histoires" data-nav-route="histoires" class="text-stone-300 hover:text-amber-400 transition-colors py-1">Contes</a>
+        <a href="#campfire/yennenga" data-nav-route="campfire" class="text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5 font-bold py-1 bg-amber-950/40 px-3 rounded-full border border-amber-600/30">
+          <svg class="w-3.5 h-3.5 text-orange-400 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <span>Au Feu</span>
         </a>
-        <a href="#contribute" data-nav-route="contribute" class="text-stone-300 hover:text-amber-400 transition-colors">Contribuer</a>
-        <a href="#admin" data-nav-route="admin" class="text-stone-300 hover:text-white transition-colors flex items-center gap-1.5 bg-stone-900 px-2.5 py-1 rounded-lg border border-stone-800">
-          <svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span>Admin</span>
-        </a>
+
+        <!-- Menu déroulant discret Découverte -->
+        <div class="relative group">
+          <button class="text-stone-400 hover:text-white transition-colors flex items-center gap-1 py-1">
+            <span>Explorer</span>
+            <svg class="w-3 h-3 text-stone-500 group-hover:text-amber-400 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="absolute top-full left-0 mt-2 w-48 bg-stone-900/95 backdrop-blur-xl border border-amber-900/40 rounded-2xl p-2 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50 space-y-1">
+            <a href="#quiz" data-nav-route="quiz" class="block px-3 py-2 rounded-xl text-stone-300 hover:text-amber-300 hover:bg-stone-800/80 transition-colors">Quiz Culturel</a>
+            <a href="#glossary" data-nav-route="glossary" class="block px-3 py-2 rounded-xl text-stone-300 hover:text-amber-300 hover:bg-stone-800/80 transition-colors">Glossaire &amp; Proverbes</a>
+            <a href="#adventure" data-nav-route="adventure" class="block px-3 py-2 rounded-xl text-amber-300 hover:text-amber-200 hover:bg-stone-800/80 transition-colors font-medium">Aventure Yennenga</a>
+            <a href="#contribute" data-nav-route="contribute" class="block px-3 py-2 rounded-xl text-stone-300 hover:text-amber-300 hover:bg-stone-800/80 transition-colors">Contribuer</a>
+            <a href="#admin" data-nav-route="admin" class="block px-3 py-2 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800/80 transition-colors">Console Admin</a>
+          </div>
+        </div>
       </nav>
 
-      <!-- Commandes de droite (Ambiance Sonore & Menu Mobile) -->
+      <!-- Commandes de droite (Écouter & Kora) -->
       <div class="flex items-center gap-3">
         <button id="btn-nav-ambience" class="px-3 py-1.5 rounded-xl border border-stone-800 bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
           <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          <span class="hidden sm:inline">Kora Traditionnelle : Off</span>
+          <span class="hidden xl:inline">Kora</span>
         </button>
 
-        <a href="/report" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all">
-          <svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          <span>Rapport Gobelab</span>
+        <a href="#histoires" class="btn-primary text-xs px-4 py-2 hidden sm:flex items-center gap-1.5 shadow-md">
+          <svg class="w-3.5 h-3.5 text-stone-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Écouter</span>
         </a>
 
         <!-- Bouton Burger Mobile -->
@@ -79,19 +86,20 @@
 
     </div>
 
-    <!-- Tiroir de Navigation Mobile -->
-    <div id="mobile-navigation" class="hidden lg:hidden border-t border-stone-800 bg-stone-950 px-4 py-4 space-y-3 text-sm font-semibold">
+    <!-- Tiroir de Navigation Mobile Allégé -->
+    <div id="mobile-navigation" class="hidden lg:hidden border-t border-stone-800 bg-stone-950 px-5 py-4 space-y-2 text-sm font-semibold">
       <a href="#home" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Accueil</a>
-      <a href="#map" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Carte des 17 Régions</a>
-      <a href="#regions" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Fiches des 17 Régions</a>
-      <a href="#histoires" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">La Collection des Contes</a>
-      <a href="#campfire/yennenga" class="block py-2 text-amber-300 font-bold border-b border-stone-900">Autour du Feu (Veillée Immersive)</a>
-      <a href="#quiz" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Quiz Culturel</a>
-      <a href="#glossary" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Glossaire &amp; Proverbes</a>
-      <a href="#adventure" class="block py-2 text-amber-300 hover:text-white font-bold border-b border-stone-900">Aventure Interactive de Yennenga</a>
-      <a href="#contribute" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Contribuer au Patrimoine</a>
-      <a href="#admin" class="block py-2 text-amber-300 hover:text-white border-b border-stone-900">Console d'Administration</a>
-      <a href="/report" class="block py-2 text-stone-400 hover:text-white">Rapport Officiel de Projet</a>
+      <a href="#map" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Carte 3D du Relief</a>
+      <a href="#regions" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Les 17 Régions</a>
+      <a href="#histoires" class="block py-2 text-stone-200 hover:text-amber-400 border-b border-stone-900">Contes &amp; Voix</a>
+      <a href="#campfire/yennenga" class="block py-2 text-amber-300 font-bold border-b border-stone-900 flex items-center gap-2">
+        <svg class="w-3.5 h-3.5 text-orange-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        <span>Au Coin du Feu</span>
+      </a>
+      <a href="#quiz" class="block py-2 text-stone-300 hover:text-amber-400 border-b border-stone-900">Quiz</a>
+      <a href="#glossary" class="block py-2 text-stone-300 hover:text-amber-400 border-b border-stone-900">Glossaire</a>
+      <a href="#adventure" class="block py-2 text-amber-300 hover:text-white font-medium border-b border-stone-900">Aventure</a>
+      <a href="#contribute" class="block py-2 text-stone-400 hover:text-white">Contribuer</a>
     </div>
   </header>
 

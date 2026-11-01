@@ -28,8 +28,8 @@ class FasoStoryView {
     // Normalisation des chapitres/étapes
     const chapters = this.getNormalizedChapters(s);
     const primaryLang = (s.languages && s.languages[0]) || s.language || "Français";
-    const audioSrc = `/static/audio/${s.id}.mp3`;
-    const heroImg = `/static/assets/illustrations/${s.heroImage || s.image || 'burkina-panoramic.svg'}`;
+    const audioSrc = s.audioUrl || `/static/audio/${s.id}.mp3`;
+    const heroImg = s.heroImage ? (s.heroImage.startsWith('/') ? s.heroImage : '/static/assets/illustrations/' + s.heroImage) : '/static/assets/illustrations/etnies/culture-faso.jpg';
 
     this.container.innerHTML = `
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in text-stone-100 space-y-8">

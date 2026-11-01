@@ -7,7 +7,7 @@
 class FasoMapView {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentMode = "2d"; // "2d" ou "3d"
+    this.currentMode = "3d"; // Par défaut 3D relief topographique fidèle à la maquette
     this.map2d = null;
     this.map3d = null;
   }

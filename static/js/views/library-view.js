@@ -67,22 +67,31 @@ class FasoLibraryView {
 
             <!-- Filtre rapide par langues (Boutons Pilules) -->
             <div class="flex flex-wrap items-center gap-1.5" id="lang-pills-container">
-              <button data-lang-filter="all" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'all' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="all" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'all' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Toutes
               </button>
-              <button data-lang-filter="Mooré" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Mooré' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="Mooré" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Mooré' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Mooré
               </button>
-              <button data-lang-filter="Dioula" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Dioula' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="Dioula" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Dioula' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Dioula
               </button>
-              <button data-lang-filter="Fulfulde" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Fulfulde' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="Fulfulde" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Fulfulde' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Fulfulde
               </button>
-              <button data-lang-filter="Bissa" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Bissa' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="Gulmancéma" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Gulmancéma' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+                Gulmancéma
+              </button>
+              <button data-lang-filter="San (Samo)" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'San (Samo)' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+                San / Samo
+              </button>
+              <button data-lang-filter="Sénoufo" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Sénoufo' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+                Sénoufo
+              </button>
+              <button data-lang-filter="Bissa" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Bissa' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Bissa
               </button>
-              <button data-lang-filter="Français" class="lang-pill px-3 py-2 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Français' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
+              <button data-lang-filter="Français" class="lang-pill px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${this.activeLanguage === 'Français' ? 'bg-amber-500 text-stone-950 shadow-md' : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'}">
                 Français
               </button>
             </div>
@@ -190,8 +199,8 @@ class FasoLibraryView {
     grid.innerHTML = filtered.map(s => {
       const primaryLang = (s.languages && s.languages[0]) || s.language || "Mooré";
       const secondaryLang = s.languages && s.languages[1] ? s.languages[1] : null;
-      const audioFile = `/static/audio/${s.id}.mp3`;
-      const imgPath = `/static/assets/illustrations/${s.heroImage || s.image || 'burkina-panoramic.svg'}`;
+      const audioFile = s.audioUrl || `/static/audio/${s.id}.mp3`;
+      const imgPath = s.heroImage ? (s.heroImage.startsWith('/') ? s.heroImage : '/static/assets/illustrations/' + s.heroImage) : '/static/assets/illustrations/etnies/culture-faso.jpg';
 
       return `
         <article class="story-card group relative bg-stone-900/90 rounded-3xl border border-stone-800/90 hover:border-amber-500/50 shadow-xl transition-all duration-500 flex flex-col justify-between overflow-hidden"

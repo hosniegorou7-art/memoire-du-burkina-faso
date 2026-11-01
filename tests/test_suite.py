@@ -151,6 +151,50 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         self.assertIn("story-master-audio", story_content)
         self.assertIn("chapter-reader-box", story_content)
 
+    def test_user_provided_audio_and_ethnic_assets(self):
+        """Vérifie l'intégration des audios fournis par l'utilisateur et des photographies d'ethnies"""
+        audio_dir = BASE_DIR / "static" / "audio"
+        user_audios = [
+            "conte-senoufo.mp3",
+            "conte-samo.mp3",
+            "conte-samo-2.mp3",
+            "conte-gourmantcheba-1.mp3",
+            "conte-gourmanctheba-2.mp3",
+            "conte-gourmantheba-3.mp3",
+            "conte-en-moore.mp3",
+            "conte-moore-2.mp3",
+            "conte-en-dioula.mp3",
+            "souraba-le-singe.mp3"
+        ]
+        for a in user_audios:
+            p = audio_dir / a
+            self.assertTrue(p.exists(), f"Fichier audio {a} manquant dans static/audio")
+            self.assertGreater(p.stat().st_size, 10000, f"Le fichier {a} semble vide ou incomplet")
+
+        # Vérification des photos d'ethnies
+        etnie_dir = BASE_DIR / "static" / "assets" / "illustrations" / "etnies"
+        self.assertTrue(etnie_dir.exists(), "Le dossier d'ethnies doit exister")
+        required_ethnic_imgs = [
+            "ethnie-mossi.jpg",
+            "ethnie-peul.jpg",
+            "ethnie-senoufo.jpg",
+            "ethnie-samo.jpg",
+            "ethnie-gourmantche.jpg",
+            "loropeni-ruines.jpg",
+            "tiebele-case.jpg"
+        ]
+        for img in required_ethnic_imgs:
+            self.assertTrue((etnie_dir / img).exists(), f"Image ethnique {img} manquante")
+
+        # Vérification de la carte 3D épurée sans filigrane
+        clean_3d = BASE_DIR / "static" / "assets" / "burkina-3d-clean.jpg"
+        self.assertTrue(clean_3d.exists(), "L'image 3D sans filigrane burkina-3d-clean.jpg doit exister")
+        self.assertGreater(clean_3d.stat().st_size, 50000, "L'image 3D semble trop petite")
+
+        # Vérification du total des contes dans app.py
+        import app
+        self.assertGreaterEqual(len(app.STORIES_DATA), 30, "La base doit contenir au moins 30 récits")
+
     def test_no_informal_emojis_in_core_navigation(self):
         """Vérifie que la navigation principale utilise des icônes SVG professionnelles sans emojis informels"""
         index_file = BASE_DIR / "static" / "index.html"
