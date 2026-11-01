@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     map: () => mapView.render(),
     regions: (id) => regionsView.render(id),
     library: () => libraryView.render(),
+    histoires: () => libraryView.render(),
     story: (id) => storyView.render(id),
     campfire: (id) => campfireView.mount(id),
     quiz: () => {

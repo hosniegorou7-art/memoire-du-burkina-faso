@@ -117,15 +117,15 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         self.assertGreaterEqual(question_count, 14, f"FASO_QUIZ doit contenir au moins 14 questions, trouvé {question_count}")
 
     def test_audio_tracks_presence(self):
-        """Vérifie la génération et présence effective des 20 fichiers audio MP3 haute fidélité"""
+        """Vérifie la génération et présence effective des fichiers audio MP3 haute fidélité dont les voix réelles du terroir"""
         audio_dir = BASE_DIR / "static" / "audio"
         self.assertTrue(audio_dir.exists(), "Le dossier static/audio doit exister")
         mp3_files = list(audio_dir.glob("*.mp3"))
         self.assertGreaterEqual(len(mp3_files), 20, f"Au moins 20 fichiers audio MP3 doivent être présents, trouvé {len(mp3_files)}")
-        # Vérification des fichiers clés
-        key_stories = ["yennenga.mp3", "dafra.mp3", "guimbi-ouattara.mp3", "festima-bankui.mp3", "cascades-djoro.mp3"]
-        for k in key_stories:
-            self.assertTrue((audio_dir / k).exists(), f"Fichier audio clé {k} manquant dans static/audio !")
+        # Vérification des fichiers de voix authentiques
+        authentic_voices = ["suruku-ni-sonsannin.mp3", "soni-alla-waray.mp3", "nin-keem.mp3", "conte-bissa.mp3"]
+        for v in authentic_voices:
+            self.assertTrue((audio_dir / v).exists(), f"Enregistrement de voix authentique {v} manquant dans static/audio !")
 
     def test_icons_and_illustrations(self):
         """Vérifie la présence des icônes vectorielles SVG et des illustrations burkinabè"""
@@ -134,9 +134,22 @@ class TestFasoMemoireFullStack(unittest.TestCase):
         
         illus_dir = BASE_DIR / "static" / "assets" / "illustrations"
         self.assertTrue(illus_dir.exists(), "Le dossier des illustrations doit exister")
-        required_illus = ["burkina-panoramic.svg", "mosquee-bobo.svg", "cascades-banfora.svg", "cour-tiebele.svg"]
+        required_illus = ["burkina-panoramic.svg", "mosquee-bobo.svg", "cascades-banfora.svg", "cour-tiebele.svg", "dioula.png", "mossi.png", "fulfulde.png", "bissa.png"]
         for img in required_illus:
             self.assertTrue((illus_dir / img).exists(), f"Illustration {img} manquante !")
+
+    def test_histoires_collection_experience(self):
+        """Vérifie la présence de la section #histoires avec lecteur audio et chapitres"""
+        lib_file = BASE_DIR / "static" / "js" / "views" / "library-view.js"
+        content = lib_file.read_text(encoding="utf-8")
+        self.assertIn('id="histoires"', content)
+        self.assertIn("Des histoires à", content)
+        self.assertIn("<audio", content)
+
+        story_file = BASE_DIR / "static" / "js" / "views" / "story-view.js"
+        story_content = story_file.read_text(encoding="utf-8")
+        self.assertIn("story-master-audio", story_content)
+        self.assertIn("chapter-reader-box", story_content)
 
     def test_no_informal_emojis_in_core_navigation(self):
         """Vérifie que la navigation principale utilise des icônes SVG professionnelles sans emojis informels"""

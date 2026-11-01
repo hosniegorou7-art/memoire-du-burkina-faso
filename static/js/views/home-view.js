@@ -70,9 +70,9 @@ class FasoHomeView {
                     ${window.fasoIcon('map', 'w-4 h-4')}
                     <span>Explorer la Carte des 17 Régions</span>
                   </a>
-                  <a href="#library" class="btn-secondary text-xs sm:text-sm px-6 py-3 flex items-center gap-2">
+                  <a href="#histoires" class="btn-secondary text-xs sm:text-sm px-6 py-3 flex items-center gap-2">
                     ${window.fasoIcon('book', 'w-4 h-4')}
-                    <span>Bibliothèque des Récits</span>
+                    <span>La Collection (#histoires)</span>
                   </a>
                   <a href="#campfire/yennenga" class="px-5 py-3 rounded-xl bg-amber-950/70 hover:bg-amber-900 text-amber-200 border border-amber-500/40 font-bold text-xs sm:text-sm transition-all flex items-center gap-2 shadow-lg backdrop-blur-sm">
                     ${window.fasoIcon('flame', 'w-4 h-4 text-orange-400')}
@@ -139,7 +139,7 @@ class FasoHomeView {
                 Des figures héroïques fondatrices aux mythes totémiques de la nature.
               </p>
             </div>
-            <a href="#library" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
+            <a href="#histoires" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
               <span>Voir les ${stories.length} récits disponibles</span>
               ${window.fasoIcon('arrowRight', 'w-3.5 h-3.5')}
             </a>
