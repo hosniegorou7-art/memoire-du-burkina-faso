@@ -10,13 +10,13 @@
 
 ---
 
-## 🌟 Fonctionnalités Principales
+## Fonctionnalités Principales
 
-### 1. 🗺️ Carte Interactive 2D & 3D du Burkina Faso
+### 1. Carte Interactive 2D & 3D du Burkina Faso
 - **Carte 2D Vectorielle SVG :** Cartographie précise des 13 régions administratives et culturelles avec ondes de pulsation géolocalisées, tracés des fleuves sacrés (Mouhoun, Nakambé) et infobulles dynamiques.
 - **Perspective 3D Isométrique & Relief :** Rendu Canvas HTML5 temps réel (60 FPS) avec élévation géographique réelle (falaises de Banfora, plateau central, dunes du Sahel), piliers lumineux verticaux, orbite 360° et **cycle atmosphérique à 4 ambiances lumineuses** (*Aube Sahélienne*, *Plein Jour*, *Crépuscule sous l'Arbre à Palabres*, *Nuit Étoilée au Baobab*).
 
-### 2. 📖 Bibliothèque Orale Multimédia & Bilinguisme
+### 2. Bibliothèque Orale Multimédia & Bilinguisme
 - 8 récits majeurs fidèlement documentés :
   - **L'Épopée de la Princesse Yennenga et l'Étalon Blanc** (Centre / Mossi - Mooré)
   - **Les Silures Sacrés de Dafra** (Hauts-Bassins / Bobo - Dioula)
@@ -30,7 +30,7 @@
 - Salutations sacrées traditionnelles (*Ne y kiba*, *Aw ni ce*, *Jam na*, *On jaraama*).
 - Glossaire interactif annoté (*Naba*, *Pulaaku*, *Faso Dan Fani*, *Dolo*, *Zaï*, *Kora*).
 
-### 3. 🎶 Synthétiseur d'Instruments Traditionnels (Web Audio API)
+### 3. Synthétiseur d'Instruments Traditionnels (Web Audio API)
 - Synthèse sonore 100% autonome sans fichiers externes :
   - **Kora :** harpe-luth à cordes pincées harmoniques.
   - **Balafon :** frappe boisée sur lames avec résonance de calebasse.
@@ -38,21 +38,21 @@
   - **Grillons & Brise du Sahel :** ambiance nocturne des veillées traditionnelles.
 - Narration vocale guidée par le Griot avec synchronisation bilingue au texte.
 
-### 4. 🌳 Mode Arbre à Palabres (Récit Interactif « Dont vous êtes le héros »)
+### 4.  Mode Arbre à Palabres (Récit Interactif « Dont vous êtes le héros »)
 - Système narratif à choix multiples permettant de vivre l'épreuve de liberté de la princesse Yennenga.
 - Déblocage de titres honorifiques (*Fondatrice de l'Empire Mossi*, *Archère Invincible*, etc.).
 
-### 5. 🎓 Espace Éducatif & Quiz de Transmission
+### 5.  Espace Éducatif & Quiz de Transmission
 - QCM interactif évaluant la compréhension historique, géographique et morale.
 - Attribution de grades culturels (*Initié des Veillées*, *Gardien des Coutumes*, *Grand Griot & Maître de la Parole*).
 
-### 6. 📄 Rapport Officiel Imprimable
+### 6.  Rapport Officiel Imprimable
 - Rapport de projet universitaire et technique complet disponible sur `/report` (avec fonction d'exportation/impression PDF optimisée).
 - Formellement adressé à **M. Odilon Simpore** (`Odilon.simpore@gobelab.org`) pour la date limite du **4 Novembre 2026**.
 
 ---
 
-## 🚀 Démarrage Rapide
+##  Démarrage Rapide
 
 ### Prérequis
 - Python 3.10 ou supérieur avec les paquets `fastapi` et `uvicorn`.
@@ -67,13 +67,13 @@ python3 app.py
 ```
 
 ### Accès aux interfaces
-- 🌐 **Application Web Immersive :** [http://localhost:8000](http://localhost:8000)
-- 📋 **Rapport de Projet Imprimable :** [http://localhost:8000/report](http://localhost:8000/report)
-- 📚 **Documentation API Interactive (Swagger) :** [http://localhost:8000/docs](http://localhost:8000/docs)
+-  **Application Web Immersive :** [http://localhost:8000](http://localhost:8000)
+-  **Rapport de Projet Imprimable :** [http://localhost:8000/report](http://localhost:8000/report)
+-  **Documentation API Interactive (Swagger) :** [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-## 🧪 Tests Automatisés
+##  Tests Automatisés
 
 Le projet comprend une suite complète de tests unitaires et d'intégration validant le routage, le filtrage linguistique, la recherche et l'intégrité des fichiers :
 
@@ -83,7 +83,7 @@ python3 tests/test_app.py
 
 ---
 
-## 📂 Structure du Répertoire
+##  Structure du Répertoire
 
 ```
 faso-contes-legendes/
@@ -114,7 +114,7 @@ faso-contes-legendes/
 
 ---
 
-## 🤝 Livrable & Contact
+##  Livrable & Contact
 
 - **Projet :** Plateforme Web Multimédia et Carte Interactive des Contes et Légendes du Burkina Faso
 - **Destinataire :** Odilon Simpore (`Odilon.simpore@gobelab.org`)
