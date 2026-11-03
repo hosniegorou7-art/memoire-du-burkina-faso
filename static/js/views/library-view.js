@@ -17,6 +17,47 @@ class FasoLibraryView {
     this.activeLanguage = "all";
     this.activeRegion = "all";
     this.searchQuery = "";
+    // CORRECTION 1 — Une seule histoire à la fois
+    this._activeStoryId = null;
+    this._activeAudioEl = null;
+  }
+
+  /**
+   * Ferme l'histoire actuellement ouverte (stoppe l'audio, réinitialise l'état).
+   */
+  _closeActiveStory() {
+    if (this._activeAudioEl) {
+      this._activeAudioEl.pause();
+      this._activeAudioEl.currentTime = 0;
+      this._activeAudioEl = null;
+    }
+    if (this._activeStoryId) {
+      const prevCard = this.container.querySelector(
+        `[data-story-id="${this._activeStoryId}"]`
+      );
+      if (prevCard) {
+        prevCard.classList.remove("ring-2", "ring-amber-400", "scale-[1.01]");
+      }
+      this._activeStoryId = null;
+    }
+  }
+
+  /**
+   * Ouvre une histoire : ferme la précédente d'abord.
+   */
+  _openStory(storyId, audioEl) {
+    if (this._activeStoryId === storyId) {
+      // Clic sur la même carte → toggle : on la referme
+      this._closeActiveStory();
+      return;
+    }
+    this._closeActiveStory();
+    this._activeStoryId = storyId;
+    this._activeAudioEl = audioEl;
+    const card = this.container.querySelector(`[data-story-id="${storyId}"]`);
+    if (card) {
+      card.classList.add("ring-2", "ring-amber-400", "scale-[1.01]");
+    }
   }
 
   render() {
@@ -204,6 +245,7 @@ class FasoLibraryView {
 
       return `
         <article class="story-card group relative bg-stone-900/90 rounded-3xl border border-stone-800/90 hover:border-amber-500/50 shadow-xl transition-all duration-500 flex flex-col justify-between overflow-hidden"
+                 data-story-id="${s.id}"
                  style="transform-style: preserve-3d; transition: transform 0.25s ease-out, border-color 0.3s ease;">
           
           <div>
@@ -378,6 +420,23 @@ class FasoLibraryView {
       card.addEventListener("mouseleave", () => {
         card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
       });
+
+      // CORRECTION 1 — Une seule histoire à la fois : intercepte play sur <audio>
+      const audioEl = card.querySelector("audio");
+      if (audioEl) {
+        audioEl.addEventListener("play", () => {
+          const storyId = card.getAttribute("data-story-id");
+          this._openStory(storyId, audioEl);
+        });
+        audioEl.addEventListener("pause", () => {
+          // Si l'audio est mis en pause manuellement, on réinitialise l'état actif
+          if (this._activeAudioEl === audioEl) {
+            this._activeStoryId = null;
+            this._activeAudioEl = null;
+            card.classList.remove("ring-2", "ring-amber-400", "scale-[1.01]");
+          }
+        });
+      }
     });
   }
 }

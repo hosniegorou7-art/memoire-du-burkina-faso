@@ -75,6 +75,20 @@ class Faso17Map2D {
               </pattern>
             </defs>
 
+            <!-- Fond de pays voisins (arrière-plan gris très clair) -->
+            <rect x="0" y="0" width="1000" height="700" fill="#1c1917" />
+
+            <!-- Contour fidèle du Burkina Faso -->
+            <path d="M 50,330 L 70,250 L 100,200 L 130,160 L 180,100 L 240,70 L 320,50 L 400,55 L 450,50 L 520,55 L 580,65 L 650,70 L 720,80 L 780,100 L 830,130 L 870,150 L 900,160 L 930,180 L 950,220 L 940,270 L 920,310 L 900,350 L 880,380 L 840,420 L 800,450 L 780,490 L 750,520 L 720,540 L 700,560 L 680,580 L 650,600 L 620,620 L 580,630 L 540,640 L 510,650 L 480,645 L 450,640 L 420,650 L 390,640 L 360,630 L 320,620 L 280,610 L 250,590 L 220,560 L 190,540 L 160,510 L 130,480 L 100,440 L 70,400 L 50,370 Z"
+              fill="#78350f" fill-opacity="0.18" stroke="#92400e" stroke-width="2.5" stroke-linejoin="round"
+              class="pointer-events-none" />
+
+            <!-- Nom du pays -->
+            <text x="500" y="90" text-anchor="middle"
+              font-size="22" font-weight="900" letter-spacing="6"
+              fill="#fbbf24" fill-opacity="0.55"
+              class="pointer-events-none font-heading">BURKINA FASO</text>
+
             <!-- Tracé des cours d'eau sacrés majeurs -->
             <g class="rivers-layer stroke-sky-400/35 fill-none stroke-[2.5] stroke-dasharray-[5,3] pointer-events-none">
               <!-- Fleuve Mouhoun (Black Volta) -->
