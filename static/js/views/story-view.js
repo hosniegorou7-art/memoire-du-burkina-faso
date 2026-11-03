@@ -54,7 +54,7 @@ class FasoStoryView {
                 ${s.category || s.type || 'Conte'}
               </span>
               <span class="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-stone-900/90 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 backdrop-blur-md">
-                ${window.fasoIcon ? window.fasoIcon('pin', 'w-3 h-3 text-amber-400') : '📍'}
+                ${window.fasoIcon ? window.fasoIcon('pin', 'w-3 h-3 text-amber-400') : ''}
                 <span>${s.regionName}</span>
               </span>
               <span class="px-3 py-1 rounded-xl text-xs font-mono font-semibold bg-stone-900/80 text-stone-300 border border-stone-800">
@@ -92,7 +92,7 @@ class FasoStoryView {
 
             <div class="flex items-center gap-3">
               <button id="btn-goto-campfire" class="px-4 py-2.5 rounded-xl bg-amber-950/60 hover:bg-amber-900 text-amber-200 border border-amber-500/40 font-bold text-xs transition-all flex items-center gap-2 shadow-md">
-                ${window.fasoIcon ? window.fasoIcon('flame', 'w-4 h-4 text-orange-400') : '🔥'}
+                ${window.fasoIcon ? window.fasoIcon('flame', 'w-4 h-4 text-orange-400') : ''}
                 <span>Mode Autour du Feu</span>
               </button>
             </div>
@@ -146,7 +146,7 @@ class FasoStoryView {
             <!-- Texte Français -->
             <div class="space-y-2">
               <div class="text-[11px] font-mono font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1">
-                ${window.fasoIcon ? window.fasoIcon('document', 'w-3 h-3 text-amber-400') : '📄'}
+                ${window.fasoIcon ? window.fasoIcon('document', 'w-3 h-3 text-amber-400') : ''}
                 <span>Récit en Français</span>
               </div>
               <div id="chapter-text-fr" class="text-sm sm:text-base text-stone-100 leading-relaxed font-serif p-5 rounded-2xl bg-stone-950/60 border border-stone-800/80 min-h-[140px]">
@@ -157,7 +157,7 @@ class FasoStoryView {
             <!-- Texte en Langue Nationale -->
             <div class="space-y-2">
               <div class="text-[11px] font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
-                ${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3 text-amber-400') : '🗣️'}
+                ${window.fasoIcon ? window.fasoIcon('speaker', 'w-3 h-3 text-amber-400') : ''}
                 <span>Parole en ${primaryLang}</span>
               </div>
               <div id="chapter-text-native" class="text-sm sm:text-base text-amber-200/90 leading-relaxed font-serif italic p-5 rounded-2xl bg-stone-950/90 border border-amber-900/30 min-h-[140px]">
@@ -170,7 +170,7 @@ class FasoStoryView {
           <!-- Boîte Morale conditionnelle (apparaît à la dernière étape) -->
           <div id="chapter-moral-box" class="${chapters.length === 1 ? '' : 'hidden'} p-6 rounded-2xl bg-gradient-to-r from-amber-950/40 via-stone-950 to-amber-950/40 border border-amber-500/40 text-center space-y-2">
             <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest block">
-              ✨ La Sagesse des Aïeux
+              La Sagesse des Aïeux
             </span>
             <p class="text-sm sm:text-base font-serif italic text-amber-100 max-w-2xl mx-auto leading-relaxed">
               "${s.moral || 'La parole juste est un remède pour le cœur.'}"
@@ -183,7 +183,7 @@ class FasoStoryView {
         ${s.audioGreeting ? `
           <div class="p-5 rounded-2xl bg-stone-900/50 border-l-4 border-amber-500 flex items-start gap-3.5 text-xs">
             <div class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 text-amber-400">
-              ${window.fasoIcon ? window.fasoIcon('speaker', 'w-4 h-4') : '🗣️'}
+              ${window.fasoIcon ? window.fasoIcon('speaker', 'w-4 h-4') : ''}
             </div>
             <div>
               <div class="font-bold text-amber-400 uppercase tracking-wider text-[10px]">

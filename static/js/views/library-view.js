@@ -46,12 +46,15 @@ class FasoLibraryView {
    * Ouvre une histoire : ferme la précédente d'abord.
    */
   _openStory(storyId, audioEl) {
-    if (this._activeStoryId === storyId) {
-      // Clic sur la même carte → toggle : on la referme
-      this._closeActiveStory();
-      return;
+    if (this._activeStoryId && this._activeStoryId !== storyId) {
+      if (this._activeAudioEl && !this._activeAudioEl.paused) {
+        this._activeAudioEl.pause();
+      }
+      const prevCard = this.container.querySelector(`[data-story-id="${this._activeStoryId}"]`);
+      if (prevCard) {
+        prevCard.classList.remove("ring-2", "ring-amber-400", "scale-[1.01]");
+      }
     }
-    this._closeActiveStory();
     this._activeStoryId = storyId;
     this._activeAudioEl = audioEl;
     const card = this.container.querySelector(`[data-story-id="${storyId}"]`);
@@ -102,7 +105,7 @@ class FasoLibraryView {
                 placeholder="Rechercher un récit, un héros, un village…"
                 class="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 rounded-2xl px-4 py-3 pl-11 text-xs text-stone-100 focus:outline-none transition-colors">
               <span class="absolute left-4 top-3.5 text-stone-500 pointer-events-none">
-                ${window.fasoIcon ? window.fasoIcon('search', 'w-4 h-4 text-stone-500') : '🔍'}
+                ${window.fasoIcon ? window.fasoIcon('search', 'w-4 h-4 text-stone-500') : ''}
               </span>
             </div>
 
@@ -268,7 +271,7 @@ class FasoLibraryView {
               <!-- Lieu / Région en bas d'image -->
               <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] text-stone-300">
                 <span class="flex items-center gap-1 font-semibold text-amber-200">
-                  ${window.fasoIcon ? window.fasoIcon('pin', 'w-3 h-3 text-amber-400') : '📍'}
+                  ${window.fasoIcon ? window.fasoIcon('pin', 'w-3 h-3 text-amber-400') : ''}
                   <span class="truncate max-w-[200px]">${s.regionName}</span>
                 </span>
                 <span class="text-stone-400 font-mono text-[10px]">${s.duration || '5 min'}</span>
@@ -300,7 +303,7 @@ class FasoLibraryView {
             <div class="p-3.5 rounded-2xl bg-stone-950/80 border border-amber-900/30 space-y-2">
               <div class="flex items-center justify-between text-[11px]">
                 <div class="flex items-center gap-1.5 font-bold text-amber-300">
-                  ${window.fasoIcon ? window.fasoIcon('audio', 'w-3.5 h-3.5 text-amber-400') : '🔊'}
+                  ${window.fasoIcon ? window.fasoIcon('audio', 'w-3.5 h-3.5 text-amber-400') : ''}
                   <span>Écouter en ${primaryLang}</span>
                 </div>
                 <span class="text-[10px] text-stone-500 font-mono">Audio officiel</span>
@@ -328,7 +331,7 @@ class FasoLibraryView {
               <button class="p-2.5 rounded-xl bg-stone-950 hover:bg-stone-800 text-stone-300 border border-stone-800 transition-colors"
                       title="Veillée au clair de lune"
                       onclick="window.fasoRouter.navigateTo('campfire', '${s.id}')">
-                ${window.fasoIcon ? window.fasoIcon('flame', 'w-4 h-4 text-orange-400') : '🔥'}
+                ${window.fasoIcon ? window.fasoIcon('flame', 'w-4 h-4 text-orange-400') : ''}
               </button>
             </div>
 

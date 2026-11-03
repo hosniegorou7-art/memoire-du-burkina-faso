@@ -5,6 +5,27 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // GESTIONNAIRE D'EXCLUSIVITÉ AUDIO UNIVERSEL
+  // Intercepte tout événement 'play' au niveau le plus haut (capture phase).
+  // Garantit à 100% qu'UN SEUL flux audio ne peut jouer en même temps sur tout le site.
+  document.addEventListener("play", (event) => {
+    const current = event.target;
+    // 1. Coupe tous les autres éléments <audio> et <video> du DOM
+    document.querySelectorAll("audio, video").forEach(media => {
+      if (media !== current && !media.paused) {
+        media.pause();
+      }
+    });
+    // 2. Coupe la synthèse vocale en cours
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+    // 3. Stoppe les instances de lecteurs tiers s'ils ne sont pas la cible
+    if (window.fasoAudio && window.fasoAudio.mp3Element && window.fasoAudio.mp3Element !== current) {
+      if (!window.fasoAudio.mp3Element.paused) window.fasoAudio.mp3Element.pause();
+    }
+  }, true);
+
   // 1. Initialisation des Moteurs Centraux
   const store = window.fasoStore;
   const mainHost = document.getElementById("main-view-host");

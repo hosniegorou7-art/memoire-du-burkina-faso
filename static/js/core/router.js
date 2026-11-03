@@ -25,6 +25,14 @@ class FasoRouter {
 
     this.currentPath = primaryRoute;
 
+    // Arrêt systématique de tout flux audio lors d'un changement d'écran
+    document.querySelectorAll("audio, video").forEach(el => {
+      if (!el.paused) el.pause();
+    });
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+
     // Mise à jour de l'état global
     if (window.fasoStore) {
       window.fasoStore.state.currentView = primaryRoute;

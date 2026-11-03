@@ -53,7 +53,7 @@ class FasoHomeView {
         lang: "Sénoufo",
         greeting: "Tchegana !",
         phonetic: "Bienvenue au pays des Cascades",
-        region: "Djôrô, Banfora",
+        region: "Tannounyan, Banfora",
         meaning: "La terre hospitalière des collines vous accueille"
       },
       {

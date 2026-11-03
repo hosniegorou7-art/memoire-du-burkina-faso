@@ -63,75 +63,103 @@ class Faso17Map2D {
         </div>
 
         <!-- Zone SVG Vectorielle Responsive (ViewBox 0 0 1000 700) -->
-        <div class="relative w-full flex-1 flex items-center justify-center min-h-[400px] max-h-[660px]">
+        <div class="relative w-full flex-1 flex items-center justify-center min-h-[440px] max-h-[680px]">
           <svg id="svg-map-17" viewBox="0 0 1000 700" class="w-full h-full max-w-5xl drop-shadow-2xl transition-all duration-300">
             <defs>
-              <filter id="shadow-reg" x="-10%" y="-10%" width="130%" height="130%">
-                <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000000" flood-opacity="0.7"/>
+              <filter id="shadow-burkina" x="-15%" y="-15%" width="130%" height="130%">
+                <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.85"/>
               </filter>
+              <clipPath id="burkina-clip">
+                <path d="M 650 48 L 680 50 L 715 68 L 735 105 L 755 140 L 740 180 L 770 220 L 790 250 L 820 290 L 870 310 L 920 325 L 945 345 L 935 375 L 895 400 L 860 420 L 810 440 L 770 475 L 740 500 L 705 510 L 670 515 L 630 510 L 595 520 L 560 535 L 515 530 L 460 520 L 420 525 L 385 555 L 370 590 L 355 630 L 340 660 L 325 670 L 305 650 L 290 610 L 260 580 L 220 565 L 180 570 L 145 595 L 120 600 L 95 570 L 90 520 L 110 470 L 140 440 L 160 410 L 185 380 L 220 340 L 245 300 L 270 270 L 290 230 L 330 200 L 375 175 L 420 160 L 470 140 L 520 115 L 570 85 L 610 60 Z" />
+              </clipPath>
               <!-- Motif textile Faso Dan Fani en filigrane -->
               <pattern id="fani-mesh" width="20" height="20" patternUnits="userSpaceOnUse">
                 <path d="M 0,10 L 10,0 L 20,10 L 10,20 Z" fill="none" stroke="#f59e0b" stroke-width="0.3" stroke-opacity="0.12" />
               </pattern>
             </defs>
 
-            <!-- Fond de pays voisins (arrière-plan gris très clair) -->
-            <rect x="0" y="0" width="1000" height="700" fill="#1c1917" />
+            <!-- Arrière-plan cartographique sombre avec texture -->
+            <rect x="0" y="0" width="1000" height="700" fill="#0c0a09" />
 
-            <!-- Contour fidèle du Burkina Faso -->
-            <path d="M 50,330 L 70,250 L 100,200 L 130,160 L 180,100 L 240,70 L 320,50 L 400,55 L 450,50 L 520,55 L 580,65 L 650,70 L 720,80 L 780,100 L 830,130 L 870,150 L 900,160 L 930,180 L 950,220 L 940,270 L 920,310 L 900,350 L 880,380 L 840,420 L 800,450 L 780,490 L 750,520 L 720,540 L 700,560 L 680,580 L 650,600 L 620,620 L 580,630 L 540,640 L 510,650 L 480,645 L 450,640 L 420,650 L 390,640 L 360,630 L 320,620 L 280,610 L 250,590 L 220,560 L 190,540 L 160,510 L 130,480 L 100,440 L 70,400 L 50,370 Z"
-              fill="#78350f" fill-opacity="0.18" stroke="#92400e" stroke-width="2.5" stroke-linejoin="round"
-              class="pointer-events-none" />
-
-            <!-- Nom du pays -->
-            <text x="500" y="90" text-anchor="middle"
-              font-size="22" font-weight="900" letter-spacing="6"
-              fill="#fbbf24" fill-opacity="0.55"
-              class="pointer-events-none font-heading">BURKINA FASO</text>
-
-            <!-- Tracé des cours d'eau sacrés majeurs -->
-            <g class="rivers-layer stroke-sky-400/35 fill-none stroke-[2.5] stroke-dasharray-[5,3] pointer-events-none">
-              <!-- Fleuve Mouhoun (Black Volta) -->
-              <path d="M 230 140 Q 180 250 200 370 Q 230 450 290 600" />
-              <!-- Nakambé (White Volta) -->
-              <path d="M 440 200 Q 460 300 480 440 Q 490 510 520 620" />
-              <!-- Nazinon (Red Volta) -->
-              <path d="M 380 320 Q 410 400 430 490" />
-              <!-- Rivière Sirba à l'Est -->
-              <path d="M 620 180 Q 670 260 760 320" />
+            <!-- Pays limitrophes (toponymie discrète) -->
+            <g class="neighbour-countries font-heading text-[12px] font-bold fill-stone-600/70 select-none pointer-events-none tracking-widest">
+              <text x="230" y="130" opacity="0.6">MALI</text>
+              <text x="830" y="160" opacity="0.6">NIGER</text>
+              <text x="915" y="470" opacity="0.6">BÉNIN</text>
+              <text x="735" y="585" opacity="0.6">TOGO</text>
+              <text x="490" y="615" opacity="0.6">GHANA</text>
+              <text x="140" y="650" opacity="0.6">CÔTE D'IVOIRE</text>
             </g>
 
-            <!-- Les 17 Régions Administratives -->
-            <g id="regions-polygons">
+            <!-- Silhouette générale avec ombre portée -->
+            <path d="M 650 48 L 680 50 L 715 68 L 735 105 L 755 140 L 740 180 L 770 220 L 790 250 L 820 290 L 870 310 L 920 325 L 945 345 L 935 375 L 895 400 L 860 420 L 810 440 L 770 475 L 740 500 L 705 510 L 670 515 L 630 510 L 595 520 L 560 535 L 515 530 L 460 520 L 420 525 L 385 555 L 370 590 L 355 630 L 340 660 L 325 670 L 305 650 L 290 610 L 260 580 L 220 565 L 180 570 L 145 595 L 120 600 L 95 570 L 90 520 L 110 470 L 140 440 L 160 410 L 185 380 L 220 340 L 245 300 L 270 270 L 290 230 L 330 200 L 375 175 L 420 160 L 470 140 L 520 115 L 570 85 L 610 60 Z"
+              fill="#1c1917" filter="url(#shadow-burkina)" />
+
+            <!-- Les 17 Régions Administratives découpées sans chevauchement -->
+            <g clip-path="url(#burkina-clip)" id="regions-polygons">
               ${this.regions.map(reg => `
                 <g class="region-item cursor-pointer group" data-region-id="${reg.id}">
                   <path
                     d="${reg.svgPath}"
-                    class="region-poly transition-all duration-300 stroke-amber-900/60 stroke-[1.5] group-hover:stroke-amber-300 group-hover:stroke-[3] group-hover:brightness-125"
+                    class="region-poly transition-all duration-300 stroke-stone-900/90 stroke-[1.5] group-hover:stroke-amber-300 group-hover:stroke-[3] group-hover:brightness-125"
                     fill="${reg.color}"
-                    fill-opacity="0.5"
-                    filter="url(#shadow-reg)"
+                    fill-opacity="0.45"
                   />
                   <path
                     d="${reg.svgPath}"
                     fill="url(#fani-mesh)"
                     class="pointer-events-none"
                   />
-                  <!-- Label du Nom de Région -->
+                </g>
+              `).join("")}
+
+              <!-- Cours d'eau sacrés majeurs à l'intérieur du territoire -->
+              <g class="rivers-layer stroke-sky-400/50 fill-none stroke-[2.2] pointer-events-none">
+                <!-- Fleuve Mouhoun (Black Volta) -->
+                <path d="M 150 530 Q 180 460 210 410 T 290 330 T 340 260 T 280 230" stroke-linecap="round" />
+                <!-- Nakambé (White Volta) -->
+                <path d="M 550 250 Q 535 320 525 380 T 570 470 T 580 530" stroke-linecap="round" />
+                <!-- Nazinon (Red Volta) -->
+                <path d="M 430 350 Q 460 420 500 470 T 520 530" stroke-linecap="round" />
+                <!-- Rivière Sirba à l'Est -->
+                <path d="M 640 220 Q 690 270 760 320" stroke-linecap="round" />
+              </g>
+            </g>
+
+            <!-- Frontière nationale dorée mise en valeur -->
+            <path d="M 650 48 L 680 50 L 715 68 L 735 105 L 755 140 L 740 180 L 770 220 L 790 250 L 820 290 L 870 310 L 920 325 L 945 345 L 935 375 L 895 400 L 860 420 L 810 440 L 770 475 L 740 500 L 705 510 L 670 515 L 630 510 L 595 520 L 560 535 L 515 530 L 460 520 L 420 525 L 385 555 L 370 590 L 355 630 L 340 660 L 325 670 L 305 650 L 290 610 L 260 580 L 220 565 L 180 570 L 145 595 L 120 600 L 95 570 L 90 520 L 110 470 L 140 440 L 160 410 L 185 380 L 220 340 L 245 300 L 270 270 L 290 230 L 330 200 L 375 175 L 420 160 L 470 140 L 520 115 L 570 85 L 610 60 Z"
+              fill="none" stroke="#d97706" stroke-width="2.5" stroke-linejoin="round"
+              class="pointer-events-none drop-shadow-[0_0_8px_rgba(245,158,11,0.4)]" />
+            <path d="M 650 48 L 680 50 L 715 68 L 735 105 L 755 140 L 740 180 L 770 220 L 790 250 L 820 290 L 870 310 L 920 325 L 945 345 L 935 375 L 895 400 L 860 420 L 810 440 L 770 475 L 740 500 L 705 510 L 670 515 L 630 510 L 595 520 L 560 535 L 515 530 L 460 520 L 420 525 L 385 555 L 370 590 L 355 630 L 340 660 L 325 670 L 305 650 L 290 610 L 260 580 L 220 565 L 180 570 L 145 595 L 120 600 L 95 570 L 90 520 L 110 470 L 140 440 L 160 410 L 185 380 L 220 340 L 245 300 L 270 270 L 290 230 L 330 200 L 375 175 L 420 160 L 470 140 L 520 115 L 570 85 L 610 60 Z"
+              fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8 4" stroke-linejoin="round"
+              class="pointer-events-none opacity-50" />
+
+            <!-- Nom du pays en filigrane noble -->
+            <text x="500" y="80" text-anchor="middle"
+              font-size="20" font-weight="900" letter-spacing="8"
+              fill="#fbbf24" fill-opacity="0.45"
+              class="pointer-events-none font-heading">BURKINA FASO</text>
+
+            <!-- Étiquettes des 17 régions -->
+            <g id="regions-labels" class="pointer-events-none select-none">
+              ${this.regions.map(reg => `
+                <g transform="translate(${reg.svgCenter[0]}, ${reg.svgCenter[1]})">
+                  <!-- Pastille d'arrière-plan pour lisibilité -->
+                  <rect x="-45" y="-12" width="90" height="24" rx="12" fill="#0c0a09" fill-opacity="0.75" stroke="#78350f" stroke-width="0.8" />
                   <text
-                    x="${reg.svgCenter[0]}"
-                    y="${reg.svgCenter[1]}"
+                    x="0"
+                    y="0"
                     text-anchor="middle"
-                    class="text-[11px] font-extrabold fill-amber-100 pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]"
+                    class="text-[10.5px] font-extrabold fill-amber-100 font-heading"
+                    dy="1"
                   >
                     ${reg.name}
                   </text>
-                  <!-- Chef-lieu en sous-titre -->
                   <text
-                    x="${reg.svgCenter[0]}"
-                    y="${reg.svgCenter[1] + 12}"
+                    x="0"
+                    y="10"
                     text-anchor="middle"
-                    class="text-[8.5px] font-semibold fill-amber-400/80 pointer-events-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]"
+                    class="text-[7.5px] font-semibold fill-amber-400/80"
                   >
                     (${reg.capital})
                   </text>
@@ -142,10 +170,10 @@ class Faso17Map2D {
             <!-- Balises lumineuses et hotspots de récits -->
             <g id="story-beacons-layer">
               ${this.regions.map(reg => `
-                <g class="beacon-marker cursor-pointer group" data-region-id="${reg.id}" transform="translate(${reg.svgCenter[0]}, ${reg.svgCenter[1] - 16})">
+                <g class="beacon-marker cursor-pointer group" data-region-id="${reg.id}" transform="translate(${reg.svgCenter[0]}, ${reg.svgCenter[1] - 18})">
                   <!-- Pulsation radar -->
-                  <circle r="16" class="fill-amber-400/20 animate-ping opacity-60 pointer-events-none" />
-                  <circle r="9" class="fill-amber-500 stroke-2 stroke-stone-900 drop-shadow-md group-hover:r-[12] transition-all" />
+                  <circle r="15" class="fill-amber-400/25 animate-ping opacity-60 pointer-events-none" />
+                  <circle r="9" class="fill-amber-500 stroke-2 stroke-stone-950 drop-shadow-md group-hover:scale-125 transition-all" />
                   <text text-anchor="middle" dy="3.5" class="text-[9px] fill-stone-950 font-black pointer-events-none">
                     ${reg.storiesCount || 1}
                   </text>
