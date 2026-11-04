@@ -1,6 +1,4 @@
-import os
-
-with open('scratch/radial_contour_svg.txt', 'r', encoding='utf-8') as f:
+with open('scratch/perfect_contour_svg.txt', 'r', encoding='utf-8') as f:
     contour_d = f.read().strip()
 
 template = """/**
@@ -45,27 +43,27 @@ class Faso17Map2D {
                 Carte Souveraine des 17 Régions du Faso
               </h3>
               <p class="text-[11px] text-amber-400/70">
-                Contours officiels haute fidélité calés sur le relief réel • Survolez ou cliquez sur une région
+                Contours réels du relief 3D • Survolez ou cliquez sur une région pour afficher son dossier
               </p>
             </div>
           </div>
 
-          <!-- Filtres rapides -->
+          <!-- Filtres géoculturels fidèles -->
           <div class="flex flex-wrap items-center gap-1.5 text-xs">
             <button class="map2d-filter active px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/20 text-amber-200 hover:bg-amber-500/30 font-medium transition-all" data-filter="all">
               Toutes (17)
             </button>
             <button class="map2d-filter px-3 py-1 rounded-full border border-stone-800 bg-stone-900/80 text-stone-300 hover:border-amber-500/40 hover:text-amber-200 transition-all" data-filter="ouest">
-              Grand Ouest
+              Grand Ouest (5)
             </button>
             <button class="map2d-filter px-3 py-1 rounded-full border border-stone-800 bg-stone-900/80 text-stone-300 hover:border-amber-500/40 hover:text-amber-200 transition-all" data-filter="centre">
-              Plateau Central
+              Plateau Central &amp; Centre (6)
             </button>
             <button class="map2d-filter px-3 py-1 rounded-full border border-stone-800 bg-stone-900/80 text-stone-300 hover:border-amber-500/40 hover:text-amber-200 transition-all" data-filter="sahel">
-              Sahel & Nord
+              Sahel &amp; Nord (3)
             </button>
             <button class="map2d-filter px-3 py-1 rounded-full border border-stone-800 bg-stone-900/80 text-stone-300 hover:border-amber-500/40 hover:text-amber-200 transition-all" data-filter="est">
-              Est & Gulmu
+              Est &amp; Gulmu (3)
             </button>
           </div>
         </div>
@@ -77,7 +75,7 @@ class Faso17Map2D {
               <filter id="shadow-burkina-3d" x="-15%" y="-15%" width="130%" height="130%">
                 <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.9"/>
               </filter>
-              <!-- Masque de découpe selon le contour réel de la carte 3D -->
+              <!-- Masque de découpe selon le contour réel continu de la carte 3D -->
               <clipPath id="burkina-real-clip">
                 <path d="${this.contourPath}" />
               </clipPath>
@@ -103,27 +101,31 @@ class Faso17Map2D {
             <!-- Silhouette de base avec ombre portée 3D -->
             <path d="${this.contourPath}" fill="#1c1917" filter="url(#shadow-burkina-3d)" />
 
-            <!-- Groupe découpé exactement selon le contour réel -->
+            <!-- Groupe découpé exactement selon le contour réel sans aucune encoche -->
             <g clip-path="url(#burkina-real-clip)" id="regions-clipped-layer">
               <!-- Fond topographique authentique issu de la carte 3D -->
               <image href="/static/assets/burkina-3d-clean.jpg" x="0" y="0" width="1024" height="1024" preserveAspectRatio="none" />
               
               <!-- Voile assombrissant léger pour sublimer la lisibilité vectorielle -->
-              <rect width="1024" height="1024" fill="#0c0a09" fill-opacity="0.18" />
+              <rect width="1024" height="1024" fill="#0c0a09" fill-opacity="0.16" />
 
-              <!-- Les 17 Régions découpées sous forme vectorielle -->
+              <!-- Les 17 Régions découpées sous forme vectorielle avec jointures arrondies -->
               <g id="regions-polygons">
                 ${this.regions.map(reg => `
                   <g class="region-item cursor-pointer group" data-region-id="${reg.id}">
                     <path
                       d="${reg.svgPath}"
-                      class="region-poly transition-all duration-300 stroke-amber-400/35 stroke-[1.8] group-hover:stroke-amber-300 group-hover:stroke-[3.5] group-hover:fill-amber-500/35"
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      class="region-poly transition-all duration-300 stroke-amber-400/30 stroke-[1.6] group-hover:stroke-amber-300 group-hover:stroke-[3] group-hover:fill-amber-500/35"
                       fill="${reg.color}"
                       fill-opacity="0.22"
                     />
                     <path
                       d="${reg.svgPath}"
                       fill="url(#fani-mesh)"
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
                       class="pointer-events-none opacity-40"
                     />
                   </g>
@@ -131,9 +133,9 @@ class Faso17Map2D {
               </g>
             </g>
 
-            <!-- Bordure souveraine dorée haute précision suivant les vraies frontières -->
+            <!-- Bordure souveraine dorée haute précision suivant les vraies frontières du relief -->
             <path d="${this.contourPath}"
-              fill="none" stroke="#f59e0b" stroke-width="3" stroke-linejoin="round"
+              fill="none" stroke="#f59e0b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
               class="pointer-events-none drop-shadow-[0_0_12px_rgba(245,158,11,0.65)]" />
             <path d="${this.contourPath}"
               fill="none" stroke="#fef3c7" stroke-width="1" stroke-dasharray="10 5" stroke-linejoin="round"
@@ -150,7 +152,7 @@ class Faso17Map2D {
               ${this.regions.map(reg => `
                 <g transform="translate(${reg.svgCenter[0]}, ${reg.svgCenter[1]})">
                   <!-- Pastille d'arrière-plan pour contraste optimal -->
-                  <rect x="-46" y="-13" width="92" height="26" rx="13" fill="#0c0a09" fill-opacity="0.82" stroke="#d97706" stroke-width="0.9" />
+                  <rect x="-46" y="-13" width="92" height="26" rx="13" fill="#0c0a09" fill-opacity="0.85" stroke="#d97706" stroke-width="0.9" />
                   <text
                     x="0"
                     y="0"
@@ -187,7 +189,7 @@ class Faso17Map2D {
             </g>
           </svg>
 
-          <!-- Volet latéral flottant (Panneau d'exploration contextuel) -->
+          <!-- Volet d'exploration contextuel (S'ouvre au survol et au clic) -->
           <div id="map-region-drawer" class="absolute top-4 right-4 w-80 max-w-[90%] bg-stone-900/95 border border-amber-500/40 rounded-2xl p-5 shadow-2xl backdrop-blur-xl transition-all duration-300 translate-x-[110%] opacity-0 pointer-events-none z-30">
             <div id="drawer-content"></div>
           </div>
@@ -197,12 +199,12 @@ class Faso17Map2D {
         <div class="w-full flex flex-wrap items-center justify-between text-xs text-amber-300/80 mt-3 pt-3 border-t border-amber-900/30">
           <div class="flex items-center gap-4">
             <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Grand Ouest</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Plateau Central</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block"></span> Sahel</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Plateau Central &amp; Centre</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block"></span> Sahel &amp; Nord</span>
             <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-yellow-600 inline-block"></span> Est (Gulmu)</span>
           </div>
           <div class="italic text-amber-400/70 text-[11px]">
-            Cliquez sur une région pour ouvrir son dossier culturel complet
+            Survolez ou cliquez sur une région pour ouvrir son dossier culturel complet
           </div>
         </div>
 
@@ -218,7 +220,7 @@ class Faso17Map2D {
     const drawerContent = this.container.querySelector("#drawer-content");
     const filterBtns = this.container.querySelectorAll(".map2d-filter");
 
-    // Filtrage territorial rapide
+    // Filtrage territorial rapide et fidèle
     filterBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         filterBtns.forEach(b => {
@@ -233,18 +235,28 @@ class Faso17Map2D {
       });
     });
 
-    // Interaction sur les régions (clic et survol)
+    // Interaction sur les régions (SURVOL + CLIC)
     const regionItems = this.container.querySelectorAll(".region-item, .beacon-marker");
     regionItems.forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.stopPropagation();
+      const activateRegion = () => {
         const regId = item.getAttribute("data-region-id");
         const reg = this.regions.find(r => r.id === regId);
         if (reg) {
           this.selectedRegionId = regId;
           this.showDrawer(reg, drawer, drawerContent);
-          if (this.onSelectRegion) this.onSelectRegion(reg);
         }
+      };
+
+      // Au survol (demande explicite de l'utilisateur)
+      item.addEventListener("mouseenter", activateRegion);
+
+      // Au clic
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        activateRegion();
+        const regId = item.getAttribute("data-region-id");
+        const reg = this.regions.find(r => r.id === regId);
+        if (reg && this.onSelectRegion) this.onSelectRegion(reg);
       });
     });
 
@@ -278,7 +290,7 @@ class Faso17Map2D {
         <div class="pt-2 border-t border-stone-800 space-y-1.5 text-[11px]">
           <div><strong class="text-amber-300">Peuples :</strong> ${reg.demographics.join(", ")}</div>
           <div><strong class="text-amber-300">Langues :</strong> ${reg.languages.join(", ")}</div>
-          <div><strong class="text-amber-300">Musique & Instruments :</strong> ${reg.musicalTraditions.slice(0, 75)}...</div>
+          <div><strong class="text-amber-300">Musique &amp; Instruments :</strong> ${reg.musicalTraditions.slice(0, 75)}...</div>
         </div>
 
         <div class="pt-3">
@@ -320,18 +332,24 @@ class Faso17Map2D {
       const regId = parent.getAttribute("data-region-id");
       let matches = true;
 
+      // Classification officielle et fidèle des 17 régions :
       if (filter === "ouest") {
         matches = ["bankui", "djoro", "guiriko", "sourou", "tannounyan"].includes(regId);
       } else if (filter === "centre") {
-        matches = ["kadiogo", "kuilse", "nando", "nazinon", "oubri"].includes(regId);
+        // Plateau Central, Centre et Centre-Est/Sud/Ouest
+        matches = ["kadiogo", "oubri", "kuilse", "nando", "nazinon", "nakambe"].includes(regId);
       } else if (filter === "sahel") {
-        matches = ["liptako", "soum", "yaadga", "nakambe"].includes(regId);
+        // Sahel et grand Nord authentique
+        matches = ["liptako", "soum", "yaadga"].includes(regId);
       } else if (filter === "est") {
+        // Est & Gulmu
         matches = ["goulmou", "sirba", "tapoa"].includes(regId);
       }
 
       poly.style.opacity = matches ? "1" : "0.15";
+      poly.style.fillOpacity = matches ? "0.35" : "0.08";
       poly.style.stroke = matches ? "#f59e0b" : "rgba(245, 158, 11, 0.2)";
+      poly.style.strokeWidth = matches ? "2.5" : "1.2";
     });
   }
 }
@@ -342,4 +360,4 @@ window.Faso17Map2D = Faso17Map2D;
 final_code = template.replace("__CONTOUR_PLACEHOLDER__", contour_d)
 with open('static/js/components/map2d.js', 'w', encoding='utf-8') as f:
     f.write(final_code)
-print("Updated static/js/components/map2d.js successfully!")
+print("Updated static/js/components/map2d.js with perfect isocontour successfully!")
